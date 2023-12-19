@@ -7,22 +7,7 @@ import { siteMetaData } from "@/utils/siteMetaData";
 import avatar from "../../../assets/img/avatar.png";
 import {onErrorImg, onLoadImg } from "@/utils/onImage";
 
-type Props = {
-  children: ReactNode;
-  content: {
-    avatar: string,
-    name: string,
-    occupation: string,
-    company: string,
-    social: {
-      email: string,
-      github: string,
-      linkedin: string,
-      twitter: string,
-    }
-  }
-}
-export default function AboutMe({ children, content }: Props) {
+function AboutMe() {
   const img = "https://media.istockphoto.com/id/480379752/it/foto/cook-decorare-un-piatto.jpg?s=1024x1024&w=is&k=20&c=EfxCFR_rrbe9gwtWdFHvAX4rYyKmgeUSngCgfqaOPoo=";
   
   return (
@@ -71,3 +56,5 @@ export default function AboutMe({ children, content }: Props) {
     </>
   )
 }
+
+export default AboutMe;
