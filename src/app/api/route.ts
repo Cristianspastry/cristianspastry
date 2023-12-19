@@ -8,10 +8,10 @@ type Props = {
 
 
 
-export const GET = async ({req,res}:Props) => {
+export const GET = async () => {
    return NextResponse.json({message : "CIAO DA GET !!!! api "})
 }
 
-export const POST = async ({req,res}:Props) => {
+export const POST = async () => {
    return NextResponse.json({message : "CIAO DA POST !!!! api"})
 }
