@@ -1,0 +1,26 @@
+[
+    {
+        "title" : "Pan Di Spagna e Biscuit",
+        "imageUrl" : "https://firebasestorage.googleapis.com/v0/b/cristian-s-pastry-86a80.appspot.com/o/img_ricette%2Fmasse_montate%2FPANDISPAGNA.jpeg?alt=media&token=125d0f18-c23e-4a63-9a05-c4f6b93f2a98"
+    },
+    {
+        "title" : "Torte da Forno",
+        "imageUrl" : "https://firebasestorage.googleapis.com/v0/b/cristian-s-pastry-86a80.appspot.com/o/img_ricette%2Ftorte%2FTORTARICOTTAECIOCCOLATO.jpeg?alt=media&token=7b974f3d-27f0-4458-8285-7491d8b4c28a"
+    },
+    {
+        "title" : "Pasta Frolla",
+        "imageUrl" :"https://www.ricettedellanonna.net/wp-content/uploads/2011/09/pasta-frolla.jpg"
+    },
+    {
+        "title" : "Biscotti",
+        "imageUrl" : "https://cristianpastry.altervista.org/wp-content/uploads/2022/09/BiscottiFrollaMontata-768x576.jpeg"
+    },
+    {
+        "title" : "Creme",
+        "imageUrl" : "https://www.giallozafferano.it/images/215-21565/Crema-pasticcera_650x433_wm.jpg"
+    },
+    {
+        "title" : "Glasse",
+        "imageUrl" : "https://www.lucake.it/wp-content/uploads/2016/07/glassa-a-specchio-al-cacao-1.jpg"
+    }
+]
