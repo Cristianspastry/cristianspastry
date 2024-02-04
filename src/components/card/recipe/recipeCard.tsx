@@ -26,12 +26,10 @@ type Props = {
 }
 
 const RecipeCard = ({ title, href, titleCategory, preparationTime, difficulty, description }: Props) => {
-
   const img = "https://www.misya.info/wp-content/uploads/2018/08/pan-di-spagna.jpg";
 
   return (
-    <>
-      <div className=" ml-4 max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105 mb-8">
+ <div className="sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl max-w-md  my-2 mx-2 bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105  ">
 
         {/* Immagine della ricetta */}
         <Image
@@ -47,7 +45,6 @@ const RecipeCard = ({ title, href, titleCategory, preparationTime, difficulty, d
         {/* Fine Immagine della ricetta */}
 
         {/* Contenuto della ricetta */}
-
         <div className="p-4">
 
           {/* Titolo della ricetta */}
@@ -56,19 +53,17 @@ const RecipeCard = ({ title, href, titleCategory, preparationTime, difficulty, d
           {/* Categoria della ricetta */}
           <RecipeCardCategory titleCategory={titleCategory} href={href} />
 
-
           {/* Dettagli della ricetta */}
           <RecipeCardDetails preparationTime={preparationTime} difficulty={difficulty} />
-
-          
 
           {/* Breve descrizione della ricetta */}
           <RecipeCardDescription description={description} />
 
         </div>
       </div>
-    </>
+   
   )
 }
+
 
 export default RecipeCard;
