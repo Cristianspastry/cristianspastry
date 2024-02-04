@@ -1,13 +1,15 @@
+
 import type { Metadata } from 'next'
 import { Inter, Manrope } from 'next/font/google'
 import './globals.css'
-import NavBar from '@/components/navBar/navBar'
+import NavBar from '@/components/layout/navBar/navBar'
 import { siteMetaData } from '@/utils/siteMetaData'
 import { cx } from '@/utils'
 import Script from 'next/script'
-import Footer from '@/components/footer/footer'
+import Footer from '@/components/layout/footer/footer'
 import RecipeCard from '@/components/card/recipe/recipeCard'
 import RecentPostSection from '@/components/home/RecentPostSection'
+import { Router, useRouter } from 'next/router'
 
 const metadata: Metadata = {
   metadataBase: new URL(siteMetaData.siteUrl),
@@ -76,7 +78,7 @@ export default function RootLayout({
     <>
       <html lang={siteMetaData.language} suppressHydrationWarning className=' scroll-smooth'>
         <Meta/>
-        <body className=' bg-gray-50 w-full antialiased flex flex-col min-h-full min-w-full h-full'>
+        <body className=' bg-gray-50 w-full antialiased flex flex-col min-h-full min-w-full h-full max-w-screen-xl'>
           <NavBar/>
           {children}
           <Footer/>

@@ -4,9 +4,8 @@
 
 
 export const navBarLinks = [
-    //{ href: '/Ricette', title: 'Ricette' },
-    { href: '/Categorie', title: 'Categorie' },
-    { href: '/Articoli', title: 'Articoli' },
-    { href: '/Tecniche', title: 'Tecniche' },
-    { href: '/AboutMe', title: 'Chi sono' },
+    { href: '/', title: 'Home' },
+    { href: '/ricette', title: 'Ricette' },
+    { href: '/teoria', title: 'Teoria' },
+    { href: '/about-me', title: 'Chi sono' },
   ]

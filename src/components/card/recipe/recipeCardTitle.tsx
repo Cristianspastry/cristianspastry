@@ -3,7 +3,7 @@
 
 
 const RecipeCardTitle = ({title}:any) => {
-    return <h1 className="text-2xl font-bold mb-1 text-gray-800">{title}</h1>
+    return <h1 className="text-2xl tracking-tight left-5 text-center font-bold mb-1 text-primaryColor">{title}</h1>
 
   };
 
