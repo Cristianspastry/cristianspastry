@@ -29,7 +29,7 @@ const RecipeCard = ({ title, href, titleCategory, preparationTime, difficulty, d
   const img = "https://www.misya.info/wp-content/uploads/2018/08/pan-di-spagna.jpg";
 
   return (
- <div className=" sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg   my-2 mx-2 bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105  ">
+ <div className=" sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg   my-2 mx-2  bg-neutral-950 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105  ">
 
         {/* Immagine della ricetta */}
         <Image
