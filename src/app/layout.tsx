@@ -60,9 +60,9 @@ const manrope = Manrope({
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode
-}) {
+}>) {
 
   const Meta = () => {
     return (
