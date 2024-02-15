@@ -3,15 +3,15 @@ import Link from "next/link";
 
 
 type Props = {
-  href: string,
+  categoryHref: string,
   titleCategory: string,
 }
 
-const RecipeCardCategory = ({ href, titleCategory }: Props) => {
+const RecipeCardCategory = ({ categoryHref, titleCategory }: Props) => {
   return (
     <>
       <div>
-        <Link href={href} className=' font-semibold  text-xl hover:scale-105 transition-all ease-linear duration-200'>
+        <Link href={categoryHref} className=' font-semibold  text-xl hover:scale-105 transition-all ease-linear duration-200'>
           {titleCategory}
         </Link>
       </div>

@@ -18,14 +18,14 @@ import { onErrorImg, onLoadImg } from '@/utils/onImage';
 
 type Props = {
   title: string,
-  href: string,
+  categoryHref: string,
   titleCategory: string,
   preparationTime: string,
   difficulty: string,
   description: string
 }
 
-const RecipeCard = ({ title, href, titleCategory, preparationTime, difficulty, description }: Props) => {
+const RecipeCard = ({ title, categoryHref, titleCategory, preparationTime, difficulty, description }: Props) => {
   const img = "https://www.misya.info/wp-content/uploads/2018/08/pan-di-spagna.jpg";
 
   return (
@@ -51,7 +51,7 @@ const RecipeCard = ({ title, href, titleCategory, preparationTime, difficulty, d
         <RecipeCardTitle title={title} />
 
         {/* Categoria della ricetta */}
-        <RecipeCardCategory titleCategory={titleCategory} href={href} />
+        <RecipeCardCategory titleCategory={titleCategory} categoryHref={categoryHref} />
 
         {/* Dettagli della ricetta */}
         <RecipeCardDetails preparationTime={preparationTime} difficulty={difficulty} />

@@ -13,8 +13,7 @@ const CategoryCard = ({category,imageUrl}: Props) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div onMouseEnter={() => setIsHovered(true)}
-    onMouseLeave={() => setIsHovered(false)} className="ml-4 max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105 mb-8 relative">
+    <div  className="ml-4 max-w-md mx-auto bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105 mb-8 relative">
       
       {/* Immagine della categoria */}
       
@@ -34,7 +33,7 @@ const CategoryCard = ({category,imageUrl}: Props) => {
 
         {/* Box bianco sotto il titolo */}
         <div
-          className={`bg-white mx-auto h-2 mt-2 ${isHovered ? 'expand-animation' : ''}`}
+          className={`bg-white mx-auto h-2 mt-2`}
         ></div>
       </div>
     </div>

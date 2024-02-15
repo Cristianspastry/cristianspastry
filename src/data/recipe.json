@@ -1,9 +1,17 @@
 [
     {
       "title": "Pan Di Spagna",
-      "href": "#/category/",
+      "href": "#/ricette/masse-montate/pan-di-spagna",
       "titleCategory": "Masse Montate",
       "preparationTime": "25 min",
+      "difficulty": "Media",
+      "description": "Il Pan di Spagna, una base versatile per dolci italiani, ottiene la sua sofficità da una combinazione di farina debole e fecola, senza l'uso di lievito. Le uova vengono montate per introdurre bollicine d'aria, assicurando una consistenza leggera. Questa ricetta offre molte varianti, tra cui versioni al cacao, senza glutine e salate. Con diversi metodi di preparazione, è possibile ottenere un risultato eccellente in modo semplice, riducendo la pulizia. Perfetto per torte speciali o creazioni creative come dolci a tema Halloween, come le dolci bare farcite con marmellata."
+    },
+    {
+      "title": "Biscotti",
+      "href": "#/ricette/masse-montate/pan-di-spagna",
+      "titleCategory": "Pasta Frolla",
+      "preparationTime": "10 min",
       "difficulty": "Media",
       "description": "Il Pan di Spagna, una base versatile per dolci italiani, ottiene la sua sofficità da una combinazione di farina debole e fecola, senza l'uso di lievito. Le uova vengono montate per introdurre bollicine d'aria, assicurando una consistenza leggera. Questa ricetta offre molte varianti, tra cui versioni al cacao, senza glutine e salate. Con diversi metodi di preparazione, è possibile ottenere un risultato eccellente in modo semplice, riducendo la pulizia. Perfetto per torte speciali o creazioni creative come dolci a tema Halloween, come le dolci bare farcite con marmellata."
     },

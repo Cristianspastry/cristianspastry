@@ -11,6 +11,11 @@ import recipes from '@/data/recipe.json';
 
 
 export default function Home() {
+  const filterRecipesByCategory = (recipes: any[]) => {
+    return recipes.filter(recipe => recipe.titleCategory === "Pasta Frolla");
+  };
+  const filteredRecipes = filterRecipesByCategory(recipes);
+
   return (
     <main className='divide-y divide-gray-200 space-y-2 pb-8 pt-6 md:space-y-5 mb-auto items-center self-center'>
       <RecentPostSection  recipes={recipes}/>
