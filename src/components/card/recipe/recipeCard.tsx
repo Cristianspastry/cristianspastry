@@ -27,13 +27,13 @@ type Props = {
 
 const RecipeCard = ({ title, categoryHref, titleCategory, preparationTime, difficulty, description }: Props) => {
   const img = "https://www.misya.info/wp-content/uploads/2018/08/pan-di-spagna.jpg";
-
+  /* {sm:m-4 md:m-4 lg:m-4 xl:m-4 justify-center my-2 mx-2 bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105 relative  } */
   return (
-    <div className=" sm:m-4 md:m-4 lg:m-4 xl:m-4 max-w-md  justify-center my-2 mx-2 bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:scale-105 relative  ">
+    <div className=" justify-center rounded-lg overflow-hidden shadow-md hover:shadow-lg transition duration-75 ease-in-out transform hover:scale-105 relative ">
 
       {/* Immagine della ricetta */}
       <Image
-        className="w-full h-48 object-cover rounded-t-md"
+        className="w-full h-50 object-cover rounded-t-md"
         src={img}
         alt="Immagine della ricetta"
         width={600}
