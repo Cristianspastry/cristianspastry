@@ -15,7 +15,7 @@ const CategorySection = ({ categories }: Props) => {
       <div className=' text-center ml-8 text-black '>
         <h1 className=' text-black font-semibold text-4xl leading-9 tracking-tight'>{" Categorie "}</h1>
       </div>
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-rows-2 flex-row pt-3 max-w-screen-xl'>
+      <div className=' grid grid-cols-1 gap-3 grid-rows-2 p-3 max-w-screen-xl flex-row xs:m-4 sm:grid-cols-2 lg:grid-cols-3'>
         {
           categories.map((category) => (
             <>
