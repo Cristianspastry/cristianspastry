@@ -2,7 +2,7 @@
 
 
 interface CategoryModel {
-    title: string;
+    titleCategory: string;
     imageUrl: string;
     href : string
 }

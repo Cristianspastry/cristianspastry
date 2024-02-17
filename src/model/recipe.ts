@@ -1,5 +1,6 @@
 
 interface RecipeModel {
+    imageUrl: any;
     title: string;
     href: string;
     titleCategory: string;
