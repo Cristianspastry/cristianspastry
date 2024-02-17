@@ -24,11 +24,11 @@ const RecentPostSection = ({ recipes }: Props) => {
         sm:grid-cols-2 lg:grid-cols-3 grid-rows-2 flex-row pt-3 max-w-screen-xl}*/
   return (
     <>
-      <div className='text-left ml-8 text-black'>
-        <h1 className='text-black font-semibold text-3xl leading-9 tracking-tight'>{" Ricette Recenti "}</h1>
+      <div className='text-lefttext-black'>
+        <h1 className='text-black font-semibold text-3xl leading-9 tracking-tight ml-8 xs:ml-10 '>{"Ricette Recenti"}</h1>
       </div>
 
-      <div className='  grid grid-cols-1 gap-3 grid-rows-2 p-3 max-w-screen-xl flex-row md:m-4 xs:m-4 sm:m-6 sm:grid-cols-2 lg:grid-cols-3'>
+      <div className='  grid grid-cols-1 gap-3 grid-rows-2 p-3 max-w-screen-xl flex-row xs:ml-4  xs:p-6 sm:m-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3'>
         {recipes.map((recipe) => (
           <Link key={recipe.title} href={`#/categorie/${recipe.titleCategory}/${recipe.title}`}>
             
