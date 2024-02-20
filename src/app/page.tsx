@@ -10,7 +10,7 @@ import NewsLetter from '@/components/NewsLetter/NewsLetter';
 import recipes from '@/data/recipe.json';
 
 
-export default function Home() {
+export default async function Home() {
   const filterRecipesByCategory = (recipes: any[]) => {
     return recipes.filter(recipe => recipe.titleCategory === "Pasta Frolla");
   };

@@ -15,9 +15,9 @@ const recipeCardDetails = ({preparationTime,difficulty}:Props) => {
     return (
       <div className="flex items-center text-sm text-gray-600 mb-2">
       {details.map(({label,value,index}:any) => (
-        <span key={index} className="mr-2 text-lg">
+        <p key={index} className="mr-2 text-lg">
           {label}: {value}
-        </span>
+        </p>
       ))}
      
     </div>

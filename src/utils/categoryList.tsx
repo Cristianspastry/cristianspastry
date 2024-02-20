@@ -31,7 +31,7 @@ const categoryList : CategoryModel[] = [
     },
     {
         titleCategory : "Festività",
-        imageUrl : "https://www.cucchiaio.it/content/cucchiaio/it/ricette/2009/12/ricetta-chiacchiere/_jcr_content/header-par/image_single_963680536.img.jpg/1549361398525.jpg",
+        imageUrl : "https://firebasestorage.googleapis.com/v0/b/cristian-s-pastry-86a80.appspot.com/o/img_ricette%2Ffestivita%2FCHIACCHIERE.jpeg?alt=media&token=e651cb6d-cfd7-4deb-b46d-446d78b7c187",
         href : "/categorie/festivita"
     },
     {
