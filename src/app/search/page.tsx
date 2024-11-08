@@ -29,7 +29,7 @@ export default function SearchResults() {
     }
 
     return (
-       <Suspense fallback={<div>Loading...</div>}>
+       
         <div className="container mx-auto px-6 mt-10">
             <h1 className="text-2xl font-bold mb-6">Risultati della ricerca per: &quot;{query}&quot;</h1>
             
@@ -44,7 +44,7 @@ export default function SearchResults() {
                 <p className="text-lg text-gray-600">Nessun risultato trovato per &quot;{query}&quot;.</p>
             )}
         </div>
-      </Suspense>
+     
     );
 }
 
