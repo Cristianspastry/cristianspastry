@@ -21,7 +21,7 @@ export default function SearchBar({ ricette }: SearchBarProps) {
 
         if (value) {
             const filteredSuggestions = ricette.filter(recipe =>
-                recipe.title.toLowerCase().includes(value.toLowerCase())
+                recipe.slug.toLowerCase().includes(value.toLowerCase())
             );
             setSuggestions(filteredSuggestions);
         } else {
@@ -72,7 +72,7 @@ export default function SearchBar({ ricette }: SearchBarProps) {
             {suggestions.length > 0 && (
                 <div className="absolute z-10 bg-white shadow-lg rounded-md mt-1 w-full text-bluModerato border border-gray-200">
                     {suggestions.map((recipe) => (
-                        <Link href={`/recipe/${recipe.id}`} key={recipe.id}>
+                        <Link href={`/recipe/${recipe.slug}`} key={recipe.id}>
                             <div className="p-2 hover:bg-gray-100 cursor-pointer border-b border-gray-200 last:border-none">
                                 {recipe.title}
                             </div>
