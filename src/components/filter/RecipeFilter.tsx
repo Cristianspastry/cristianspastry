@@ -1,9 +1,10 @@
 // src/components/RecipeFilters.tsx
 "use client";
 
+import { RecipeFiltersType } from '@/utils/types';
 import React, { useState } from 'react';
 
-const RecipeFilters = ({ onFilterChange }: { onFilterChange: (filters: any) => void }) => {
+const RecipeFilters = ({ onFilterChange }: { onFilterChange: (filters: RecipeFiltersType) => void }) => {
   const [difficulty, setDifficulty] = useState('');
   const [prepTime, setPrepTime] = useState('');
   const [category, setCategory] = useState('');

@@ -6,7 +6,6 @@ import Recipe from '@/models/recipe';
 //import ImgTrial from '../../../assets/img/torta.png';
 
 const RecipeCard: React.FC<Recipe> = ({
-    id,
     slug,
     title,
     description,
