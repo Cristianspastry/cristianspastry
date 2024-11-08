@@ -7,7 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import { getFilteredRecipes } from '@/utils/recipeUtils';
 import RecipeCard from '@/components/card/RecipeCard';
 import Recipe from '@/models/recipe';
-import { Suspense, useEffect, useState } from 'react';
+import {  useEffect, useState } from 'react';
 
 export default function SearchResults() {
     const [query, setQuery] = useState<string>('');
