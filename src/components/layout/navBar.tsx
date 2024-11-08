@@ -1,7 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect,  } from 'react';
 import { Constants } from '@/utils/constants';
 import SearchBar from '../filter/SearchBar';
 import { allRecipes } from '@/data/recipe';
@@ -40,7 +40,7 @@ export default function Navbar() {
     }, [isOpen]);
 
     // Gestisce il click fuori dal menu
-const handleClickOutside = useCallback((event) => {
+/*const handleClickOutside = useCallback((event: React.MouseEvent) => {
         const menu = document.getElementById('mobile-menu');
         if (isOpen && menu && !menu.contains(event.target) && 
             !event.target.closest('button[aria-label="Toggle menu"]')) {
@@ -51,7 +51,7 @@ const handleClickOutside = useCallback((event) => {
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, [handleClickOutside]);
+    }, [handleClickOutside]);*/
 
     return (
         <header 
