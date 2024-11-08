@@ -1,0 +1,12 @@
+
+
+Intendo che potremmo aggiungere alcune funzionalità extra per rendere la ricerca più intuitiva e ricca di opzioni per gli utenti. Ecco qualche idea:
+
+[x]Suggerimenti di ricerca: Mostrare un elenco di suggerimenti mentre l’utente digita nella search bar. Ad esempio, se un utente inizia a scrivere "cioccolato", potrebbe vedere suggerimenti come "Torta al cioccolato", "Biscotti al cioccolato", ecc. Questo si può fare utilizzando una lista di ricette filtrata in tempo reale mentre l'utente digita.
+
+da rivedere [x]Filtri avanzati: Aggiungere opzioni di filtro per parametri come difficoltà, tempo di preparazione, o categoria (es. "Dolci veloci", "Dolci da forno"). Questi filtri aiuterebbero gli utenti a trovare ricette che rispondono a specifiche esigenze, senza dover digitare query troppo dettagliate.
+
+[x]Ricette recenti o popolari: Oltre ai risultati della ricerca, potresti aggiungere un piccolo pannello che mostra le ricette più recenti o popolari, fornendo più spunti all’utente anche se la ricerca non restituisce risultati esatti.
+
+[x]Salvataggio delle ricerche: Per migliorare la UX, potresti implementare la possibilità per gli utenti di salvare le loro ricerche recenti o preferite, così possono accedervi rapidamente in futuro.
+
