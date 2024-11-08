@@ -7,19 +7,26 @@ import { useSearchParams } from 'next/navigation';
 import { getFilteredRecipes } from '@/utils/recipeUtils';
 import RecipeCard from '@/components/card/RecipeCard';
 import Recipe from '@/models/recipe';
-import { Suspense } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 
 export default function SearchResults() {
+    const [query, setQuery] = useState<string>('');
+    const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
+    
     const searchParams = useSearchParams();
-    const query = searchParams.get('query') || '';
+    
+    useEffect(() => {
+        const queryParam = searchParams.get('query') || ''; // Ottieni il parametro 'query'
+        setQuery(queryParam); // Imposta il parametro nel state
+        const recipes = getFilteredRecipes(queryParam); // Filtro le ricette
+        setFilteredRecipes(recipes); // Imposta le ricette filtrate
+    }, [searchParams]); // Esegui di nuovo quando i parametri cambiano
 
-    const filteredRecipes: Recipe[] = getFilteredRecipes(query);
-
-   if(query === null) {
-    return (
-        <div className="container mx-auto px-6 mt-10">Loading ....</div>
-    );
-   }
+    if (!query) {
+        return (
+            <div className="container mx-auto px-6 mt-10">Loading ....</div> // Stato di caricamento
+        );
+    }
 
     return (
        <Suspense fallback={<div>Loading...</div>}>
