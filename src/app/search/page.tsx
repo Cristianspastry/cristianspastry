@@ -15,6 +15,12 @@ export default function SearchResults() {
 
     const filteredRecipes: Recipe[] = getFilteredRecipes(query);
 
+   if(query === null) {
+    return (
+        <div className="container mx-auto px-6 mt-10">Loading ....</div>
+    );
+   }
+
     return (
        <Suspense fallback={<div>Loading...</div>}>
         <div className="container mx-auto px-6 mt-10">
