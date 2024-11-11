@@ -7,9 +7,9 @@ import { useSearchParams } from 'next/navigation';
 import { getFilteredRecipes } from '@/utils/recipeUtils';
 import RecipeCard from '@/components/card/RecipeCard';
 import Recipe from '@/models/recipe';
-import {  useEffect, useState ,} from 'react';
+import {  Suspense, useEffect, useState ,} from 'react';
 
-export default function SearchResults() {
+function SearchResultsContent() {
     const [query, setQuery] = useState<string>('');
     const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
     
@@ -50,3 +50,10 @@ export default function SearchResults() {
     );
 }
 
+export default function SearchResults() {
+    return (
+        <Suspense fallback={<div className="container mx-auto px-6 mt-10">Loading ....</div>}>
+            <SearchResultsContent />
+        </Suspense>
+    );
+}
