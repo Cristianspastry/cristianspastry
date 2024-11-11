@@ -7,7 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import { getFilteredRecipes } from '@/utils/recipeUtils';
 import RecipeCard from '@/components/card/RecipeCard';
 import Recipe from '@/models/recipe';
-import {  useEffect, useState } from 'react';
+import {  useEffect, useState ,} from 'react';
 
 export default function SearchResults() {
     const [query, setQuery] = useState<string>('');
@@ -29,7 +29,8 @@ export default function SearchResults() {
     }
 
     return (
-       
+        <>
+      
         <div className="container mx-auto px-6 mt-10">
             <h1 className="text-2xl font-bold mb-6">Risultati della ricerca per: &quot;{query}&quot;</h1>
             
@@ -45,6 +46,7 @@ export default function SearchResults() {
             )}
         </div>
      
+        </>                             
     );
 }
 
