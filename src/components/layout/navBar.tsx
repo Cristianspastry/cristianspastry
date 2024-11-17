@@ -39,6 +39,10 @@ export default function Navbar() {
         };
     }, [isOpen]);
 
+    const handleSearchComplete = () => {
+       setIsOpen(false); // Close the menu
+    };
+
     // Gestisce il click fuori dal menu
 /*const handleClickOutside = useCallback((event: React.MouseEvent) => {
         const menu = document.getElementById('mobile-menu');
@@ -70,7 +74,7 @@ export default function Navbar() {
                 </h1>
 
                 <div className="hidden md:flex justify-center items-center w-full max-w-md mx-4">
-                    <SearchBar ricette={allRecipes} />
+                    <SearchBar ricette={allRecipes} onSearchComplete={handleSearchComplete}/>
                 </div>
 
                 {/* Desktop Navigation */}
@@ -141,7 +145,7 @@ export default function Navbar() {
 
                         <div className="flex-1 overflow-y-auto pt-8">
                             <div className="px-6 pb-8">
-                                <SearchBar ricette={allRecipes} />
+                                <SearchBar ricette={allRecipes} onSearchComplete={handleSearchComplete} />
                             </div>
 
                             <div className="w-full border-t border-gray-200 mb-8" />

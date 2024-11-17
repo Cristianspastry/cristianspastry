@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-    images: {
+  reactStrictMode: true,
+  images: {
+        domains: ['media.istockphoto.com'],
         localPatterns: [
           {
             pathname: '/assets/img/**',

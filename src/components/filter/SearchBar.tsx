@@ -8,9 +8,11 @@ import Recipe from '@/models/recipe';
 
 type SearchBarProps = {
     ricette: Recipe[];
+    onSearchComplete: () => void;  // New prop to close the menu
+
 };
 
-export default function SearchBar({ ricette }: SearchBarProps) {
+export default function SearchBar({ ricette,onSearchComplete  }: SearchBarProps) {
     const [query, setQuery] = useState('');
     const [suggestions, setSuggestions] = useState<Recipe[]>([]);
     const router = useRouter();
@@ -34,18 +36,26 @@ export default function SearchBar({ ricette }: SearchBarProps) {
         if (!query) {
             return;
         }
-        
+
         // Reindirizza alla pagina di ricerca e nascondi i suggerimenti
         router.push(`/search?query=${encodeURIComponent(query)}`);
-        
+
         setSuggestions([]); // Nascondi i suggerimenti
 
         // Resetta la barra di ricerca
         setQuery('');
+
+        // Close the menu
+        onSearchComplete();
+
     };
+
+
 
     return (
         <div className="relative">
+            
+            {/* Barra di ricerca */}
             <Form action={handleSubmit} className="flex items-center bg-white rounded-full shadow-md hover:shadow-lg transition duration-200 focus-within:border-blue-500 w-full max-w-md mx-auto">
                 <input
                     type="text"
@@ -69,10 +79,11 @@ export default function SearchBar({ ricette }: SearchBarProps) {
                 </button>
             </Form>
 
+            {/* Suggerimenti */}
             {suggestions.length > 0 && (
                 <div className="absolute z-10 bg-white shadow-lg rounded-md mt-1 w-full text-bluModerato border border-gray-200">
                     {suggestions.map((recipe) => (
-                        <Link href={`/recipe/${recipe.slug}`} key={recipe.id}>
+                        <Link href={`/recipe/${recipe.slug}`} key={recipe.id} onClick={onSearchComplete}>
                             <div className="p-2 hover:bg-gray-100 cursor-pointer border-b border-gray-200 last:border-none">
                                 {recipe.title}
                             </div>
@@ -80,6 +91,7 @@ export default function SearchBar({ ricette }: SearchBarProps) {
                     ))}
                 </div>
             )}
+
         </div>
     );
 }
