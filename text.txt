@@ -93,3 +93,86 @@
         </a>
       </footer>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+aggiustare prep time sulla card !!! ù
+
+
+
+
+
+
+ const [isOpen, setIsOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+    const [recipes,setRecipes] = useState<Recipe[]>([]);
+    
+    useEffect(() => {
+        const fetchRecipes = async () => {
+            const recipeRepository = new FirestoreRecipeRepository();
+            const getAllRecipesUseCase = new GetAllRecipesUseCase(recipeRepository);
+
+            const allRecipes = await getAllRecipesUseCase.execute();
+            setRecipes(allRecipes || []);
+        };
+
+        fetchRecipes();
+    }, []);
+
+    // Gestisce lo scroll della navbar
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 20);
+        };
+        
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    // Gestisce la chiusura del menu con ESC
+    useEffect(() => {
+        const handleEscape = (e: { key: string; }) => {
+            if (e.key === 'Escape') setIsOpen(false);
+        };
+
+        if (isOpen) {
+            window.addEventListener('keydown', handleEscape);
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+
+        return () => {
+            window.removeEventListener('keydown', handleEscape);
+            document.body.style.overflow = 'unset';
+        };
+    }, [isOpen]);
+
+    const handleSearchComplete = () => {
+       setIsOpen(false); // Close the menu
+    };

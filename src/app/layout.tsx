@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-
-
+import localFont from "next/font/local";
+import { cn } from "@/infrastructure/utils/utils";
 
 export const metadata: Metadata = {
   title: {
@@ -62,6 +62,18 @@ export const metadata: Metadata = {
   },
 }
 
+const GeistSans = localFont({
+  src: "./fonts/GeistVF.woff",
+  variable: "--font-geist-sans",
+  weight: "100 900",
+});
+const GeistMono = localFont({
+  src: "./fonts/GeistMonoVF.woff",
+  variable: "--font-geist-mono",
+  weight: "100 900",
+});
+
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -69,11 +81,17 @@ export default function RootLayout({
 }>) {
   return (
     <>
-    <html lang="it">
-      <body
-        className={``}>
-       {children}
-        
+     <html lang="it" className={cn(GeistSans.variable, GeistMono.variable)}>
+      <body className={cn(
+        "min-h-screen bg-background font-sans antialiased",
+        GeistSans.variable,
+        GeistMono.variable
+      )}>
+
+
+        {children}
+
+    
       </body>
     </html>
     </>

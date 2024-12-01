@@ -1,26 +1,22 @@
 import React from "react";
-import HeroSection from "@/components/sections/HeroSection";
-import RecipeSection from "@/components/sections/RecipeSection";
-import Recipe from "@/models/recipe";
-import { getAllRecipesbyJson } from "@/utils/recipeUtils";
+import HeroSection from "@/presentation/components/(BLOG)/sections/HeroSection";
+import RecipeSection from "@/presentation/components/(BLOG)/sections/RecipeSection";
+import { FirestoreRecipeRepository } from "@/data/repositories/FirestoreRecipeRepository";
+import { GetAllRecipesUseCase } from "@/core/usecases/GetAllRecipesUseCase";
 
 export default async function Home() {
 
-    const recipes = await getAllRecipesbyJson();
-    console.log(recipes);
 
-    const popularRecipes = recipes.filter((recipe: Recipe) => recipe.isPopular).slice(0, 4);
-    const recentRecipes = recipes.sort((a:Recipe,b:Recipe) => 
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    ).slice(0, 4);
-    const specialRecipes = recipes.filter((recipe: Recipe) => recipe.isSpecial).slice(0, 4);
+     // Recupera le ricette tramite il caso d’uso
+    const recipeRepository = new FirestoreRecipeRepository();
+    const getAllRecipesUseCase = new GetAllRecipesUseCase(recipeRepository);
 
-    /*const popularRecipes = JSON.parse(JSON.stringify(recipeJson)).filter((recipe: Recipe) => recipe.isPopular).slice(0, 4);
-    const recentRecipes = JSON.parse(JSON.stringify(recipeJson)).sort(({a, b}: {a: Recipe, b: Recipe}) => 
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    ).slice(0, 4);
-    const specialRecipes = JSON.parse(JSON.stringify(recipeJson)).filter((recipe: Recipe) => recipe.isSpecial).slice(0, 4);
-*/
+    const recipes = await getAllRecipesUseCase.execute();
+
+    // Filtro per sezioni (ad esempio, popolari e recenti)
+    const popularRecipes = recipes.filter((recipe) => recipe.isPopular);
+    const recentRecipes = recipes.slice(0, 5); // Prendi le prime 5 ricette recenti
+
     return (
         <main className="flex flex-col min-h-screen">
            
@@ -29,20 +25,21 @@ export default async function Home() {
 
             {/* Content Sections */}
             <div className="container mx-auto px-6 py-16 space-y-16">
-                <RecipeSection
+              
+                {/* Recipe Section */}
+                <RecipeSection 
                     sectionTitle="Ricette Popolari"
+                    recipes={recipes}
+                />
+                <RecipeSection 
+                    sectionTitle=" Ricette Recenti"
                     recipes={popularRecipes}
                 />
-                
-                <RecipeSection
-                    sectionTitle="Ultime Ricette"
-                    recipes={recentRecipes}
+                <RecipeSection 
+                    sectionTitle=" Ricette Speciali"
+                    recipes={recentRecipes.slice(0, 4)}
                 />
-                
-                <RecipeSection
-                    sectionTitle="Ricette per Occasioni Speciali"
-                    recipes={specialRecipes}
-                />
+
             </div>
         </main>
     );

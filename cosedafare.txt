@@ -1,5 +1,5 @@
 
-
+concurrently \"next dev --turbopack\" \"start chrome --guest http://localhost:3000\"
 Intendo che potremmo aggiungere alcune funzionalità extra per rendere la ricerca più intuitiva e ricca di opzioni per gli utenti. Ecco qualche idea:
 
 [x]Suggerimenti di ricerca: Mostrare un elenco di suggerimenti mentre l’utente digita nella search bar. Ad esempio, se un utente inizia a scrivere "cioccolato", potrebbe vedere suggerimenti come "Torta al cioccolato", "Biscotti al cioccolato", ecc. Questo si può fare utilizzando una lista di ricette filtrata in tempo reale mentre l'utente digita.

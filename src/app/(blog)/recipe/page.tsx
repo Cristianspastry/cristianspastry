@@ -2,7 +2,7 @@
 
 "use client";
 
-import RecipeCard from '@/components/card/RecipeCard';
+import RecipeCard from '@/presentation/components/(BLOG)/card/RecipeCard';
 import { useState, useEffect } from 'react'
  // Assumo che questo sia il tuo componente Card personalizzato
 
@@ -95,7 +95,7 @@ export default function RecipePage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredRecipes.map(recipe => (
-          <RecipeCard slug={''} description={''} prepTime={''} ingredients={[]} steps={[]} isSpecial={false} createdAt={''} isPopular={false} key={recipe.id} {...recipe} />
+          <RecipeCard  {...recipe} isPopular={false} key={recipe.id}  />
         ))}
       </div>
       

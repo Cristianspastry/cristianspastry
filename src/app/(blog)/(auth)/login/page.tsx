@@ -1,5 +1,5 @@
 // app/login/page.tsx
-import LoginForm from '@/components/form/loginForm';
+import LoginForm from '@/presentation/components/(BLOG)/form/loginForm';
 
 export default function LoginPage() {
   return (

@@ -5,8 +5,8 @@
 import { useSearchParams } from 'next/navigation';
 
 import { getFilteredRecipes } from '@/utils/recipeUtils';
-import RecipeCard from '@/components/card/RecipeCard';
-import Recipe from '@/models/recipe';
+import RecipeCard from '@/presentation/components/(BLOG)/card/RecipeCard';
+import Recipe from '@/core/entities/Recipe';
 import {  Suspense, useEffect, useState ,} from 'react';
 
 function SearchResultsContent() {
