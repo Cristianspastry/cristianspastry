@@ -537,6 +537,7 @@ export const SCIENCE_LIST_QUERY = groq`*[_type == "scienza" && !seo.noIndex] | o
   title,
   slug,
   excerpt,
+  "imageUrl": mainImage.asset->url,
   "mainImageUrl": mainImage.asset->url,
   "mainImageAlt": mainImage.alt,
   articleType,

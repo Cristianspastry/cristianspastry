@@ -3,13 +3,37 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { Menu, X, Instagram, Facebook, Youtube, Mail, Twitter, Search } from 'lucide-react'
+import { Menu, X, Instagram, Facebook, Youtube, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
 import { siteConfig } from '@/lib/config'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import SearchModal from '@/components/search/SearchModal'
+
+// Custom TikTok icon component
+const TikTokIcon = ({ className }: { className?: string }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+  </svg>
+)
+
+// Custom X (Twitter) icon component
+const XIcon = ({ className }: { className?: string }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+  </svg>
+)
 
 const socialLinks = [
   {
@@ -31,16 +55,16 @@ const socialLinks = [
     label: siteConfig.social.youtube.label
   },
   {
-    key: 'x',
-    icon: Twitter,
-    url: siteConfig.social.x.url,
-    label: siteConfig.social.x.label
+    key: 'tiktok',
+    icon: TikTokIcon,
+    url: siteConfig.social.tiktok?.url || '#',
+    label: siteConfig.social.tiktok?.label || 'TikTok'
   },
   {
-    key: 'email',
-    icon: Mail,
-    url: `mailto:${siteConfig.contact.email}`,
-    label: 'Email'
+    key: 'x',
+    icon: XIcon,
+    url: siteConfig.social.x.url,
+    label: siteConfig.social.x.label
   }
 ]
 
@@ -63,7 +87,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white shadow-sm">
-      <nav className="container mx-auto flex h-16 items-center justify-between px-4">
+      <nav className="container mx-auto flex  h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2">
           <Image
             src="/logo.svg"
@@ -106,10 +130,11 @@ export function Header() {
         {/* Mobile Navigation */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild className="md:hidden">
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               size="icon"
-              className="relative h-10 w-10 hover:bg-primary-50"
+              className="relative h-10 w-10 hover:bg-primary-50 transition-all"
+              aria-label={isOpen ? "Chiudi menu" : "Apri menu"}
             >
               <AnimatePresence mode="wait">
                 {!isOpen ? (
@@ -130,20 +155,32 @@ export function Header() {
                     exit={{ rotate: -180, opacity: 0, scale: 0.8 }}
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                   >
-                    <X className="h-6 w-6 text-primary-900" strokeWidth={2.5} />
+                    <X className="h-6 w-6 text-primary-900" strokeWidth={3} />
                   </motion.div>
                 )}
               </AnimatePresence>
             </Button>
           </SheetTrigger>
-          <SheetContent 
-            side="right" 
-            className="w-[320px] bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 text-white border-none"
+          <SheetContent
+            side="right"
+            className="w-[320px] bg-gradient-to-br from-primary-900 via-primary-800 to-primary-900 text-white border-none flex flex-col overflow-y-auto"
           >
             <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
-           
-            {/* Menu items con animazioni - spostati più in basso con padding top */}
-            <nav className="flex flex-col gap-2 pt-16">
+
+            {/* Close button inside menu */}
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.3 }}
+              onClick={() => setIsOpen(false)}
+              className="absolute top-4 right-4 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm transition-all hover:bg-white/20 hover:rotate-90 active:scale-95"
+              aria-label="Chiudi menu"
+            >
+              <X className="h-5 w-5 text-white" strokeWidth={3} />
+            </motion.button>
+
+            {/* Menu items con animazioni - scrollabile */}
+            <nav className="flex flex-col gap-2 pt-16 flex-1 min-h-0 overflow-y-auto pb-4">
               {siteConfig.navigation.map((item, index) => {
                 const Icon = item.icon
                 return (
@@ -200,49 +237,42 @@ export function Header() {
               </motion.div>
             </nav>
 
-            {/* Footer con social */}
+            {/* Footer con social - sempre visibile in fondo */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.4 }}
-              className="absolute bottom-6 left-6 right-6"
+              className="mt-auto pt-8 pb-8 px-6 flex-shrink-0 border-t border-white/10"
             >
-              <div className="space-y-4">
-                {/* Social icons */}
-                <div className="flex justify-center gap-4">
-                {socialLinks.map((social) => {
-                const IconComponent = social.icon
-                const isExternal = social.key !== 'email'
+              {/* Social icons */}
+              <div className="flex justify-center items-center gap-3">
+                {socialLinks.map((social, index) => {
+                  const IconComponent = social.icon
+                  const isExternal = social.key !== 'email'
 
-                return (
-                  <a
-                    key={social.key}
-                    href={social.url}
-                    {...(isExternal && {
-                      target: "_blank",
-                      rel: "noopener noreferrer"
-                    })}
-                    className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm transition-all hover:bg-white/20 hover:scale-110 active:scale-95"
-                    title={social.label}
-                  >
-                    <IconComponent className="h-5 w-5 text-white" strokeWidth={2} />
-                  </a>
-                )
-              })}
-                 
-                </div>
-
-                {/* Tagline */}
-                <div className="rounded-xl bg-white/10 backdrop-blur-sm p-4 text-center border border-white/20">
-                  <p className="text-sm font-medium text-primary-50">
-                    ✨ {siteConfig.name}✨
-                  </p>
-                  <div className="mt-3 flex justify-center gap-2">
-                    <div className="h-1.5 w-10 rounded-full bg-primary-200/50" />
-                    <div className="h-1.5 w-10 rounded-full bg-primary-300/60" />
-                    <div className="h-1.5 w-10 rounded-full bg-primary-400/70" />
-                  </div>
-                </div>
+                  return (
+                    <motion.a
+                      key={social.key}
+                      href={social.url}
+                      {...(isExternal && {
+                        target: "_blank",
+                        rel: "noopener noreferrer"
+                      })}
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{
+                        delay: 0.7 + (index * 0.05),
+                        duration: 0.3,
+                        ease: "easeOut"
+                      }}
+                      className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm transition-all hover:bg-white/20 hover:scale-110 active:scale-95 shadow-lg"
+                      title={social.label}
+                      aria-label={social.label}
+                    >
+                      <IconComponent className="h-5 w-5 text-white" strokeWidth={2.5} />
+                    </motion.a>
+                  )
+                })}
               </div>
             </motion.div>
           </SheetContent>
