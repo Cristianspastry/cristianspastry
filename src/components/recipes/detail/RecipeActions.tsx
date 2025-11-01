@@ -59,6 +59,9 @@ export function RecipeActions({ recipe }: RecipeActionsProps) {
         <Share2 className="h-4 w-4" />
         Condividi
       </Button>
+      {/*
+      TODO: Implementare la logica di salvataggio della ricetta
+      in localStorage O DATABASE CON NEXT AUTH;
       <Button
         onClick={handleSave}
         variant="outline"
@@ -66,7 +69,7 @@ export function RecipeActions({ recipe }: RecipeActionsProps) {
       >
         <Bookmark className="h-4 w-4" />
         Salva
-      </Button>
+      </Button>*/}
     </div>
   )
 }

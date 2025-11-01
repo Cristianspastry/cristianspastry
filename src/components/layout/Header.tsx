@@ -10,6 +10,7 @@ import { siteConfig } from '@/lib/config'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import SearchModal from '@/components/search/SearchModal'
+import { usePathname } from 'next/navigation'
 
 // Custom TikTok icon component
 const TikTokIcon = ({ className }: { className?: string }) => (
@@ -71,7 +72,7 @@ const socialLinks = [
 export function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
-
+  const pathname = usePathname()
   // Keyboard shortcut Ctrl+K / Cmd+K
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -105,15 +106,37 @@ export function Header() {
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-6 md:flex">
-          {siteConfig.navigation.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="text-base font-medium text-gray-700 transition-colors hover:text-primary-600"
-            >
-              {item.name}
-            </Link>
-          ))}
+          {siteConfig.navigation.map((item) => {
+            // Check if current page matches this nav item
+            const isActive = item.href === '/'
+              ? pathname === '/'
+              : pathname.startsWith(item.href)
+
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                className={`relative text-black text-base font-medium transition-colors hover:text-primary-600 py-2 px-1 ${isActive ? 'text-primary-600 font-semibold' : 'text-gray-700'}`}
+              >
+                <span className={`transition-colors ${isActive ? 'text-primary-600 font-semibold' : 'text-gray-700'}`}>
+                  {item.name}
+                </span>
+                {/* Animated underline */}
+                {isActive && (
+                  <motion.div
+                    layoutId="activeNav"
+                    className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-primary-500 to-primary-600 rounded-full"
+                    initial={false}
+                    transition={{
+                      type: "spring",
+                      stiffness: 380,
+                      damping: 30
+                    }}
+                  />
+                )}
+              </Link>
+            )
+          })}
 
           {/* Search Button */}
           <Button
