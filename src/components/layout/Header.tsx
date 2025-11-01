@@ -9,8 +9,13 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/s
 import { siteConfig } from '@/lib/config'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import SearchModal from '@/components/search/SearchModal'
+import dynamic from 'next/dynamic'
 import { usePathname } from 'next/navigation'
+
+// Lazy load SearchModal - solo quando necessario
+const SearchModal = dynamic(() => import('@/components/search/SearchModal'), {
+  ssr: false,
+})
 
 // Custom TikTok icon component
 const TikTokIcon = ({ className }: { className?: string }) => (

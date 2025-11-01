@@ -14,17 +14,27 @@ export default function proxy(request: NextRequest) {
   // Headers per sicurezza e performance
   const response = NextResponse.next()
 
-  // DNS Prefetch per domini esterni
-  response.headers.set(
-    'Link',
-    '<https://cdn.sanity.io>; rel=dns-prefetch, <https://m.media-amazon.com>; rel=dns-prefetch'
-  )
+  // Preconnect solo per pagine che usano effettivamente immagini Sanity
+  const needsSanityImages =
+    pathname === '/' ||
+    pathname.startsWith('/ricette/') || // Dettaglio ricetta (non lista)
+    pathname.startsWith('/scienza/') ||
+    pathname.startsWith('/tecniche/') ||
+    pathname === '/chi-sono'
 
-  // Preconnect per risorse critiche
-  response.headers.append(
-    'Link',
-    '<https://cdn.sanity.io>; rel=preconnect; crossorigin'
-  )
+  if (needsSanityImages) {
+    // DNS Prefetch per domini esterni
+    response.headers.set(
+      'Link',
+      '<https://cdn.sanity.io>; rel=dns-prefetch, <https://m.media-amazon.com>; rel=dns-prefetch'
+    )
+
+    // Preconnect per risorse critiche
+    response.headers.append(
+      'Link',
+      '<https://cdn.sanity.io>; rel=preconnect; crossorigin'
+    )
+  }
 
   // Cache-Control dinamico basato sulla route
   if (pathname.startsWith('/ricette') || pathname.startsWith('/tecniche') || pathname.startsWith('/scienza')) {
