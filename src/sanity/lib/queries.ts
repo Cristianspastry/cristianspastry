@@ -4,6 +4,52 @@ import { groq } from "next-sanity"
 // RICETTE
 // ============================================
 
+/**
+ * Costruisce la query GROQ per ottenere ricette con filtri dinamici
+ */
+export function buildRecipesQuery(
+  filterString: string,
+  offset: number,
+  limit: number
+): string {
+  return `{
+    "recipes": *[_type == "ricetta" ${filterString}] | order(publishedAt desc) [${offset}...${offset + limit}] {
+      _id,
+      title,
+      slug,
+      excerpt,
+      "mainImageUrl": mainImage.asset->url,
+      "mainImageAlt": mainImage.alt,
+      categories[]->{
+        _id,
+        title,
+        slug,
+        color,
+        emoji
+      },
+      difficulty,
+      prepTime,
+      cookTime,
+      servings,
+      tags,
+      publishedAt,
+      author->{
+        _id,
+        name,
+        slug,
+        "imageUrl": image.asset->url
+      }
+    },
+    "total": count(*[_type == "ricetta" ${filterString}]),
+    "stats": {
+      "totalRecipes": count(*[_type == "ricetta" && !seo.noIndex]),
+      "avgDifficulty": null,
+      "avgTime": null,
+      "categories": count(*[_type == "category" && references(*[_type == "ricetta"]._id)])
+    }
+  }`
+}
+
 // Query per singola ricetta con tutti i dati SEO
 export const RECIPE_QUERY = groq`*[_type == "ricetta" && slug.current == $slug][0]{
   _id,
@@ -21,11 +67,13 @@ export const RECIPE_QUERY = groq`*[_type == "ricetta" && slug.current == $slug][
   cookTime,
   restTime,
   servings,
+  panSize,
   categories[]->{
     _id,
     title,
     slug,
-    color
+    color,
+    emoji,
   },
   tags,
   ingredients,
@@ -220,6 +268,32 @@ export const RECIPES_BY_CATEGORY_QUERY = groq`*[_type == "ricetta" && references
   publishedAt
 }`
 
+// Query per ricette correlate con fallback (stessa categoria o tutte le ricette)
+export const RELATED_RECIPES_FALLBACK_QUERY = groq`*[_type == "ricetta" && _id != $currentRecipeId && !seo.noIndex] | order(publishedAt desc) [0...6]{
+  _id,
+  title,
+  slug,
+  excerpt,
+  "imageUrl": mainImage.asset->url,
+  "imageAlt": mainImage.alt,
+  difficulty,
+  prepTime,
+  publishedAt
+}`
+
+// Query per ricette della stessa categoria
+export const RECIPES_SAME_CATEGORY_QUERY = groq`*[_type == "ricetta" && _id != $currentRecipeId && !seo.noIndex && references(*[_type=="category" && _id in $categoryIds]._id)] | order(publishedAt desc) [0...6]{
+  _id,
+  title,
+  slug,
+  excerpt,
+  "imageUrl": mainImage.asset->url,
+  "imageAlt": mainImage.alt,
+  difficulty,
+  prepTime,
+  publishedAt
+}`
+
 // Query per sitemap ricette
 export const RECIPES_SITEMAP_QUERY = groq`*[_type == "ricetta" && !seo.noIndex]{
   "slug": slug.current,
@@ -308,7 +382,7 @@ export const TECHNIQUE_QUERY = groq`*[_type == "tecnica" && slug.current == $slu
   }
 }`
 
-// Query per lista tecniche
+// Query per lista tecniche (con paginazione server-side)
 export const TECHNIQUES_LIST_QUERY = groq`*[_type == "tecnica" && !seo.noIndex] | order(publishedAt desc) [$start...$end]{
   _id,
   title,
@@ -320,6 +394,27 @@ export const TECHNIQUES_LIST_QUERY = groq`*[_type == "tecnica" && !seo.noIndex] 
   executionTime,
   category,
   tags,
+  publishedAt,
+  author->{
+    name,
+    slug
+  }
+}`
+
+// Query per tutte le tecniche (senza paginazione)
+export const ALL_TECHNIQUES_QUERY = groq`*[_type == "tecnica" && !seo.noIndex] | order(publishedAt desc){
+  _id,
+  title,
+  slug,
+  excerpt,
+  "mainImageUrl": mainImage.asset->url,
+  "mainImageAlt": mainImage.alt,
+  difficulty,
+  executionTime,
+  category,
+  tags,
+  equipment,
+  steps,
   publishedAt,
   author->{
     name,
@@ -438,6 +533,27 @@ export const SCIENCE_QUERY = groq`*[_type == "scienza" && slug.current == $slug]
 
 // Query per lista articoli scientifici
 export const SCIENCE_LIST_QUERY = groq`*[_type == "scienza" && !seo.noIndex] | order(publishedAt desc) [$start...$end]{
+  _id,
+  title,
+  slug,
+  excerpt,
+  "mainImageUrl": mainImage.asset->url,
+  "mainImageAlt": mainImage.alt,
+  articleType,
+  complexity,
+  readingTime,
+  tags,
+  publishedAt,
+  featured,
+  author->{
+    name,
+    slug,
+    "imageUrl": image.asset->url
+  }
+}`
+
+// Query per tutti gli articoli scientifici (senza paginazione)
+export const ALL_SCIENCE_QUERY = groq`*[_type == "scienza" && !seo.noIndex] | order(publishedAt desc){
   _id,
   title,
   slug,
@@ -774,3 +890,55 @@ export interface LatestPost {
   publishedAt: string
 }
 */
+
+// ============================================
+// PRODOTTI AFFILIATI
+// ============================================
+
+// Query per tutti i prodotti
+export const ALL_PRODUCTS_QUERY = groq`*[_type == "product"] | order(order asc, publishedAt desc) {
+  _id,
+  title,
+  slug,
+  category,
+  description,
+  "imageUrl": image.asset->url,
+  "imageAlt": image.alt,
+  amazonUrl,
+  price,
+  featured,
+  order,
+  ctaText,
+  publishedAt
+}`
+
+// Query per prodotti per categoria
+export const PRODUCTS_BY_CATEGORY_QUERY = groq`*[_type == "product" && category == $category] | order(order asc, publishedAt desc) {
+  _id,
+  title,
+  slug,
+  category,
+  description,
+  "imageUrl": image.asset->url,
+  "imageAlt": image.alt,
+  amazonUrl,
+  price,
+  featured,
+  order,
+  ctaText,
+  publishedAt
+}`
+
+// Query per prodotti in evidenza
+export const FEATURED_PRODUCTS_QUERY = groq`*[_type == "product" && featured == true] | order(order asc) [0...4] {
+  _id,
+  title,
+  slug,
+  category,
+  description,
+  "imageUrl": image.asset->url,
+  "imageAlt": image.alt,
+  amazonUrl,
+  price,
+  ctaText
+}`

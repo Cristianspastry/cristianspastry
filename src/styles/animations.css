@@ -1,0 +1,214 @@
+/* Smooth transitions for all interactive elements */
+@layer utilities {
+  /* Smooth hover transitions */
+  .smooth-hover {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .smooth-hover-fast {
+    @apply transition-all duration-200 ease-out;
+  }
+
+  .smooth-hover-slow {
+    @apply transition-all duration-500 ease-out;
+  }
+
+  /* Scale on hover */
+  .hover-scale {
+    @apply transition-transform duration-300 ease-out hover:scale-105;
+  }
+
+  .hover-scale-sm {
+    @apply transition-transform duration-300 ease-out hover:scale-102;
+  }
+
+  .hover-scale-lg {
+    @apply transition-transform duration-300 ease-out hover:scale-110;
+  }
+
+  /* Lift effect */
+  .hover-lift {
+    @apply transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg;
+  }
+
+  .hover-lift-lg {
+    @apply transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-xl;
+  }
+
+  /* Glow effect */
+  .hover-glow {
+    @apply transition-all duration-300 ease-out hover:shadow-lg hover:shadow-primary-500/20;
+  }
+
+  /* Loading shimmer animation */
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+
+  .loading-shimmer {
+    animation: shimmer 2s infinite linear;
+    background: linear-gradient(
+      to right,
+      #f3f4f6 0%,
+      #e5e7eb 20%,
+      #f3f4f6 40%,
+      #f3f4f6 100%
+    );
+    background-size: 1000px 100%;
+  }
+
+  /* Pulse animation */
+  @keyframes soft-pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+
+  .soft-pulse {
+    animation: soft-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Fade in animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-in {
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  .fade-in-slow {
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  /* Slide in animations */
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .slide-in-up {
+    animation: slideInUp 0.5s ease-out;
+  }
+
+  .slide-in-right {
+    animation: slideInRight 0.5s ease-out;
+  }
+
+  .slide-in-left {
+    animation: slideInLeft 0.5s ease-out;
+  }
+
+  /* Smooth scrolling */
+  .smooth-scroll {
+    scroll-behavior: smooth;
+  }
+
+  /* Mobile touch feedback */
+  @media (hover: none) and (pointer: coarse) {
+    .touch-feedback {
+      @apply active:scale-95 active:opacity-80 transition-all duration-150;
+    }
+  }
+
+  /* Focus visible styles */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 rounded-lg;
+  }
+
+  /* Skeleton loading */
+  .skeleton {
+    @apply relative overflow-hidden bg-gray-200 rounded;
+  }
+
+  .skeleton::after {
+    content: '';
+    @apply absolute inset-0;
+    animation: shimmer 2s infinite;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.6) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+  }
+
+  /* Responsive utilities */
+  @media (max-width: 640px) {
+    .mobile-full-width {
+      @apply w-full;
+    }
+
+    .mobile-center {
+      @apply text-center;
+    }
+
+    .mobile-stack {
+      @apply flex-col;
+    }
+  }
+}
+
+/* Improved mobile touch targets */
+@media (hover: none) and (pointer: coarse) {
+  button,
+  a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

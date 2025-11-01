@@ -1,8 +1,6 @@
-'use client'
 
-import { motion } from 'framer-motion'
 import type { Recipe } from '@/sanity/lib/types'
-import RecipeCard from '../recipes/RecipeCard'
+import RecipeCard from '../recipes/list/RecipeCard'
 
 interface FeaturedRecipesProps {
   recipes: Recipe[]

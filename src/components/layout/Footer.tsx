@@ -2,8 +2,25 @@ import Link from 'next/link'
 import { Instagram, Facebook, Youtube, Mail, Twitter } from 'lucide-react'
 import { siteConfig } from '@/lib/config'
 import Script from 'next/script'
+import { getAllCategories } from '@/lib/data/categories'
+import { CurrentYear } from './CurrentYear'
+import { Suspense } from 'react'
 
-export function Footer() {
+// Custom TikTok icon component
+const Tiktok = ({ className }: { className?: string }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+  </svg>
+)
+
+export async function Footer() {
+  // Fetch categories dynamically
+  const categories = await getAllCategories()
   // Configurazione dinamica dei social media da mostrare
   const socialLinks = [
     {
@@ -25,6 +42,12 @@ export function Footer() {
       label: siteConfig.social.youtube.label
     },
     {
+      key: 'tiktok',
+      icon: Tiktok,
+      url: siteConfig.social.tiktok?.url || '#',
+      label: siteConfig.social.tiktok?.label || 'TikTok'
+    },
+    {
       key: 'x',
       icon: Twitter,
       url: siteConfig.social.x.url,
@@ -36,7 +59,8 @@ export function Footer() {
       url: `mailto:${siteConfig.contact.email}`,
       label: 'Email'
     }
-  ]
+  ];
+  
   return (
     <footer className="border-t bg-pastry-50">
       <div className="container mx-auto px-4 py-12">
@@ -70,31 +94,21 @@ export function Footer() {
           <div className="space-y-4">
             <h4 className="font-semibold text-pastry-900">Categorie</h4>
             <ul className="space-y-2 text-sm">
-
-              <li>
-                <Link
-                  href="/ricette?category=torte"
-                  className="text-gray-600 hover:text-pastry-600"
-                >
-                  Torte
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/ricette?category=biscotti"
-                  className="text-gray-600 hover:text-pastry-600"
-                >
-                  Biscotti
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/ricette?category=lievitati"
-                  className="text-gray-600 hover:text-pastry-600"
-                >
-                  Lievitati
-                </Link>
-              </li>
+              {categories.length > 0 ? (
+                categories.map((category) => (
+                  <li key={category._id}>
+                    <Link
+                      href={`/ricette?category=${category.slug.current}`}
+                      className="text-gray-600 hover:text-pastry-600"
+                    >
+                      {category.emoji && <span className="mr-1">{category.emoji}</span>}
+                      {category.title}
+                    </Link>
+                  </li>
+                ))
+              ) : (
+                <li className="text-gray-500">Nessuna categoria disponibile</li>
+              )}
             </ul>
           </div>
 
@@ -125,7 +139,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 border-t pt-8 text-center text-sm text-gray-600">
-          <p>© {new Date().getFullYear()} {siteConfig.name}. Tutti i diritti riservati.</p>
+          <p>© <Suspense fallback="2025"><CurrentYear /></Suspense> {siteConfig.name}. Tutti i diritti riservati.</p>
         </div>
       </div>
 

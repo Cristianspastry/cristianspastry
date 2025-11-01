@@ -2,13 +2,14 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
-import { Menu, X, Instagram, Facebook, Youtube, Mail, Twitter} from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Menu, X, Instagram, Facebook, Youtube, Mail, Twitter, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
 import { siteConfig } from '@/lib/config'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
+import SearchModal from '@/components/search/SearchModal'
 
 const socialLinks = [
   {
@@ -45,15 +46,29 @@ const socialLinks = [
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+
+  // Keyboard shortcut Ctrl+K / Cmd+K
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault()
+        setIsSearchOpen(true)
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [])
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white shadow-sm">
       <nav className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2">
-          <Image 
-            src="/logo.svg" 
-            alt="Logo" 
-            width={50} 
+          <Image
+            src="/logo.svg"
+            alt="Logo"
+            width={50}
             height={50}
             priority
             className="h-12 w-12"
@@ -75,6 +90,17 @@ export function Header() {
               {item.name}
             </Link>
           ))}
+
+          {/* Search Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsSearchOpen(true)}
+            className="h-10 w-10 hover:bg-gray-100"
+            aria-label="Cerca"
+          >
+            <Search className="h-5 w-5 text-gray-700" />
+          </Button>
         </div>
 
         {/* Mobile Navigation */}
@@ -125,8 +151,8 @@ export function Header() {
                     key={item.name}
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ 
-                      delay: index * 0.08, 
+                    transition={{
+                      delay: index * 0.08,
                       duration: 0.4,
                       ease: "easeOut"
                     }}
@@ -146,6 +172,32 @@ export function Header() {
                   </motion.div>
                 )
               })}
+
+              {/* Search Button in Mobile Menu */}
+              <motion.div
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                  delay: siteConfig.navigation.length * 0.08,
+                  duration: 0.4,
+                  ease: "easeOut"
+                }}
+              >
+                <button
+                  onClick={() => {
+                    setIsOpen(false)
+                    setIsSearchOpen(true)
+                  }}
+                  className="group flex w-full items-center gap-4 rounded-xl px-4 py-3.5 transition-all hover:bg-white/10 hover:pl-6 active:scale-95"
+                >
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 transition-all group-hover:bg-white/20 group-hover:scale-110">
+                    <Search className="h-5 w-5 text-primary-100" strokeWidth={2} />
+                  </div>
+                  <span className="text-lg font-semibold text-white">
+                    Cerca
+                  </span>
+                </button>
+              </motion.div>
             </nav>
 
             {/* Footer con social */}
@@ -196,6 +248,9 @@ export function Header() {
           </SheetContent>
         </Sheet>
       </nav>
+
+      {/* Search Modal */}
+      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </header>
   )
 }

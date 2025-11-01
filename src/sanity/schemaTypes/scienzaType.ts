@@ -288,8 +288,8 @@ export const scienzaType = defineType({
               title: 'sectionTitle',
               type: 'sectionType',
             },
-            prepare({ title, type }) {
-              const typeLabels = {
+            prepare({ title, type }: { title?: string; type?: string }) {
+              const typeLabels: Record<string, string> = {
                 text: '📝 Testo',
                 scientific: '🔬 Scientifico',
                 example: '💡 Esempio',
@@ -299,7 +299,7 @@ export const scienzaType = defineType({
               }
               return {
                 title,
-                subtitle: typeLabels[type] || type,
+                subtitle: type ? (typeLabels[type] || type) : '',
               }
             },
           },
@@ -708,8 +708,8 @@ export const scienzaType = defineType({
       articleType: 'articleType',
       complexity: 'complexity',
     },
-    prepare({ title, media, articleType, complexity }) {
-      const typeLabels = {
+    prepare({ title, media, articleType, complexity }: { title?: string; media?: any; articleType?: string; complexity?: string }) {
+      const typeLabels: Record<string, string> = {
         ingredienti: '🥚 Ingredienti',
         processi: '⚗️ Processi',
         reazioni: '🔥 Reazioni',
@@ -720,7 +720,7 @@ export const scienzaType = defineType({
       }
       return {
         title,
-        subtitle: `${typeLabels[articleType] || articleType} - ${complexity || ''}`,
+        subtitle: `${articleType ? (typeLabels[articleType] || articleType) : ''} - ${complexity || ''}`,
         media,
       }
     },

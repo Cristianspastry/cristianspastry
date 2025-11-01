@@ -5,10 +5,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Beaker, Clock, BookMarked, FlaskConical } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import type { Science } from '@/sanity/lib/types'
+import type { Science, SciencePreview } from '@/sanity/lib/types'
 
 interface ScienceCardProps {
-  science: Science
+  science: Science | SciencePreview
   index?: number
 }
 
@@ -39,6 +39,11 @@ const complexityLabels: Record<string, string> = {
 }
 
 export function ScienceCard({ science, index = 0 }: ScienceCardProps) {
+  // Handle both Science and SciencePreview types
+  const isFullScience = 'sections' in science
+  const imageUrl = isFullScience ? science.mainImageUrl : science.imageUrl
+  const imageAlt = isFullScience ? science.mainImageAlt : undefined
+  const fullScience = isFullScience ? science : null
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -50,10 +55,10 @@ export function ScienceCard({ science, index = 0 }: ScienceCardProps) {
         <article className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-300 hover:shadow-2xl border border-gray-100">
           {/* Immagine - aspect ratio più largo */}
           <div className="relative aspect-[4/3] overflow-hidden">
-            {science.mainImageUrl ? (
+            {imageUrl ? (
               <Image
-                src={science.mainImageUrl}
-                alt={science.mainImageAlt || science.title}
+                src={imageUrl}
+                alt={imageAlt || science.title}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -107,16 +112,16 @@ export function ScienceCard({ science, index = 0 }: ScienceCardProps) {
                   </span>
                 </div>
               )}
-              {science.sections && science.sections.length > 0 && (
+              {fullScience?.sections?.length && (
                 <div className="flex items-center gap-2">
                   <BookMarked className="h-4 w-4 text-purple-600" />
-                  <span className="font-semibold">{science.sections.length} sezioni</span>
+                  <span className="font-semibold">{fullScience.sections.length} sezioni</span>
                 </div>
               )}
-              {science.experiments && science.experiments.length > 0 && (
+              {fullScience?.experiments?.length && (
                 <div className="flex items-center gap-2">
                   <FlaskConical className="h-4 w-4 text-purple-600" />
-                  <span className="font-semibold">{science.experiments.length} esperimenti</span>
+                  <span className="font-semibold">{fullScience.experiments.length} esperimenti</span>
                 </div>
               )}
             </div>
@@ -129,9 +134,9 @@ export function ScienceCard({ science, index = 0 }: ScienceCardProps) {
             )}
 
             {/* Tags se presenti */}
-            {science.tags && science.tags.length > 0 && (
+            {fullScience?.tags?.length && (
               <div className="mb-4 flex flex-wrap gap-2">
-                {science.tags.slice(0, 3).map((tag, idx) => (
+                {fullScience.tags.slice(0, 3).map((tag, idx) => (
                   <Badge key={idx} variant="secondary" className="text-xs">
                     {tag}
                   </Badge>

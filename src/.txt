@@ -12,3 +12,55 @@ Dolci al cucchiaio
 Crostate & Pie
 Biscotti
 Masse montate
+
+22/10 -> migliorare la pagina dettaglio ricette , creare pagina ricette 
+
+
+[creare sezione per pagine , strumenti che ho usato nella 
+ricetta/scienza/tecnica con link a fine pagina]
+
+Opzioni per proseguire:
+1. Completare l'integrazione backend
+Implementare l'API endpoint /api/contact per il form contatti
+Integrare un servizio email (SendGrid, Nodemailer, Resend)
+Testare l'invio delle email dal form
+
+2. Popolare il CMS Sanity
+Creare l'autore con slug "cristian" in Sanity Studio
+Aggiungere ricette, tecniche e articoli scientifici
+Configurare immagini e contenuti
+
+3. Ottimizzazioni SEO e Performance
+-Configurare metadataBase per Open Graph images
+-Aggiungere meta tags specifici per social media
+-Ottimizzare le immagini con next/image
+-Implementare caching strategico
+
+4. Miglioramenti UI/UX
+-Aggiungere animazioni e transizioni
+-Implementare dark mode
+-Migliorare la responsive su mobile
+-Aggiungere loading states e skeleton loaders
+
+5. Funzionalità aggiuntive
+-Sistema di ricerca globale
+Filtri avanzati per ricette
+Sistema di valutazioni/commenti
+Newsletter signup
+Print recipe feature
+
+6. Testing e Deploy
+Configurare variabili d'ambiente per produzione
+Setup del deployment (Vercel, Netlify, ecc.)
+Testing delle funzionalità
+Configurare analytics
+
+
+Deploy Checklist:
+ NEXT_PUBLIC_SITE_URL configurato in produzione
+ Crea /public/og-image.jpg (1200x630px)
+ Crea /public/apple-touch-icon.png (180x180px)
+ Crea /public/android-chrome-192x192.png
+ Crea /public/android-chrome-512x512.png
+ Testa con Lighthouse
+ Valida meta tags con metatags.io

@@ -14,11 +14,11 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.3 }}
           >
             <h1 className="mb-6 text-4xl font-bold tracking-tight text-primary-50 md:text-6xl">
-            Ogni dolce ha un’anima. Io racconto la sua storia, un morso alla volta.
-              
+            Ogni dolce ha un'anima. Io racconto la sua storia, un morso alla volta.
+
             </h1>
             <p className="mb-8 text-lg text-primary-100 md:text-xl">
             Ricette sincere, passione artigianale e {" "}
@@ -29,7 +29,7 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
             className="flex flex-wrap justify-center gap-4"
           >
             <Button asChild size="lg" className="bg-white text-primary-900 hover:bg-primary-50">
@@ -38,7 +38,7 @@ export function Hero() {
                 Esplora Ricette
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-white text-primary-900 hover:bg-white/10">
+            <Button asChild size="lg"  className="bg-white text-primary-900 hover:bg-primary-50">
               <Link href="/tecniche">
                 <BookOpen className="mr-2 h-5 w-5" />
                 Impara le Tecniche
@@ -49,7 +49,7 @@ export function Hero() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
             className="mt-16 grid gap-8 md:grid-cols-3"
           >
             <div className="rounded-lg border border-primary-700 bg-primary-800/50 backdrop-blur p-6">

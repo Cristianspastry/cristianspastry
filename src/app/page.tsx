@@ -4,10 +4,10 @@ import { ContentSection } from "@/components/home/ContentSection"
 import { generateHomeMetadata } from "@/lib/seo"
 import type { Metadata } from "next"
 import { getHomePageData } from "@/lib/data/home"
+import PageTransition from "@/components/shared/PageTransition"
 
-
-
-export const revalidate = 3600 // Revalidate ogni ora
+// ❌ RIMOSSO: export const revalidate = 3600
+// ✅ Cache gestita tramite 'use cache' in getHomePageData()
 
 // ============================================
 // METADATA
@@ -25,7 +25,7 @@ export default async function HomePage() {
   const { featuredRecipes, latestTechniques, latestScience } = await getHomePageData()
 
   return (
-    <>
+    <PageTransition>
       {/* Hero Section */}
       <Hero />
 
@@ -53,6 +53,6 @@ export default async function HomePage() {
         backgroundColor="bg-gray-50"
         columns={3}
       />
-    </>
+    </PageTransition>
   )
 }

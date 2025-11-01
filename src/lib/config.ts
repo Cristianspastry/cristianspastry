@@ -1,4 +1,5 @@
-import {Home, BookOpen, Beaker, User, Mail, ChefHat } from 'lucide-react'
+import { CATEGORIES_QUERY } from '@/sanity/lib/queries';
+import {Home, BookOpen, Beaker, User, Mail, ChefHat, Package,Calculator } from 'lucide-react'
 import { env } from 'process';
 
 export const siteConfig = {
@@ -11,8 +12,9 @@ export const siteConfig = {
       { name: 'Ricette', href: '/ricette', icon: ChefHat },
       { name: 'Tecniche', href: '/tecniche', icon: BookOpen },
       { name: 'Scienza', href: '/scienza', icon: Beaker },
+      { name: 'Calcolatori', href: '/calcolatori', icon: Calculator },
+      { name: 'Strumenti', href: '/strumenti', icon: Package },
       { name: 'Chi Sono', href: '/chi-sono', icon: User },
-      { name: 'Contatti', href: '/contatti', icon: Mail },
     ],
     social: {
       instagram: {
@@ -31,10 +33,7 @@ export const siteConfig = {
         url: "https://x.com/cristianspastry",
         label: "X"
       },
-      whatsapp: {
-        url: "https://wa.me/39123456789",
-        label: "WhatsApp"
-      },
+      
       tiktok: {
         url: "https://tiktok.com/@cristianspastry",
         label: "TikTok"
@@ -61,5 +60,6 @@ export const siteConfig = {
       keywords: ["dolci", "pasticceria", "ricette", "torte", "biscotti", "artigianale"],
       author: "Cristian Sorrentino",
       siteUrl: env.NEXT_PUBLIC_SITE_URL
-    }
+    },
+    CATEGORIES_QUERY
   }; 

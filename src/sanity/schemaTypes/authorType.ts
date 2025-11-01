@@ -88,6 +88,11 @@ export const authorType = defineType({
           type: 'url',
         },
         {
+          name: 'X',
+          title: 'X',
+          type: 'url',
+        },
+        {
           name: 'website',
           title: 'Sito web',
           type: 'url',

@@ -16,9 +16,15 @@ const END = 6 // Mostra 6 items per sezione
 
 /**
  * Fetches featured recipes for the home page
+ *
+ * CACHE: Cache per 1 ora - homepage visitata frequentemente
+ *
  * @returns Promise<Recipe[]>
  */
 export async function getFeaturedRecipes(): Promise<Recipe[]> {
+  'use cache'
+  // cacheLife({ hours: 1 })
+
   try {
     return await client.fetch<Recipe[]>(RECIPES_LIST_QUERY, {
       start: START,
@@ -32,9 +38,15 @@ export async function getFeaturedRecipes(): Promise<Recipe[]> {
 
 /**
  * Fetches latest techniques for the home page
+ *
+ * CACHE: Cache per 1 ora
+ *
  * @returns Promise<Technique[]>
  */
 export async function getLatestTechniques(): Promise<Technique[]> {
+  'use cache'
+  // cacheLife({ hours: 1 })
+
   try {
     return await client.fetch<Technique[]>(TECHNIQUES_LIST_QUERY, {
       start: START,
@@ -48,9 +60,15 @@ export async function getLatestTechniques(): Promise<Technique[]> {
 
 /**
  * Fetches latest science articles for the home page
+ *
+ * CACHE: Cache per 1 ora
+ *
  * @returns Promise<Science[]>
  */
 export async function getLatestScience(): Promise<Science[]> {
+  'use cache'
+  // cacheLife({ hours: 1 })
+
   try {
     return await client.fetch<Science[]>(SCIENCE_LIST_QUERY, {
       start: START,
@@ -64,9 +82,14 @@ export async function getLatestScience(): Promise<Science[]> {
 
 /**
  * Fetches all home page data in parallel
+ *
+ * CACHE: Eredita la cache dalle singole funzioni chiamate
+ *
  * @returns Promise with all home page data
  */
 export async function getHomePageData() {
+  'use cache'
+  // cacheLife({ hours: 1 })
   const [featuredRecipes, latestTechniques, latestScience] = await Promise.all([
     getFeaturedRecipes(),
     getLatestTechniques(),

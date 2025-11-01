@@ -1,5 +1,5 @@
 import type { Technique } from "@/sanity/lib/types"
-import { TechniqueCard } from "./TechniqueCard"
+import { TechniqueCard } from "./list/TechniqueCard"
 
 interface TechniqueGridProps {
   techniques: Technique[]
