@@ -7,13 +7,25 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    AUTH_SECRET:
+    // Auth - opzionale se non usato
+    NEXT_AUTH_SECRET:
       process.env.NODE_ENV === "production"
-        ? z.string()
+        ? z.string().optional()
         : z.string().optional(),
-    AUTH_DISCORD_ID: z.string(),
-    AUTH_DISCORD_SECRET: z.string(),
-    DATABASE_URL: z.string().url(),
+    AUTH_DISCORD_ID: z.string().optional(),
+    AUTH_DISCORD_SECRET: z.string().optional(),
+
+    // Database - opzionale
+    DATABASE_URL: z.string().optional(),
+
+    // Sanity CMS
+    SANITY_API_WRITE_TOKEN: z.string().optional(),
+    SANITY_REVALIDATE_SECRET: z.string().optional(),
+
+    // Resend Email
+    RESEND_API_KEY: z.string().optional(),
+    CONTACT_EMAIL: z.string().email().optional(),
+
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -33,10 +45,14 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
-    AUTH_SECRET: process.env.AUTH_SECRET,
+    NEXT_AUTH_SECRET: process.env.NEXT_AUTH_SECRET,
     AUTH_DISCORD_ID: process.env.AUTH_DISCORD_ID,
     AUTH_DISCORD_SECRET: process.env.AUTH_DISCORD_SECRET,
     DATABASE_URL: process.env.DATABASE_URL,
+    SANITY_API_WRITE_TOKEN: process.env.SANITY_API_WRITE_TOKEN,
+    SANITY_REVALIDATE_SECRET: process.env.SANITY_REVALIDATE_SECRET,
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
+    CONTACT_EMAIL: process.env.CONTACT_EMAIL,
     NODE_ENV: process.env.NODE_ENV,
   },
   /**
