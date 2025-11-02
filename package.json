@@ -50,6 +50,7 @@
     "next": "16.0.1",
     "next-auth": "5.0.0-beta.25",
     "next-sanity": "^11.5.1",
+    "nuqs": "^2.7.2",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "resend": "^6.4.0",

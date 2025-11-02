@@ -1,7 +1,28 @@
-import { Suspense } from 'react'
+/**
+ * Tecniche Page - Server Component
+ *
+ * Pagina principale per la visualizzazione delle tecniche di pasticceria con filtri server-side.
+ *
+ * ARCHITETTURA:
+ * - Server Component → fetcha dati filtrati da Sanity (solo 12 tecniche/pagina)
+ * - URL params → filtri passati via searchParams
+ * - Client Component (TechniquesList) → gestisce UI e navigazione
+ *
+ * FLOW:
+ * 1. Next.js passa searchParams al Server Component
+ * 2. Parse params e costruisce filtri
+ * 3. Fetch dati da Sanity con getTechniques() (server-side filtering)
+ * 4. Passa dati al Client Component TechniquesList
+ * 5. User interagisce con filtri → router.push() → ciclo ricomincia
+ *
+ * PERFORMANCE:
+ * - Solo 12 tecniche fetchate per request (vs 1000+ client-side)
+ * - Server-side cache con 'use cache'
+ */
+
 import type { Metadata } from 'next'
 import TechniquesList from '@/components/technique/list/TechniquesList'
-import TechniquesLoading from '@/components/technique/list/TechniquesLoading'
+import { getTechniques } from '@/lib/data/techniques'
 
 export const metadata: Metadata = {
   title: 'Tecniche di Pasticceria | Cristian\'s Pastry',
@@ -34,7 +55,38 @@ export const metadata: Metadata = {
   },
 }
 
-export default function TechniquesPage() {
+/**
+ * Props ricevute dal Server Component
+ * searchParams è automaticamente passato da Next.js come Promise
+ */
+interface TechniquesPageProps {
+  searchParams: Promise<{
+    category?: string    // Categoria tecnica (impasti, cottura, decorazione, etc.)
+    difficulty?: string  // Difficoltà (base, intermedio, avanzato, professionale)
+    search?: string     // Query di ricerca testuale
+    page?: string       // Numero pagina corrente
+  }>
+}
+
+export default async function TechniquesPage({ searchParams }: TechniquesPageProps) {
+  // Await searchParams (Next.js 15+ requirement)
+  const params = await searchParams
+  const page = parseInt(params.page || '1')
+
+  // ============================================
+  // FETCH DATA (Server-side)
+  // ============================================
+  const { techniques, total } = await getTechniques({
+    category: params.category && params.category !== 'all' ? params.category : undefined,
+    difficulty: params.difficulty && params.difficulty !== 'all' ? params.difficulty : undefined,
+    search: params.search || undefined,
+    page,
+    limit: 12, // Solo 12 tecniche per pagina (server-side pagination)
+  })
+
+  // ============================================
+  // RENDER
+  // ============================================
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       {/* Hero Section */}
@@ -48,6 +100,7 @@ export default function TechniquesPage() {
             <p className="text-xl text-blue-100 md:text-2xl">
               Impara le tecniche fondamentali e avanzate della pasticceria professionale
             </p>
+            {/* Indicatori difficoltà */}
             <div className="mt-8 flex flex-wrap justify-center gap-4 text-sm text-blue-200">
               <div className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-green-400" />
@@ -70,12 +123,14 @@ export default function TechniquesPage() {
         </div>
       </section>
 
-      {/* Techniques List with Filters */}
+      {/* Techniques List (Client Component con filtri e grid) */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <Suspense fallback={<TechniquesLoading />}>
-            <TechniquesList />
-          </Suspense>
+          <TechniquesList
+            techniques={techniques}
+            total={total}
+            currentPage={page}
+          />
         </div>
       </section>
     </div>

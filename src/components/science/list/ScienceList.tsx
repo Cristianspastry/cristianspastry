@@ -1,188 +1,195 @@
+/**
+ * ScienceList Component
+ *
+ * Componente client per la visualizzazione e il filtraggio degli articoli scientifici sulla pasticceria.
+ * Utilizza URL-based state management per filtri persistenti e condivisibili.
+ *
+ * @component
+ * @architecture
+ * - Server Component (page.tsx) fetcha i dati filtrati da Sanity (solo 12 articoli)
+ * - Client Component (questo) gestisce l'UI e la navigazione
+ * - Filtri salvati in URL params → shareable, bookmarkable, SEO-friendly
+ * - Navigation via router.push() → no full page reload, smooth UX
+ *
+ * @flow
+ * 1. User clicca filtro → updateFilters() aggiorna URL params
+ * 2. router.push() triggera navigation (senza reload)
+ * 3. Next.js re-fetcha dati server-side con nuovi params
+ * 4. Componente re-renderizza con nuovi dati
+ */
+
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useMemo, useState, useCallback } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { ScienceCard } from './ScienceCard'
 import ListSearchBar from '@/components/shared/list/ListSearchBar'
 import { FilterGroup } from '@/components/shared/list/FilterButton'
 import ListEmptyState from '@/components/shared/list/ListEmptyState'
-import { client } from '@/sanity/lib/client'
-import { ALL_SCIENCE_QUERY } from '@/sanity/lib/queries'
 import type { Science } from '@/sanity/lib/types'
-import { Loader2, Filter, X, Beaker } from 'lucide-react'
+import { Filter, X, Beaker, SlidersHorizontal } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import type { FilterOption } from '@/components/shared/list/FilterButton'
 
 const ITEMS_PER_PAGE = 12
 
-const complexityOptions: FilterOption[] = [
-  { value: 'all', label: 'Tutte le complessità' },
-  { value: 'base', label: 'Base' },
-  { value: 'intermedio', label: 'Intermedio' },
-  { value: 'avanzato', label: 'Avanzato' },
-]
+interface ScienceListProps {
+  articles: Science[]     // Articoli già filtrati dal server (max 12)
+  total: number          // Totale articoli che matchano i filtri (per paginazione)
+  currentPage: number    // Pagina corrente
+}
 
-const articleTypeOptions: FilterOption[] = [
-  { value: 'all', label: 'Tutti i tipi' },
-  { value: 'ingredienti', label: 'Ingredienti' },
-  { value: 'processi', label: 'Processi' },
-  { value: 'reazioni', label: 'Reazioni Chimiche' },
-  { value: 'fisica', label: 'Fisica' },
-  { value: 'dietro-quinte', label: 'Dietro le Quinte' },
-  { value: 'miti', label: 'Miti e Verità' },
-  { value: 'storia', label: 'Storia' },
-]
+export default function ScienceList({ articles, total, currentPage }: ScienceListProps) {
+  // ============================================
+  // STATE & HOOKS
+  // ============================================
+  const [isFilterOpen, setIsFilterOpen] = useState(false)
+  const router = useRouter()
+  const searchParams = useSearchParams()
 
-export default function ScienceList() {
-  const [articles, setArticles] = useState<Science[]>([])
-  const [filteredArticles, setFilteredArticles] = useState<Science[]>([])
-  const [loading, setLoading] = useState(true)
-  const [searchQuery, setSearchQuery] = useState('')
-  const [selectedComplexity, setSelectedComplexity] = useState<string>('all')
-  const [selectedArticleType, setSelectedArticleType] = useState<string>('all')
-  const [currentPage, setCurrentPage] = useState(1)
+  // ============================================
+  // FILTRI DA URL
+  // Legge i filtri correnti dai query params
+  // NOTA: Science usa 'articleType' e 'complexity' invece di 'category' e 'difficulty'
+  // ============================================
+  const filters = {
+    search: searchParams.get('search') || '',
+    articleType: searchParams.get('articleType') || 'all',
+    complexity: searchParams.get('complexity') || 'all',
+    page: currentPage,
+  }
 
-  // Fetch articles from Sanity
-  useEffect(() => {
-    async function fetchArticles() {
-      try {
-        setLoading(true)
-        const data = await client.fetch(ALL_SCIENCE_QUERY)
-        setArticles(data)
-        setFilteredArticles(data)
-      } catch (error) {
-        console.error('Error fetching science articles:', error)
-      } finally {
-        setLoading(false)
+  // ============================================
+  // UPDATE FILTERS
+  // Aggiorna URL con nuovi filtri e triggera re-fetch server-side
+  // ============================================
+  const updateFilters = useCallback((newFilters: Partial<typeof filters>) => {
+    const params = new URLSearchParams(searchParams.toString())
+    const mergedFilters = { ...filters, ...newFilters }
+
+    // Aggiungi solo params con valori significativi
+    Object.entries(mergedFilters).forEach(([key, value]) => {
+      if (value && value !== 'all' && value !== '' && value !== 1) {
+        params.set(key, String(value))
+      } else {
+        params.delete(key)
       }
-    }
+    })
 
-    fetchArticles()
-  }, [])
+    // Navigation senza scroll al top (mantieni posizione utente)
+    router.push(`/scienza?${params.toString()}`, { scroll: false })
+  }, [searchParams, router, filters])
 
-  // Apply filters
-  useEffect(() => {
-    let filtered = [...articles]
+  // ============================================
+  // FILTER OPTIONS
+  // Opzioni per i dropdown filtri (memoized)
+  // ============================================
+  const complexityOptions: FilterOption[] = useMemo(() => [
+    { value: 'all', label: 'Tutte le complessità' },
+    { value: 'base', label: 'Base' },
+    { value: 'intermedio', label: 'Intermedio' },
+    { value: 'avanzato', label: 'Avanzato' },
+  ], [])
 
-    // Filter by search query
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase()
-      filtered = filtered.filter(
-        (article) =>
-          article.title.toLowerCase().includes(query) ||
-          article.excerpt?.toLowerCase().includes(query) ||
-          article.tags?.some((tag) => tag.toLowerCase().includes(query))
-      )
-    }
+  const articleTypeOptions: FilterOption[] = useMemo(() => [
+    { value: 'all', label: 'Tutti i tipi' },
+    { value: 'ingredienti', label: 'Ingredienti' },
+    { value: 'processi', label: 'Processi' },
+    { value: 'reazioni', label: 'Reazioni Chimiche' },
+    { value: 'fisica', label: 'Fisica' },
+    { value: 'dietro-quinte', label: 'Dietro le Quinte' },
+    { value: 'miti', label: 'Miti e Verità' },
+    { value: 'storia', label: 'Storia' },
+  ], [])
 
-    // Filter by complexity
-    if (selectedComplexity !== 'all') {
-      filtered = filtered.filter(
-        (article) => article.complexity === selectedComplexity
-      )
-    }
+  // ============================================
+  // DERIVED STATE
+  // Calcoli basati su filtri e dati
+  // ============================================
+  const totalPages = Math.ceil(total / ITEMS_PER_PAGE)
+  const hasActiveFilters = filters.articleType !== 'all' || filters.complexity !== 'all'
+  const activeFiltersCount = [
+    filters.articleType !== 'all',
+    filters.complexity !== 'all'
+  ].filter(Boolean).length
 
-    // Filter by article type
-    if (selectedArticleType !== 'all') {
-      filtered = filtered.filter(
-        (article) => article.articleType === selectedArticleType
-      )
-    }
-
-    setFilteredArticles(filtered)
-    setCurrentPage(1) // Reset to first page when filters change
-  }, [searchQuery, selectedComplexity, selectedArticleType, articles])
-
-  // Pagination
-  const totalPages = Math.ceil(filteredArticles.length / ITEMS_PER_PAGE)
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
-  const endIndex = startIndex + ITEMS_PER_PAGE
-  const currentArticles = filteredArticles.slice(startIndex, endIndex)
-
+  // ============================================
+  // HANDLERS
+  // ============================================
   const handlePageChange = (page: number) => {
-    setCurrentPage(page)
+    updateFilters({ page })
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  if (loading) {
-    return (
-      <div className="flex min-h-[400px] items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-orange-600" />
-      </div>
-    )
-  }
-
-  const hasActiveFilters = selectedComplexity !== 'all' || selectedArticleType !== 'all'
-
   const resetFilters = () => {
-    setSelectedComplexity('all')
-    setSelectedArticleType('all')
+    updateFilters({ articleType: 'all', complexity: 'all', page: 1 })
   }
 
-  return (
-    <div className="space-y-8">
-      {/* Search Bar */}
-      <ListSearchBar
-        value={searchQuery}
-        onChange={setSearchQuery}
-        placeholder="Cerca articoli scientifici per titolo, descrizione o tag..."
-        onClear={() => setSearchQuery('')}
-      />
+  // ============================================
+  // RENDER HELPERS
+  // ============================================
 
-      {/* Filters */}
-      <div className="space-y-6 rounded-2xl bg-white p-6 shadow-lg border border-gray-100">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Filter className="h-5 w-5 text-orange-600" />
-            <h2 className="text-lg font-bold text-gray-900">Filtra Articoli</h2>
-          </div>
-          {hasActiveFilters && (
-            <button
-              onClick={resetFilters}
-              className="flex items-center gap-1 text-sm text-orange-600 hover:text-orange-700 font-medium transition-colors touch-feedback"
-            >
-              <X className="h-4 w-4" />
-              Rimuovi filtri
-            </button>
-          )}
+  /**
+   * FiltersContent - Contenuto filtri riutilizzato in mobile drawer e desktop sidebar
+   */
+  const FiltersContent = () => (
+    <>
+      {/* Header con reset */}
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-2">
+          <Filter className="h-5 w-5 text-orange-600" />
+          <h2 className="text-lg font-bold text-gray-900">Filtra Articoli</h2>
         </div>
+        {hasActiveFilters && (
+          <button
+            onClick={resetFilters}
+            className="flex items-center gap-1 text-sm text-orange-600 hover:text-orange-700 font-medium transition-colors"
+          >
+            <X className="h-4 w-4" />
+            Rimuovi filtri
+          </button>
+        )}
+      </div>
 
-        {/* Filter Groups */}
+      {/* Gruppi filtri */}
+      <div className="space-y-6">
         <FilterGroup
           title="Complessità"
           options={complexityOptions}
-          activeValue={selectedComplexity}
-          onChange={setSelectedComplexity}
+          activeValue={filters.complexity}
+          onChange={(value) => updateFilters({ complexity: value, page: 1 })}
         />
 
         <FilterGroup
           title="Tipo di Articolo"
           options={articleTypeOptions}
-          activeValue={selectedArticleType}
-          onChange={setSelectedArticleType}
+          activeValue={filters.articleType}
+          onChange={(value) => updateFilters({ articleType: value, page: 1 })}
         />
 
-        {/* Active Filters Summary */}
+        {/* Riepilogo filtri attivi con badge removibili */}
         {hasActiveFilters && (
           <div className="border-t border-gray-200 pt-4">
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-sm text-gray-600">Filtri attivi:</span>
-              {selectedComplexity !== 'all' && (
+              {filters.complexity !== 'all' && (
                 <Badge variant="secondary" className="flex items-center gap-1">
-                  {complexityOptions.find((c) => c.value === selectedComplexity)?.label}
+                  {complexityOptions.find((d) => d.value === filters.complexity)?.label}
                   <button
-                    onClick={() => setSelectedComplexity('all')}
+                    onClick={() => updateFilters({ complexity: 'all', page: 1 })}
                     className="ml-1 hover:text-red-600"
                   >
                     <X className="h-3 w-3" />
                   </button>
                 </Badge>
               )}
-              {selectedArticleType !== 'all' && (
+              {filters.articleType !== 'all' && (
                 <Badge variant="secondary" className="flex items-center gap-1">
-                  {articleTypeOptions.find((t) => t.value === selectedArticleType)?.label}
+                  {articleTypeOptions.find((c) => c.value === filters.articleType)?.label}
                   <button
-                    onClick={() => setSelectedArticleType('all')}
+                    onClick={() => updateFilters({ articleType: 'all', page: 1 })}
                     className="ml-1 hover:text-red-600"
                   >
                     <X className="h-3 w-3" />
@@ -193,21 +200,77 @@ export default function ScienceList() {
           </div>
         )}
       </div>
+    </>
+  )
 
-      {/* Results Info */}
-      {filteredArticles.length > 0 && (
+  // ============================================
+  // RENDER
+  // ============================================
+  return (
+    <div className="space-y-8">
+      {/* Barra di ricerca */}
+      <ListSearchBar
+        value={filters.search}
+        onChange={(value) => updateFilters({ search: value, page: 1 })}
+        placeholder="Cerca articoli scientifici per titolo, descrizione o tag..."
+        onClear={() => updateFilters({ search: '', page: 1 })}
+      />
+
+      {/* Mobile: Bottom Sheet Drawer */}
+      <div className="md:hidden">
+        <Sheet open={isFilterOpen} onOpenChange={setIsFilterOpen}>
+          <SheetTrigger asChild>
+            <Button
+              variant="outline"
+              className="w-full flex items-center justify-center gap-2 h-12 text-base font-semibold shadow-sm"
+            >
+              <SlidersHorizontal className="h-5 w-5" />
+              Filtri
+              {activeFiltersCount > 0 && (
+                <Badge variant="default" className="ml-1 h-5 min-w-5 rounded-full px-1.5">
+                  {activeFiltersCount}
+                </Badge>
+              )}
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="bottom" className="h-[85vh] overflow-y-auto px-6">
+            <SheetHeader className="mb-4">
+              <SheetTitle className="sr-only">Filtra Articoli</SheetTitle>
+            </SheetHeader>
+            <div className="pb-24">
+              <FiltersContent />
+            </div>
+            <div className="sticky bottom-0 left-0 right-0 bg-white border-t pt-4 pb-6 -mx-6 px-6">
+              <Button
+                onClick={() => setIsFilterOpen(false)}
+                className="w-full h-12 text-base font-semibold"
+              >
+                Mostra {total} {total === 1 ? 'articolo' : 'articoli'}
+              </Button>
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
+
+      {/* Desktop: Sidebar fissa */}
+      <div className="hidden md:block rounded-2xl bg-white p-6 shadow-lg border border-gray-100">
+        <FiltersContent />
+      </div>
+
+      {/* Contatore risultati */}
+      {total > 0 && (
         <div className="text-center text-gray-600">
           <p>
-            Mostrati <span className="font-semibold">{filteredArticles.length}</span>{' '}
-            {filteredArticles.length === 1 ? 'articolo' : 'articoli'}
+            Mostrati <span className="font-semibold">{total}</span>{' '}
+            {total === 1 ? 'articolo' : 'articoli'}
           </p>
         </div>
       )}
 
-      {/* Articles Grid or Empty State */}
-      {currentArticles.length > 0 ? (
+      {/* Grid articoli o stato vuoto */}
+      {articles.length > 0 ? (
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {currentArticles.map((article, index) => (
+          {articles.map((article, index) => (
             <ScienceCard key={article._id} article={article} index={index} />
           ))}
         </div>
@@ -217,14 +280,14 @@ export default function ScienceList() {
           title="Nessun articolo trovato"
           description="Prova a modificare i filtri o la ricerca per trovare gli articoli che stai cercando."
           hasFilters={hasActiveFilters}
-          searchTerm={searchQuery}
+          searchTerm={filters.search}
           action={
-            hasActiveFilters || searchQuery
+            hasActiveFilters || filters.search
               ? {
                   label: 'Rimuovi tutti i filtri',
                   onClick: () => {
                     resetFilters()
-                    setSearchQuery('')
+                    updateFilters({ search: '', page: 1 })
                   },
                 }
               : undefined
@@ -232,7 +295,7 @@ export default function ScienceList() {
         />
       )}
 
-      {/* Pagination */}
+      {/* Paginazione */}
       {totalPages > 1 && (
         <div className="flex justify-center gap-2 pt-8">
           <button

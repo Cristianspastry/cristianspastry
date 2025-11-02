@@ -1,7 +1,33 @@
-import { Suspense } from 'react'
+/**
+ * Scienza Page - Server Component
+ *
+ * Pagina principale per la visualizzazione degli articoli scientifici con filtri server-side.
+ *
+ * ARCHITETTURA:
+ * - Server Component → fetcha dati filtrati da Sanity (solo 12 articoli/pagina)
+ * - URL params → filtri passati via searchParams
+ * - Client Component (ScienceList) → gestisce UI e navigazione
+ *
+ * NOTA IMPORTANTE:
+ * - Science usa 'articleType' e 'complexity' (NON category/difficulty)
+ * - articleType: ingredienti, processi, reazioni, fisica, dietro-quinte, miti, storia
+ * - complexity: base, intermedio, avanzato
+ *
+ * FLOW:
+ * 1. Next.js passa searchParams al Server Component
+ * 2. Parse params e costruisce filtri
+ * 3. Fetch dati da Sanity con getScienceArticles() (server-side filtering)
+ * 4. Passa dati al Client Component ScienceList
+ * 5. User interagisce con filtri → router.push() → ciclo ricomincia
+ *
+ * PERFORMANCE:
+ * - Solo 12 articoli fetchati per request (vs 1000+ client-side)
+ * - Server-side cache con 'use cache'
+ */
+
 import type { Metadata } from 'next'
 import ScienceList from '@/components/science/list/ScienceList'
-import ScienceLoading from '@/components/science/list/ScienceLoading'
+import { getScienceArticles } from '@/lib/data/science'
 
 export const metadata: Metadata = {
   title: 'La Scienza della Pasticceria | Cristian\'s Pastry',
@@ -34,7 +60,38 @@ export const metadata: Metadata = {
   },
 }
 
-export default function SciencePage() {
+/**
+ * Props ricevute dal Server Component
+ * searchParams è automaticamente passato da Next.js come Promise
+ */
+interface SciencePageProps {
+  searchParams: Promise<{
+    articleType?: string  // Tipo articolo (ingredienti, processi, reazioni, fisica, etc.)
+    complexity?: string   // Complessità (base, intermedio, avanzato)
+    search?: string       // Query di ricerca testuale
+    page?: string         // Numero pagina corrente
+  }>
+}
+
+export default async function SciencePage({ searchParams }: SciencePageProps) {
+  // Await searchParams (Next.js 15+ requirement)
+  const params = await searchParams
+  const page = parseInt(params.page || '1')
+
+  // ============================================
+  // FETCH DATA (Server-side)
+  // ============================================
+  const { articles, total } = await getScienceArticles({
+    articleType: params.articleType && params.articleType !== 'all' ? params.articleType : undefined,
+    complexity: params.complexity && params.complexity !== 'all' ? params.complexity : undefined,
+    search: params.search || undefined,
+    page,
+    limit: 12, // Solo 12 articoli per pagina (server-side pagination)
+  })
+
+  // ============================================
+  // RENDER
+  // ============================================
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       {/* Hero Section */}
@@ -48,6 +105,7 @@ export default function SciencePage() {
             <p className="text-xl text-orange-100 md:text-2xl">
               Scopri i principi scientifici dietro le tecniche e gli ingredienti della pasticceria
             </p>
+            {/* Indicatori complessità */}
             <div className="mt-8 flex flex-wrap justify-center gap-4 text-sm text-orange-200">
               <div className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-green-400" />
@@ -66,12 +124,14 @@ export default function SciencePage() {
         </div>
       </section>
 
-      {/* Science List with Filters */}
+      {/* Science List (Client Component con filtri e grid) */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <Suspense fallback={<ScienceLoading />}>
-            <ScienceList />
-          </Suspense>
+          <ScienceList
+            articles={articles}
+            total={total}
+            currentPage={page}
+          />
         </div>
       </section>
     </div>

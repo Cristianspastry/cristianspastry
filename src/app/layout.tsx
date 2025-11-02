@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 import { Suspense } from "react";
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
 import { TRPCReactProvider } from "@/trpc/react";
 import { Header } from "@/components/layout/Header";
@@ -105,16 +106,18 @@ export default function RootLayout({
       </head>
       <body>
         <Suspense fallback={null}>
-          <TRPCReactProvider>
-              <div className="flex min-h-screen flex-col">
-                <Header />
-                <main className="flex-1">
-                  {children}
-                </main>
-                <Footer />
-              </div>
-              <ToastProvider />
-          </TRPCReactProvider>
+          <NuqsAdapter>
+            <TRPCReactProvider>
+                <div className="flex min-h-screen flex-col">
+                  <Header />
+                  <main className="flex-1">
+                    {children}
+                  </main>
+                  <Footer />
+                </div>
+                <ToastProvider />
+            </TRPCReactProvider>
+          </NuqsAdapter>
         </Suspense>
       </body>
     </html>
