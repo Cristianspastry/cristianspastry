@@ -1,3 +1,22 @@
+/**
+ * Footer Component
+ *
+ * Footer moderno e funzionale per Cristian's Pastry
+ *
+ * STRUTTURA:
+ * - 5 colonne desktop (Brand, Navigazione, Categorie A, Categorie B, Newsletter)
+ * - Stack verticale su mobile
+ * - Pre-footer con separator visivo
+ * - Footer bottom con copyright e link legali
+ *
+ * FEATURES:
+ * - Newsletter subscription form
+ * - Social icons con hover effects
+ * - Categorie divise in due colonne bilanciate
+ * - Accessibilità WCAG AA
+ * - Responsive design
+ */
+
 import Link from 'next/link'
 import { Instagram, Facebook, Youtube, Mail } from 'lucide-react'
 import { siteConfig } from '@/lib/config'
@@ -5,6 +24,7 @@ import Script from 'next/script'
 import { getAllCategories } from '@/lib/data/categories'
 import { CurrentYear } from './CurrentYear'
 import { Suspense } from 'react'
+import NewsletterForm from './NewsletterForm'
 
 // Custom TikTok icon component
 const Tiktok = ({ className }: { className?: string }) => (
@@ -33,145 +53,240 @@ const XIcon = ({ className }: { className?: string }) => (
 export async function Footer() {
   // Fetch categories dynamically
   const categories = await getAllCategories()
-  // Configurazione dinamica dei social media da mostrare
+
+  // Dividi le categorie in due colonne bilanciate
+  const midPoint = Math.ceil(categories.length / 2)
+  const categoriesColumnA = categories.slice(0, midPoint)
+  const categoriesColumnB = categories.slice(midPoint)
+
+  // Configurazione social media
   const socialLinks = [
     {
       key: 'instagram',
       icon: Instagram,
       url: siteConfig.social.instagram.url,
-      label: siteConfig.social.instagram.label
+      label: 'Instagram'
     },
     {
       key: 'facebook',
       icon: Facebook,
       url: siteConfig.social.facebook.url,
-      label: siteConfig.social.facebook.label
+      label: 'Facebook'
     },
     {
       key: 'youtube',
       icon: Youtube,
       url: siteConfig.social.youtube.url,
-      label: siteConfig.social.youtube.label
+      label: 'YouTube'
     },
     {
       key: 'tiktok',
       icon: Tiktok,
       url: siteConfig.social.tiktok?.url || '#',
-      label: siteConfig.social.tiktok?.label || 'TikTok'
+      label: 'TikTok'
     },
     {
       key: 'x',
       icon: XIcon,
       url: siteConfig.social.x.url,
-      label: siteConfig.social.x.label
-    },
-    {
-      key: 'email',
-      icon: Mail,
-      url: `mailto:${siteConfig.contact.email}`,
-      label: 'Email'
+      label: 'X'
     }
   ];
-  
+
   return (
-    <footer className="border-t bg-pastry-50 min-h-[400px]">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid gap-8 md:grid-cols-4">
-          <div className="space-y-4">
-            <h3 className="text-lg font-bold text-pastry-900">{siteConfig.name}</h3>
-            <p className="text-sm text-gray-600">
-              {siteConfig.description}
-            </p>
-          </div>
+    <>
+      {/* Separator visivo */}
+      <div className="h-px bg-gradient-to-r from-transparent via-primary-200 to-transparent" />
 
-          <div className="space-y-4">
-            <h4 className="font-semibold text-pastry-900">Navigazione</h4>
-            <ul className="space-y-2 text-sm">
-              {siteConfig.navigation.map((item) => (
-                <li key={item.name}>
-                  <Link href={item.href} className="text-gray-600 hover:text-primary-600">
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <Link href="https://www.iubenda.com/privacy-policy/67085013" target='_blank' className="text-gray-600 hover:text-primary-600 iubenda-black iubenda-noiframe iubenda-embed iubenda-noiframe hover:underline" title="Privacy Policy">Privacy Policy</Link>
-              </li>
-              <li>
-                <Link href="https://www.iubenda.com/privacy-policy/67085013/cookie-policy" target='_blank' className="text-gray-600 hover:text-primary-600 iubenda-black iubenda-noiframe iubenda-embed iubenda-noiframe hover:underline" title="Cookie Policy">Cookie Policy</Link>
-              </li>
-            </ul>
-          </div>
+      {/* Footer principale */}
+      <footer className="bg-gradient-to-b from-white to-primary-50/30 text-gray-800">
+        <div className="container mx-auto px-4 py-16">
+          {/* Grid principale - 5 colonne desktop */}
+          <div className="grid gap-12 lg:grid-cols-5 md:grid-cols-2">
 
-          <div className="space-y-4">
-            <h4 className="font-semibold text-pastry-900">Categorie</h4>
-            <ul className="space-y-2 text-sm">
-              {categories.length > 0 ? (
-                categories.map((category) => (
+            {/* COLONNA 1: Brand Identity */}
+            <div className="space-y-6 lg:col-span-1">
+              <div>
+                <h3 className="text-2xl font-bold bg-gradient-to-r from-primary-500 to-primary-600 bg-clip-text text-transparent mb-2">
+                  {siteConfig.name}
+                </h3>
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  Ricette artigianali e scienza della pasticceria. Dove la tecnica incontra la passione.
+                </p>
+              </div>
+            </div>
+
+            {/* COLONNA 2: Navigazione */}
+            <div className="space-y-6">
+              <h4 className="text-lg font-bold text-gray-900 tracking-wide">Navigazione</h4>
+              <ul className="space-y-3 text-sm">
+                {siteConfig.navigation.map((item) => (
+                  <li key={item.name}>
+                    <Link
+                      href={item.href}
+                      className="text-gray-600 hover:text-primary-600 transition-all duration-300 hover:translate-x-1 inline-flex items-center gap-2 group"
+                    >
+                      <span className="w-0 group-hover:w-2 h-px bg-primary-600 transition-all duration-300" />
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* COLONNA 3: Categorie A */}
+            <div className="space-y-6">
+              <h4 className="text-lg font-bold text-gray-900 tracking-wide">Le Nostre Creazioni</h4>
+              <ul className="space-y-3 text-sm">
+                {categoriesColumnA.map((category) => (
                   <li key={category._id}>
                     <Link
                       href={`/ricette?category=${category.slug.current}`}
-                      className="text-gray-600 hover:text-pastry-600"
+                      className="text-gray-600 hover:text-primary-600 transition-all duration-300 hover:translate-x-1 inline-flex items-center gap-2 group"
                     >
-                      {category.emoji && <span className="mr-1">{category.emoji}</span>}
+                      <span className="w-0 group-hover:w-2 h-px bg-primary-600 transition-all duration-300" />
+                      {category.emoji && <span className="text-base">{category.emoji}</span>}
                       {category.title}
                     </Link>
                   </li>
-                ))
-              ) : (
-                <li className="text-gray-500">Nessuna categoria disponibile</li>
-              )}
-            </ul>
+                ))}
+              </ul>
+            </div>
+
+            {/* COLONNA 4: Categorie B */}
+            <div className="space-y-6">
+              <h4 className="text-lg font-bold text-gray-900 tracking-wide">Scopri di Più</h4>
+              <ul className="space-y-3 text-sm">
+                {categoriesColumnB.map((category) => (
+                  <li key={category._id}>
+                    <Link
+                      href={`/ricette?category=${category.slug.current}`}
+                      className="text-gray-600 hover:text-primary-600 transition-all duration-300 hover:translate-x-1 inline-flex items-center gap-2 group"
+                    >
+                      <span className="w-0 group-hover:w-2 h-px bg-primary-600 transition-all duration-300" />
+                      {category.emoji && <span className="text-base">{category.emoji}</span>}
+                      {category.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* COLONNA 5: Engagement & Newsletter */}
+            <div className="space-y-6">
+              <h4 className="text-lg font-bold text-gray-900 tracking-wide">Resta Connesso</h4>
+
+              {/* Newsletter form */}
+              <div className="space-y-4">
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  Ricevi ricette esclusive e consigli direttamente nella tua inbox
+                </p>
+                <NewsletterForm />
+              </div>
+
+              {/* Social Icons */}
+              <div className="pt-4">
+                <p className="text-sm text-gray-600 mb-4">Seguimi sui social</p>
+                <div className="flex gap-4 flex-wrap">
+                  {socialLinks.map((social) => {
+                    const IconComponent = social.icon
+                    return (
+                      <a
+                        key={social.key}
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative"
+                        title={social.label}
+                        aria-label={social.label}
+                      >
+                        <div className="w-11 h-11 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center transition-all duration-300 group-hover:bg-primary-500 group-hover:border-primary-500 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-primary-500/50">
+                          <IconComponent className="w-5 h-5 text-gray-600 group-hover:text-white transition-colors" />
+                        </div>
+                        <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                          {social.label}
+                        </span>
+                      </a>
+                    )
+                  })}
+                  {/* Email separato */}
+                  <a
+                    href={`mailto:${siteConfig.contact.email}`}
+                    className="group relative"
+                    title="Email"
+                    aria-label="Contattaci via email"
+                  >
+                    <div className="w-11 h-11 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center transition-all duration-300 group-hover:bg-primary-500 group-hover:border-primary-500 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-primary-500/50">
+                      <Mail className="w-5 h-5 text-gray-600 group-hover:text-white transition-colors" />
+                    </div>
+                    <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                      Email
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="space-y-4">
-            <h4 className="font-semibold text-pastry-900">Seguimi</h4>
-            <div className="flex gap-4">
-              {socialLinks.map((social) => {
-                const IconComponent = social.icon
-                const isExternal = social.key !== 'email'
+          {/* Separator */}
+          <div className="my-12 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
 
-                return (
-                  <a
-                    key={social.key}
-                    href={social.url}
-                    {...(isExternal && {
-                      target: "_blank",
-                      rel: "noopener noreferrer"
-                    })}
-                    className="text-gray-600 hover:text-primary-600"
-                    title={social.label}
-                  >
-                    <IconComponent className="h-5 w-5" />
-                  </a>
-                )
-              })}
+          {/* Footer Bottom */}
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-gray-600">
+            {/* Copyright */}
+            <div className="flex items-center gap-2">
+              <p>© <Suspense fallback="2025"><CurrentYear /></Suspense> {siteConfig.name}</p>
+              <span className="hidden md:inline">•</span>
+              <p className="hidden md:block">Tutti i diritti riservati</p>
+            </div>
+
+            {/* Link legali */}
+            <div className="flex items-center gap-6">
+              <Link
+                href="https://www.iubenda.com/privacy-policy/67085013"
+                target='_blank'
+                className="hover:text-primary-600 transition-colors iubenda-black iubenda-noiframe iubenda-embed"
+                title="Privacy Policy"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                href="https://www.iubenda.com/privacy-policy/67085013/cookie-policy"
+                target='_blank'
+                className="hover:text-primary-600 transition-colors iubenda-black iubenda-noiframe iubenda-embed"
+                title="Cookie Policy"
+              >
+                Cookie Policy
+              </Link>
+            </div>
+
+            {/* Made with love */}
+            <div className="flex items-center gap-1">
+              <span>Made with</span>
+              <span className="text-red-500 animate-pulse">❤️</span>
+              <span>in Naples</span>
             </div>
           </div>
         </div>
 
-        <div className="mt-8 border-t pt-8 text-center text-sm text-gray-600">
-          <p>© <Suspense fallback="2025"><CurrentYear /></Suspense> {siteConfig.name}. Tutti i diritti riservati.</p>
-        </div>
-      </div>
-
-      {/* Iubenda Scripts */}
-    <Script
-      id="iubenda-loader-pp"
-      strategy="afterInteractive"
-      dangerouslySetInnerHTML={{
-        __html:
-          '(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);',
-      }}
-    />
-    <Script
-      id="iubenda-loader-cp"
-      strategy="afterInteractive"
-      dangerouslySetInnerHTML={{
-        __html:
-          '(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);',
-      }}
-    />
-    </footer>
+        {/* Iubenda Scripts */}
+        <Script
+          id="iubenda-loader-pp"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html:
+              '(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);',
+          }}
+        />
+        <Script
+          id="iubenda-loader-cp"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html:
+              '(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);',
+          }}
+        />
+      </footer>
+    </>
   )
 }

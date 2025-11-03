@@ -48,3 +48,4 @@ yarn-error.log*
 # scripts
 /scripts
 *.txt
+/email-templates

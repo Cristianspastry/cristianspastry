@@ -4,8 +4,8 @@ import { env } from 'process';
 
 export const siteConfig = {
     name: "Cristian's Pastry",
-    description: "Dolci artigianali tra tradizione e passione",
-    tagline: "Dolci artigianali tra tradizione e passione.",
+    description: "Cristian's Pastry nasce dalla convinzione che dietro ogni dolce perfetto ci sia conoscenza, tecnica e passione. Qui troverai ricette artigianali raccontate nel dettaglio, la scienza che rende possibile ogni trasformazione, e gli strumenti per calcolare, creare e stupire. Benvenuto nel mondo dove la pasticceria diventa arte accessibile.",
+    tagline: "La pasticceria spiegata con passione.",
     author: "Cristian Sorrentino",
     navigation: [
       { name: 'Home', href: '/', icon: Home },
@@ -56,7 +56,7 @@ export const siteConfig = {
     },
     seo: {
       title: "Cristian's Pastry - Dolci Artigianali",
-      description: "Scopri ricette di dolci artigianali, tecniche di pasticceria e la passione per i dolci fatti in casa.",
+      description: "Ricette artigianali, scienza della pasticceria e tecniche professionali. Trasforma la tua cucina in un laboratorio dolciario con passione e precisione.",
       keywords: ["dolci", "pasticceria", "ricette", "torte", "biscotti", "artigianale"],
       author: "Cristian Sorrentino",
       siteUrl: env.NEXT_PUBLIC_SITE_URL
