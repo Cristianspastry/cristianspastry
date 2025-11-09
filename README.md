@@ -161,10 +161,16 @@ SANITY_API_WRITE_TOKEN="your-write-token"
 SANITY_REVALIDATE_SECRET="your-secret-key"
 
 # ============================================
-# RESEND (Email Service)
+# RESEND (Email Service - Form Contatti)
 # ============================================
 RESEND_API_KEY="re_xxxxxxxxxxxxx"
 CONTACT_EMAIL="tua@email.com"
+
+# ============================================
+# EMAILOCTOPUS (Newsletter)
+# ============================================
+EMAILOCTOPUS_API_KEY="your-api-key"
+EMAILOCTOPUS_LIST_ID="your-list-id"
 
 # ============================================
 # AUTH (Opzionale)
@@ -204,7 +210,7 @@ Segui le istruzioni e copia il **Project ID** nel tuo `.env`.
 4. Crea un token con permessi **Editor**
 5. Copia il token in `SANITY_API_WRITE_TOKEN`
 
-### 3. Setup Resend (Email)
+### 3. Setup Resend (Email Form Contatti)
 
 1. Crea account su [resend.com](https://resend.com)
 2. Vai su **API Keys** → Create
@@ -212,6 +218,17 @@ Segui le istruzioni e copia il **Project ID** nel tuo `.env`.
 4. Imposta `CONTACT_EMAIL` con la tua email
 
 > **Pro Tip**: Verifica il tuo dominio su Resend per evitare che le email finiscano in spam!
+
+### 4. Setup EmailOctopus (Newsletter)
+
+1. Crea account su [emailoctopus.com](https://emailoctopus.com)
+2. Crea una nuova lista: Dashboard → Lists → Create a list
+3. Copia il **List ID** dalle impostazioni
+4. Vai su Dashboard → Settings → API → Create API key
+5. Copia la chiave in `EMAILOCTOPUS_API_KEY`
+6. Incolla il List ID in `EMAILOCTOPUS_LIST_ID`
+
+Per maggiori dettagli, vedi il file `.env.newsletter.example`.
 
 ---
 

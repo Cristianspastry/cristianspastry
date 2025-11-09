@@ -1,6 +1,10 @@
 /**
  * @fileoverview Form Newsletter con validazione e feedback
  *
+ * NEWSLETTER TEMPORANEAMENTE DISABILITATA
+ * Questo file è stato commentato perché la funzionalità newsletter è stata accantonata.
+ * Per riattivare: decommentare questo file, newsletter.ts e la sezione nel Footer.tsx
+ *
  * Client Component che gestisce l'iscrizione alla newsletter.
  * Usa Server Actions per sicurezza (API keys mai esposte al client).
  *
@@ -14,24 +18,20 @@
 
 'use client'
 
+/* NEWSLETTER TEMPORANEAMENTE DISABILITATA - INIZIO CODICE COMMENTATO */
+
+/*
 import { useState, useTransition } from 'react'
 import { Send } from 'lucide-react'
 import { toast } from 'sonner'
 import { subscribeToNewsletter } from '@/app/actions/newsletter'
 
-/**
- * Form per iscrizione newsletter
- *
- * @example
- * <NewsletterForm />
- */
+// Form per iscrizione newsletter
 export default function NewsletterForm() {
   const [email, setEmail] = useState('')
   const [isPending, startTransition] = useTransition()
 
-  /**
-   * Gestisce il submit del form
-   */
+  // Gestisce il submit del form
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -46,13 +46,11 @@ export default function NewsletterForm() {
       const result = await subscribeToNewsletter(email)
 
       if (result.success) {
-        // Successo
         toast.success(result.message, {
           duration: 5000,
         })
-        setEmail('') // Reset form
+        setEmail('')
       } else {
-        // Errore
         toast.error(result.message, {
           duration: 5000,
         })
@@ -85,3 +83,6 @@ export default function NewsletterForm() {
     </form>
   )
 }
+*/
+
+/* NEWSLETTER TEMPORANEAMENTE DISABILITATA - FINE CODICE COMMENTATO */

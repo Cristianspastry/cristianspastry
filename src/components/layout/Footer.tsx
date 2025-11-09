@@ -24,7 +24,8 @@ import Script from 'next/script'
 import { getAllCategories } from '@/lib/data/categories'
 import { CurrentYear } from './CurrentYear'
 import { Suspense } from 'react'
-import NewsletterForm from './NewsletterForm'
+// NEWSLETTER TEMPORANEAMENTE DISABILITATA
+// import NewsletterForm from './NewsletterForm'
 
 // Custom TikTok icon component
 const Tiktok = ({ className }: { className?: string }) => (
@@ -172,20 +173,20 @@ export async function Footer() {
               </ul>
             </div>
 
-            {/* COLONNA 5: Engagement & Newsletter */}
+            {/* COLONNA 5: Social Media */}
             <div className="space-y-6">
               <h4 className="text-lg font-bold text-gray-900 tracking-wide">Resta Connesso</h4>
 
-              {/* Newsletter form */}
-              <div className="space-y-4">
+              {/* NEWSLETTER TEMPORANEAMENTE DISABILITATA */}
+              {/* <div className="space-y-4">
                 <p className="text-sm text-gray-600 leading-relaxed">
                   Ricevi ricette esclusive e consigli direttamente nella tua inbox
                 </p>
                 <NewsletterForm />
-              </div>
+              </div> */}
 
               {/* Social Icons */}
-              <div className="pt-4">
+              <div>
                 <p className="text-sm text-gray-600 mb-4">Seguimi sui social</p>
                 <div className="flex gap-4 flex-wrap">
                   {socialLinks.map((social) => {

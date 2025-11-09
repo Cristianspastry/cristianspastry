@@ -1,49 +1,45 @@
 /**
- * @fileoverview Server Actions per gestione newsletter ConvertKit
+ * @fileoverview Server Actions per gestione newsletter EmailOctopus
+ *
+ * NEWSLETTER TEMPORANEAMENTE DISABILITATA
+ * Questo file è stato commentato perché la funzionalità newsletter è stata accantonata.
+ * Per riattivare: decommentare questo file, NewsletterForm.tsx e la sezione nel Footer.tsx
  *
  * Gestisce l'iscrizione alla newsletter in modo sicuro lato server.
  * Le API keys non vengono mai esposte al client.
  *
- * @see https://developers.convertkit.com/#forms
+ * @see https://emailoctopus.com/api-documentation
  */
 
 'use server'
 
-/**
- * Risposta dell'API ConvertKit
- */
-interface ConvertKitResponse {
-  subscription: {
-    id: number
-    state: string
-    created_at: string
-    subscriber: {
-      id: number
-    }
-  }
+/* NEWSLETTER TEMPORANEAMENTE DISABILITATA - INIZIO CODICE COMMENTATO */
+
+/*
+// Risposta dell'API EmailOctopus (successo)
+interface EmailOctopusSuccessResponse {
+  id: string
+  email_address: string
+  fields: Record<string, string>
+  tags: string[]
+  status: 'SUBSCRIBED' | 'UNSUBSCRIBED' | 'PENDING'
+  created_at: string
 }
 
-/**
- * Stato dell'operazione di iscrizione
- */
+// Risposta dell'API EmailOctopus (errore)
+interface EmailOctopusErrorResponse {
+  code: string
+  message: string
+}
+
+// Stato dell'operazione di iscrizione
 export interface NewsletterSubscribeResult {
   success: boolean
   message: string
   error?: string
 }
 
-/**
- * Iscrive un utente alla newsletter tramite ConvertKit
- *
- * @param email - Email dell'utente da iscrivere
- * @returns Risultato dell'operazione con messaggio di feedback
- *
- * @example
- * const result = await subscribeToNewsletter('user@example.com')
- * if (result.success) {
- *   // Mostra messaggio di successo
- * }
- */
+// Iscrive un utente alla newsletter tramite EmailOctopus
 export async function subscribeToNewsletter(
   email: string
 ): Promise<NewsletterSubscribeResult> {
@@ -58,12 +54,12 @@ export async function subscribeToNewsletter(
       }
     }
 
-    // Verifica che le credenziali ConvertKit siano configurate
-    const apiKey = process.env.CONVERTKIT_API_KEY
-    const formId = process.env.CONVERTKIT_FORM_ID
+    // Verifica che le credenziali EmailOctopus siano configurate
+    const apiKey = process.env.EMAILOCTOPUS_API_KEY
+    const listId = process.env.EMAILOCTOPUS_LIST_ID
 
-    if (!apiKey || !formId) {
-      console.error('ConvertKit non configurato correttamente')
+    if (!apiKey || !listId) {
+      console.error('EmailOctopus non configurato correttamente')
       return {
         success: false,
         message: 'Servizio temporaneamente non disponibile',
@@ -71,9 +67,9 @@ export async function subscribeToNewsletter(
       }
     }
 
-    // Chiamata API a ConvertKit
+    // Chiamata API a EmailOctopus
     const response = await fetch(
-      `https://api.convertkit.com/v3/forms/${formId}/subscribe`,
+      `https://emailoctopus.com/api/1.6/lists/${listId}/contacts`,
       {
         method: 'POST',
         headers: {
@@ -81,18 +77,19 @@ export async function subscribeToNewsletter(
         },
         body: JSON.stringify({
           api_key: apiKey,
-          email: email,
+          email_address: email,
         }),
       }
     )
 
+    const data = await response.json()
+
     // Gestione risposta
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}))
-      console.error('ConvertKit API error:', errorData)
+      const errorData = data as EmailOctopusErrorResponse
+      console.error('EmailOctopus API error:', errorData)
 
-      // Email già iscritta
-      if (response.status === 400) {
+      if (errorData.code === 'MEMBER_EXISTS_WITH_EMAIL_ADDRESS') {
         return {
           success: false,
           message: 'Sei già iscritto alla newsletter!',
@@ -100,20 +97,30 @@ export async function subscribeToNewsletter(
         }
       }
 
-      // Altri errori
+      if (errorData.code === 'INVALID_PARAMETERS') {
+        return {
+          success: false,
+          message: 'Email non valida',
+          error: 'INVALID_EMAIL',
+        }
+      }
+
       return {
         success: false,
         message: 'Errore durante l\'iscrizione. Riprova più tardi.',
-        error: 'API_ERROR',
+        error: errorData.code || 'API_ERROR',
       }
     }
 
-    const data: ConvertKitResponse = await response.json()
-
     // Successo
+    const successData = data as EmailOctopusSuccessResponse
+    const message = successData.status === 'PENDING'
+      ? 'Iscrizione completata! Controlla la tua email per confermare.'
+      : 'Iscrizione completata con successo!'
+
     return {
       success: true,
-      message: 'Iscrizione completata! Controlla la tua email per confermare.',
+      message,
     }
   } catch (error) {
     console.error('Newsletter subscription error:', error)
@@ -124,3 +131,6 @@ export async function subscribeToNewsletter(
     }
   }
 }
+*/
+
+/* NEWSLETTER TEMPORANEAMENTE DISABILITATA - FINE CODICE COMMENTATO */
