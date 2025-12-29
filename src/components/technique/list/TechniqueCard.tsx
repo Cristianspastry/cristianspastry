@@ -20,10 +20,10 @@ const difficultyLabels: Record<string, string> = {
 }
 
 const difficultyColors: Record<string, string> = {
-  base: 'bg-green-600',
-  intermedio: 'bg-yellow-600',
-  avanzato: 'bg-red-600',
-  professionale: 'bg-purple-600'
+  base: 'bg-green-700',
+  intermedio: 'bg-yellow-700',
+  avanzato: 'bg-red-700',
+  professionale: 'bg-purple-700'
 }
 
 export function TechniqueCard({ technique, index = 0 }: TechniqueCardProps) {

@@ -73,10 +73,7 @@ export function ScienceCard({ science, index = 0 }: ScienceCardProps) {
             {/* Badge tipo articolo */}
             {science.articleType && (
               <div className="absolute left-5 top-5">
-                <span
-                  className={`rounded-full ${articleTypeColors[science.articleType] ?? 'bg-purple-700'
-                    } px-4 py-2 text-sm font-semibold text-white shadow-md`}
-                >
+                <span className="rounded-full bg-green-700 px-4 py-2 text-sm font-semibold text-white shadow-md">
 
                   {articleTypeLabels[science.articleType] ?? science.articleType}
                 </span>
