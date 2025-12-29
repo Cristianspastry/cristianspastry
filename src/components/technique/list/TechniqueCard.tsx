@@ -20,10 +20,10 @@ const difficultyLabels: Record<string, string> = {
 }
 
 const difficultyColors: Record<string, string> = {
-  base: 'bg-green-500',
-  intermedio: 'bg-yellow-500',
-  avanzato: 'bg-red-500',
-  professionale: 'bg-purple-500'
+  base: 'bg-green-600',
+  intermedio: 'bg-yellow-600',
+  avanzato: 'bg-red-600',
+  professionale: 'bg-purple-600'
 }
 
 export function TechniqueCard({ technique, index = 0 }: TechniqueCardProps) {
@@ -60,9 +60,11 @@ export function TechniqueCard({ technique, index = 0 }: TechniqueCardProps) {
             {/* Difficulty Badge */}
             {technique.difficulty && (
               <div className="absolute left-5 top-5">
-                <span className={`rounded-full ${
-                  difficultyColors[technique.difficulty] ?? 'bg-gray-500'
-                } px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm shadow-lg`}>
+                <span
+                  className={`rounded-full ${difficultyColors[technique.difficulty] ?? 'bg-gray-600'
+                    } px-4 py-2 text-sm font-semibold text-white shadow-md`}
+                >
+
                   {difficultyLabels[technique.difficulty] ?? technique.difficulty}
                 </span>
               </div>
@@ -86,7 +88,7 @@ export function TechniqueCard({ technique, index = 0 }: TechniqueCardProps) {
             </h3>
 
             {/* Meta Info */}
-            <div className="mb-4 flex flex-wrap items-center gap-4 text-sm text-gray-600">
+            <div className="mb-4 flex flex-wrap items-center gap-4 text-sm text-gray-700">
               {technique.executionTime && (
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4 text-blue-600" />
@@ -109,7 +111,7 @@ export function TechniqueCard({ technique, index = 0 }: TechniqueCardProps) {
 
             {/* Excerpt */}
             {technique.excerpt && (
-              <p className="mb-5 line-clamp-3 flex-1 text-sm leading-relaxed text-gray-600">
+              <p className="mb-5 line-clamp-3 flex-1 text-sm leading-relaxed text-gray-700">
                 {technique.excerpt}
               </p>
             )}

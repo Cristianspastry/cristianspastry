@@ -93,13 +93,14 @@ export const metadata: Metadata = {
 const geist = Geist({
   subsets: ["latin"],
   variable: "--font-geist-sans",
+  display: "swap",
 });
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="it" className={`${geist.variable}`}>
+    <html lang="it" className={`${geist.variable} scrollbar-gutter-stable `}>
       <head>
         <StructuredData type="website" />
         <StructuredData type="organization" />
@@ -110,7 +111,7 @@ export default function RootLayout({
             <TRPCReactProvider>
                 <div className="flex min-h-screen flex-col">
                   <Header />
-                  <main className="flex-1">
+                  <main className="flex-1 pt-16">
                     {children}
                   </main>
                   <Footer />

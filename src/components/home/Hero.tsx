@@ -54,27 +54,29 @@ export function Hero() {
           >
             <div className="rounded-lg border border-primary-700 bg-primary-800/50 backdrop-blur p-6">
               <ChefHat className="mx-auto mb-4 h-10 w-10 text-primary-200" />
-              <h3 className="mb-2 font-semibold text-white">
+              <p className="mb-2 text-lg font-semibold text-white">
                 Ricette Dettagliate
-              </h3>
+              </p>
               <p className="text-sm text-primary-100">
                 Istruzioni passo-passo per dolci perfetti
               </p>
             </div>
             <div className="rounded-lg border border-primary-700 bg-primary-800/50 backdrop-blur p-6">
               <BookOpen className="mx-auto mb-4 h-10 w-10 text-primary-200" />
-              <h3 className="mb-2 font-semibold text-white">
+              <p className="mb-2 text-lg font-semibold text-white">
+
                 Tecniche Professionali
-              </h3>
+              </p>
               <p className="text-sm text-primary-100">
                 Impara i segreti dei maestri pasticceri
               </p>
             </div>
             <div className="rounded-lg border border-primary-700 bg-primary-800/50 backdrop-blur p-6">
               <Sparkles className="mx-auto mb-4 h-10 w-10 text-primary-200" />
-              <h3 className="mb-2 font-semibold text-white">
+              <p className="mb-2 text-lg font-semibold text-white">
+
                 Scienza del Dolce
-              </h3>
+              </p>
               <p className="text-sm text-primary-100">
                 Comprendi la chimica e la fisica della pasticceria
               </p>

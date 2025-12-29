@@ -23,14 +23,15 @@ const articleTypeLabels: Record<string, string> = {
 }
 
 const articleTypeColors: Record<string, string> = {
-  ingredienti: 'bg-green-500',
-  processi: 'bg-blue-500',
-  reazioni: 'bg-purple-500',
-  fisica: 'bg-cyan-500',
-  'dietro-quinte': 'bg-orange-500',
-  miti: 'bg-red-500',
-  storia: 'bg-yellow-600',
+  ingredienti: 'bg-green-600',
+  processi: 'bg-blue-700',
+  reazioni: 'bg-purple-700',
+  fisica: 'bg-cyan-700',
+  'dietro-quinte': 'bg-orange-600',
+  miti: 'bg-red-600',
+  storia: 'bg-yellow-700',
 }
+
 
 const complexityLabels: Record<string, string> = {
   base: 'Base',
@@ -68,13 +69,15 @@ export function ScienceCard({ science, index = 0 }: ScienceCardProps) {
                 <Beaker className="h-16 w-16 text-purple-300" />
               </div>
             )}
-            
+
             {/* Badge tipo articolo */}
             {science.articleType && (
               <div className="absolute left-5 top-5">
-                <span className={`rounded-full ${
-                  articleTypeColors[science.articleType] ?? 'bg-purple-500'
-                } px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm`}>
+                <span
+                  className={`rounded-full ${articleTypeColors[science.articleType] ?? 'bg-purple-700'
+                    } px-4 py-2 text-sm font-semibold text-white shadow-md`}
+                >
+
                   {articleTypeLabels[science.articleType] ?? science.articleType}
                 </span>
               </div>
@@ -128,7 +131,7 @@ export function ScienceCard({ science, index = 0 }: ScienceCardProps) {
 
             {/* Excerpt */}
             {science.excerpt && (
-              <p className="mb-5 line-clamp-3 flex-1 text-sm leading-relaxed text-gray-600">
+              <p className="mb-5 line-clamp-3 flex-1 text-sm leading-relaxed text-gray-700">
                 {science.excerpt}
               </p>
             )}

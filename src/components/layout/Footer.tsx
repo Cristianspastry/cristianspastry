@@ -137,7 +137,7 @@ export async function Footer() {
 
             {/* COLONNA 3: Categorie A */}
             <div className="space-y-6">
-              <h4 className="text-lg font-bold text-gray-900 tracking-wide">Le Nostre Creazioni</h4>
+              <h4 className="text-lg font-bold text-gray-900 tracking-wide">Le Mie Creazioni</h4>
               <ul className="space-y-3 text-sm">
                 {categoriesColumnA.map((category) => (
                   <li key={category._id}>
