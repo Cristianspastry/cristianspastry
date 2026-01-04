@@ -6,7 +6,7 @@ import { SEARCH_QUERY } from '@/sanity/lib/queries'
 // quando usano request data come searchParams
 
 // Forza la route ad essere dinamica
-export const dynamic = 'force-dynamic'
+//export const dynamic = 'force-dynamic'
 
 export async function GET(request: NextRequest) {
   try {
