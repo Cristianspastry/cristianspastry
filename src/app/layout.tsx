@@ -121,7 +121,7 @@ export default function RootLayout({
               <Header />
               
               {/* Main content - CRITICAL: main landmark must be direct child of body for best accessibility */}
-              <main id="main-content" className="flex-1 pt-16">
+              <main id="main-content" className="flex-1 pt-2">
                 {children}
               </main>
               

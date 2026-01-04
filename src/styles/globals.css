@@ -3,6 +3,21 @@
 @import "tw-animate-css";
 @import "./animations.css";
 
+
+
+/* Previeni layout shift da modal/sheet */
+body:has([data-state="open"]) {
+  overflow: hidden;
+  padding-right: var(--scrollbar-width, 0px);
+}
+
+/* Calcola larghezza scrollbar */
+@supports (scrollbar-gutter: stable) {
+  html {
+    scrollbar-gutter: stable; /* ← Hai già questo! */
+  }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme {
