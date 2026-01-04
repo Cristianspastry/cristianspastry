@@ -92,8 +92,8 @@ const config = {
   compress: true,
   poweredByHeader: false,
 
-  // Cache Components (Partial Prerendering)
-  cacheComponents: true,
+  // ❌ RIMUOVI QUESTA RIGA - incompatibile con API routes dinamiche
+  // cacheComponents: true,
 
   // Experimental features per performance
   experimental: {
