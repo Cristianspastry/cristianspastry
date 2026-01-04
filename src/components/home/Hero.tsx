@@ -17,12 +17,14 @@ export function Hero() {
             transition={{ duration: 0.3 }}
           >
             <h1 className="mb-6 text-4xl font-bold tracking-tight text-primary-50 md:text-6xl">
-            Ogni dolce ha un'anima. Io racconto la sua storia, un morso alla volta.
+            Dove la tecnica incontra la passione per la pasticceria.
 
             </h1>
             <p className="mb-8 text-lg text-primary-100 md:text-xl">
-            Ricette sincere, passione artigianale e {" "}
-            il profumo di un sogno che lievita ogni giorno.
+            Se vuoi capire perché una ricetta funziona, non solo copiarla, sei nel posto giusto.
+            <br />
+            Ricette artigianali, basi solide e contenuti pensati per crescere davvero.
+            
             </p>
           </motion.div>
 
