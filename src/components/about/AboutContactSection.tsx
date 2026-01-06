@@ -57,7 +57,7 @@ export default function AboutContactSection({ author }: AboutContactSectionProps
         )}
 
         {/* Phone (placeholder - you can add this to schema if needed) */}
-        <div className="flex items-start gap-4">
+        {/*<div className="flex items-start gap-4">
           <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-green-100">
             <Phone className="h-6 w-6 text-green-600" />
           </div>
@@ -66,10 +66,10 @@ export default function AboutContactSection({ author }: AboutContactSectionProps
             <p className="text-lg font-medium text-gray-900">+39 XXX XXX XXXX</p>
             <p className="text-sm text-gray-500">Disponibile Lun-Ven, 9:00-18:00</p>
           </div>
-        </div>
+        </div> */}
 
         {/* Address (placeholder) */}
-        <div className="flex items-start gap-4">
+       {/* <div className="flex items-start gap-4">
           <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-orange-100">
             <MapPin className="h-6 w-6 text-orange-600" />
           </div>
@@ -78,7 +78,7 @@ export default function AboutContactSection({ author }: AboutContactSectionProps
             <p className="text-lg font-medium text-gray-900">Via Roma, 123</p>
             <p className="text-sm text-gray-500">00100 Roma, Italia</p>
           </div>
-        </div>
+        </div> */}
 
         {/* Social Media */}
         {hasSocial && (

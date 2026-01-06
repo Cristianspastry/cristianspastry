@@ -144,7 +144,6 @@ export const recipeType = defineType({
       validation: (Rule) => Rule.required().min(1),
       group: 'details',
     }),
-    // ✅ NUOVO CAMPO - STAMPO
     defineField({
       name: 'panSize',
       title: 'Dimensione stampo (cm) - Opzionale',
@@ -152,7 +151,7 @@ export const recipeType = defineType({
       description: 'Dimensione dello stampo in centimetri (es: 20, 22, 24). Lascia vuoto se la ricetta non richiede stampo.',
       validation: (Rule) => 
         Rule.custom((value: number | undefined) => {
-          if (value === undefined || value === null) return true // Opzionale
+          if (value === undefined || value === null) return true
           if (value < 18) {
             return 'La dimensione dello stampo deve essere almeno 18 cm'
           }
@@ -363,18 +362,40 @@ export const recipeType = defineType({
     // Note e consigli
     defineField({
       name: 'tips',
-      title: 'Consigli dello chef',
+      title: 'Consigli',
       type: 'array',
       of: [{ type: 'block' }],
-      group: 'content',
+      description: 'Suggerimenti e trucchi per ottenere il miglior risultato',
+      group: ['content', 'details'],
     }),
+    
+    // ✅ NUOVO CAMPO - Errori comuni
+    defineField({
+      name: 'commonMistakes',
+      title: 'Errori comuni da evitare',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description: 'Elenca gli errori più comuni e come evitarli',
+      group: ['content', 'details'],
+    }),
+    
+    // ✅ NUOVO CAMPO - Quando usarlo
+    defineField({
+      name: 'whenToUse',
+      title: 'Quando usare questa ricetta',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description: 'Occasioni perfette per preparare questa ricetta (es: cene, feste, colazioni)',
+      group: ['content', 'details'],
+    }),
+    
     defineField({
       name: 'storage',
       title: 'Conservazione',
       type: 'text',
       rows: 3,
       description: 'Come conservare il prodotto finito',
-      group: 'details',
+      group: ['content', 'details'],
     }),
     defineField({
       name: 'variations',
@@ -382,7 +403,7 @@ export const recipeType = defineType({
       type: 'array',
       of: [{ type: 'block' }],
       description: 'Possibili varianti della ricetta',
-      group: 'content',
+      group: ['content', 'details'],
     }),
 
     // Relazioni

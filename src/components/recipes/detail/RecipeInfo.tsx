@@ -9,7 +9,7 @@ interface RecipeInfoProps {
 
 const difficultyLabels = {
   facile: 'Facile',
-  medio: 'Medio',
+  media: 'Media',
   difficile: 'Difficile',
   professionale: 'Professionale',
 }
@@ -85,7 +85,7 @@ export function RecipeInfo({ recipe, totalTime }: RecipeInfoProps) {
           <div>
             <p className="text-sm text-gray-600">Difficoltà</p>
             <p className="text-lg font-bold text-primary-900">
-              {difficultyLabels[recipe.difficulty as keyof typeof difficultyLabels]}
+              {difficultyLabels[recipe.difficulty as keyof typeof difficultyLabels] || 'N/A'}
             </p>
           </div>
         </div>

@@ -40,16 +40,16 @@ export async function generateMetadata({ params }: TechniquePageProps): Promise<
       images: technique.seo?.ogImageUrl
         ? [{ url: technique.seo.ogImageUrl }]
         : technique.mainImageUrl
-        ? [{ url: technique.mainImageUrl }]
-        : [],
+          ? [{ url: technique.mainImageUrl }]
+          : [],
       type: 'article',
     },
     keywords: technique.seo?.synonyms || technique.tags,
     robots: technique.seo?.noIndex
       ? {
-          index: false,
-          follow: false,
-        }
+        index: false,
+        follow: false,
+      }
       : undefined,
   }
 }
@@ -71,13 +71,18 @@ export default async function TechniquePage({ params }: TechniquePageProps) {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-12">
-        <div className="grid gap-12 lg:grid-cols-3">
+        <div className="flex gap-12 lg:flex-row flex-col">
           {/* Main Column */}
-          <div className="space-y-12 lg:col-span-2">
+          <div className="space-y-12 lg:w-2/3 flex-1">
             {/* Introduction */}
             {technique.introduction && (
               <TechniqueIntroduction content={technique.introduction} />
             )}
+
+            {/* Info Card - Mobile Only (sotto introduzione) */}
+            <div className="lg:hidden">
+              <TechniqueInfo technique={technique} />
+            </div>
 
             {/* Equipment */}
             {technique.equipment && technique.equipment.length > 0 && (
@@ -103,16 +108,23 @@ export default async function TechniquePage({ params }: TechniquePageProps) {
             {technique.variations && technique.variations.length > 0 && (
               <TechniqueVariations variations={technique.variations} />
             )}
+
+            {/* Related Content - Mobile Only (in fondo) */}
+            <div className="lg:hidden">
+              <TechniqueRelated technique={technique} />
+            </div>
           </div>
 
-          {/* Sidebar */}
-          <div className="space-y-8 lg:col-span-1">
-            {/* Info Card */}
-            <TechniqueInfo technique={technique} />
+          {/* Sidebar - Desktop Only */}
+          <aside className="hidden lg:block lg:w-1/3 flex-shrink-0">
+            <div className="lg:sticky lg:top-24 lg:self-start space-y-8">
+              {/* Info Card */}
+              <TechniqueInfo technique={technique} />
 
-            {/* Related Content */}
-            <TechniqueRelated technique={technique} />
-          </div>
+              {/* Related Content */}
+              <TechniqueRelated technique={technique} />
+            </div>
+          </aside>
         </div>
       </div>
     </div>

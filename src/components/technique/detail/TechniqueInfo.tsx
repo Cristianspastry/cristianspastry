@@ -10,7 +10,7 @@ interface TechniqueInfoProps {
 
 export default function TechniqueInfo({ technique }: TechniqueInfoProps) {
   return (
-    <div className="sticky top-4 space-y-6 rounded-2xl bg-white p-6 shadow-lg border border-gray-100">
+    <div className="space-y-6 rounded-2xl bg-white p-6 shadow-lg border border-gray-100">
       <h2 className="text-2xl font-bold text-gray-900">Informazioni</h2>
 
       <div className="space-y-4">
@@ -83,18 +83,19 @@ export default function TechniqueInfo({ technique }: TechniqueInfoProps) {
         )}
 
         {/* Video Tutorial */}
-        {technique.videoTutorial && (
-          <a
-            href={technique.videoTutorial}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-3 rounded-lg bg-blue-600 px-4 py-3 text-white transition-colors hover:bg-blue-700"
-          >
-            <Play className="h-5 w-5" />
-            <span className="font-semibold">Guarda il Video Tutorial</span>
-          </a>
-        )}
-      </div>
+        {/* Video Tutorial */}
+        {technique.videoTutorial && (<a
+
+          href = { technique.videoTutorial }
+    target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-3 rounded-lg bg-blue-600 px-4 py-3 text-white transition-colors hover:bg-blue-700"
+  >
+        <Play className="h-5 w-5" />
+        <span className="font-semibold">Guarda il Video Tutorial</span>
+      </a>
+)}
     </div>
+    </div >
   )
 }

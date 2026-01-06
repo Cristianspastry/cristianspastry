@@ -15,6 +15,7 @@
  * - Categorie divise in due colonne bilanciate
  * - Accessibilità WCAG AA ✓
  * - Responsive design
+ * - Spaziatura ottimizzata per mobile
  *
  * FIXES APPLIED:
  * - ✓ Rimossi inline styles problematici da link iubenda
@@ -22,6 +23,7 @@
  * - ✓ Migliorato contrasto badge (non applicabile qui ma documentato)
  * - ✓ Link esterni con rel="noopener noreferrer"
  * - ✓ Aria-labels appropriati per social icons
+ * - ✓ Ridotta spaziatura verticale su mobile
  */
 
 import Link from 'next/link'
@@ -43,7 +45,7 @@ const Tiktok = ({ className }: { className?: string }) => (
     xmlns="http://www.w3.org/2000/svg"
     aria-hidden="true"
   >
-    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
   </svg>
 )
 
@@ -56,7 +58,7 @@ const XIcon = ({ className }: { className?: string }) => (
     xmlns="http://www.w3.org/2000/svg"
     aria-hidden="true"
   >
-    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
   </svg>
 )
 
@@ -106,19 +108,19 @@ export async function Footer() {
   return (
     <>
       {/* Separator visivo - decorativo quindi aria-hidden è OK */}
-      <div 
-        className="h-px bg-gradient-to-r from-transparent via-primary-200 to-transparent" 
+      <div
+        className="h-px bg-gradient-to-r from-transparent via-primary-200 to-transparent"
         aria-hidden="true"
       />
 
       {/* Footer principale */}
       <footer className="bg-gradient-to-b from-white to-primary-50/30 text-gray-800">
-        <div className="container mx-auto px-4 py-16">
-          {/* Grid principale - 5 colonne desktop */}
-          <div className="grid gap-12 lg:grid-cols-5 md:grid-cols-2">
+        <div className="container mx-auto px-4 py-12 md:py-16">
+          {/* Grid principale - 5 colonne desktop, spaziatura ridotta su mobile */}
+          <div className="grid gap-8 md:gap-12 lg:grid-cols-5 md:grid-cols-2">
 
             {/* COLONNA 1: Brand Identity */}
-            <div className="space-y-6 lg:col-span-1">
+            <div className="space-y-3 md:space-y-6 lg:col-span-1">
               <div>
                 <h3 className="text-2xl font-bold bg-gradient-to-r from-primary-500 to-primary-600 bg-clip-text text-transparent mb-2">
                   {siteConfig.name}
@@ -130,18 +132,18 @@ export async function Footer() {
             </div>
 
             {/* COLONNA 2: Navigazione */}
-            <div className="space-y-6">
+            <div className="space-y-3 md:space-y-6">
               <h4 className="text-lg font-bold text-gray-900 tracking-wide">Navigazione</h4>
               <nav aria-label="Navigazione principale footer">
-                <ul className="space-y-3 text-sm">
+                <ul className="space-y-1.5 md:space-y-2 text-sm">
                   {siteConfig.navigation.map((item) => (
                     <li key={item.name}>
                       <Link
                         href={item.href}
                         className="text-gray-600 hover:text-primary-600 transition-all duration-300 hover:translate-x-1 inline-flex items-center gap-2 group"
                       >
-                        <span 
-                          className="w-0 group-hover:w-2 h-px bg-primary-600 transition-all duration-300" 
+                        <span
+                          className="w-0 group-hover:w-2 h-px bg-primary-600 transition-all duration-300"
                           aria-hidden="true"
                         />
                         {item.name}
@@ -153,18 +155,18 @@ export async function Footer() {
             </div>
 
             {/* COLONNA 3: Categorie A */}
-            <div className="space-y-6">
+            <div className="space-y-3 md:space-y-6">
               <h4 className="text-lg font-bold text-gray-900 tracking-wide">Le Mie Creazioni</h4>
               <nav aria-label="Categorie ricette - parte 1">
-                <ul className="space-y-3 text-sm">
+                <ul className="space-y-1.5 md:space-y-2 text-sm">
                   {categoriesColumnA.map((category) => (
                     <li key={category._id}>
                       <Link
                         href={`/ricette?category=${category.slug.current}`}
                         className="text-gray-600 hover:text-primary-600 transition-all duration-300 hover:translate-x-1 inline-flex items-center gap-2 group"
                       >
-                        <span 
-                          className="w-0 group-hover:w-2 h-px bg-primary-600 transition-all duration-300" 
+                        <span
+                          className="w-0 group-hover:w-2 h-px bg-primary-600 transition-all duration-300"
                           aria-hidden="true"
                         />
                         {category.emoji && (
@@ -180,19 +182,20 @@ export async function Footer() {
               </nav>
             </div>
 
+
             {/* COLONNA 4: Categorie B */}
-            <div className="space-y-6">
+            <div className="space-y-3 md:space-y-6">
               <h4 className="text-lg font-bold text-gray-900 tracking-wide">Scopri di Più</h4>
               <nav aria-label="Categorie ricette - parte 2">
-                <ul className="space-y-3 text-sm">
+                <ul className="space-y-1.5 md:space-y-2 text-sm">
                   {categoriesColumnB.map((category) => (
                     <li key={category._id}>
                       <Link
                         href={`/ricette?category=${category.slug.current}`}
                         className="text-gray-600 hover:text-primary-600 transition-all duration-300 hover:translate-x-1 inline-flex items-center gap-2 group"
                       >
-                        <span 
-                          className="w-0 group-hover:w-2 h-px bg-primary-600 transition-all duration-300" 
+                        <span
+                          className="w-0 group-hover:w-2 h-px bg-primary-600 transition-all duration-300"
                           aria-hidden="true"
                         />
                         {category.emoji && (
@@ -209,7 +212,7 @@ export async function Footer() {
             </div>
 
             {/* COLONNA 5: Social Media */}
-            <div className="space-y-6">
+            <div className="space-y-3 md:space-y-6">
               <h4 className="text-lg font-bold text-gray-900 tracking-wide">Resta Connesso</h4>
 
               {/* NEWSLETTER TEMPORANEAMENTE DISABILITATA */}
@@ -222,9 +225,9 @@ export async function Footer() {
 
               {/* Social Icons */}
               <div>
-                <p className="text-sm text-gray-600 mb-4">Seguimi sui social</p>
+                <p className="text-sm text-gray-600 mb-3 md:mb-4">Seguimi sui social</p>
                 <nav aria-label="Link social media">
-                  <div className="flex gap-4 flex-wrap">
+                  <div className="flex gap-3 md:gap-4 flex-wrap">
                     {socialLinks.map((social) => {
                       const IconComponent = social.icon
                       return (
@@ -239,7 +242,7 @@ export async function Footer() {
                           <div className="w-11 h-11 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center transition-all duration-300 group-hover:bg-primary-500 group-hover:border-primary-500 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-primary-500/50">
                             <IconComponent className="w-5 h-5 text-gray-600 group-hover:text-white transition-colors" />
                           </div>
-                          <span 
+                          <span
                             className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap"
                             aria-hidden="true"
                           >
@@ -257,7 +260,7 @@ export async function Footer() {
                       <div className="w-11 h-11 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center transition-all duration-300 group-hover:bg-primary-500 group-hover:border-primary-500 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-primary-500/50">
                         <Mail className="w-5 h-5 text-gray-600 group-hover:text-white transition-colors" />
                       </div>
-                      <span 
+                      <span
                         className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap"
                         aria-hidden="true"
                       >
@@ -271,13 +274,13 @@ export async function Footer() {
           </div>
 
           {/* Separator - decorativo quindi aria-hidden è OK */}
-          <div 
-            className="my-12 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" 
+          <div
+            className="my-8 md:my-12 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"
             aria-hidden="true"
           />
 
           {/* Footer Bottom */}
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-gray-600">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6 text-sm text-gray-600">
             {/* Copyright */}
             <div className="flex items-center gap-2">
               <p>
@@ -289,7 +292,7 @@ export async function Footer() {
 
             {/* Link legali - FIXED: Rimossi inline styles e classi iubenda problematiche */}
             <nav aria-label="Link legali">
-              <div className="flex items-center gap-6">
+              <div className="flex items-center gap-4 md:gap-6">
                 <a
                   href="https://www.iubenda.com/privacy-policy/67085013"
                   target="_blank"

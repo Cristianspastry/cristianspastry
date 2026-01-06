@@ -29,8 +29,19 @@ export default async function HomePage() {
       {/* Hero Section */}
       <Hero />
 
+      {/* Spacer decorativo */}
+      <div className="h-12 md:h-20 bg-gradient-to-b from-white to-gray-50/30" aria-hidden="true" />
+
       {/* Featured Recipes */}
       <FeaturedRecipes recipes={featuredRecipes} />
+
+      {/* Separator decorativo */}
+      <div className="relative py-12 md:py-16" aria-hidden="true">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary-50/20 to-transparent" />
+        <div className="container mx-auto px-4">
+          <div className="h-px bg-gradient-to-r from-transparent via-primary-200 to-transparent" />
+        </div>
+      </div>
 
       {/* Latest Techniques */}
       <ContentSection
@@ -42,6 +53,14 @@ export default async function HomePage() {
         backgroundColor="bg-white"
         columns={3}
       />
+
+      {/* Separator decorativo */}
+      <div className="relative py-12 md:py-16" aria-hidden="true">
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50/50 to-gray-50" />
+        <div className="container mx-auto px-4">
+          <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
+        </div>
+      </div>
 
       {/* Latest Science Articles */}
       <ContentSection

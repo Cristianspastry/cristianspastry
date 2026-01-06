@@ -73,13 +73,18 @@ export default async function SciencePage({ params }: SciencePageProps) {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-12">
-        <div className="grid gap-12 lg:grid-cols-3">
+        <div className="flex gap-12 lg:flex-row flex-col">
           {/* Main Column */}
-          <div className="space-y-12 lg:col-span-2">
+          <div className="space-y-12 lg:w-2/3 flex-1">
             {/* Introduction */}
             {article.introduction && (
               <ScienceIntroduction content={article.introduction} />
             )}
+
+            {/* Info Card - Mobile Only (sotto introduzione) */}
+            <div className="lg:hidden">
+              <ScienceInfo article={article} />
+            </div>
 
             {/* Sections */}
             {article.sections && article.sections.length > 0 && (
@@ -115,16 +120,23 @@ export default async function SciencePage({ params }: SciencePageProps) {
             {article.references && article.references.length > 0 && (
               <ScienceReferences references={article.references} />
             )}
+
+            {/* Related Content - Mobile Only (in fondo) */}
+            <div className="lg:hidden">
+              <ScienceRelated article={article} />
+            </div>
           </div>
 
-          {/* Sidebar */}
-          <div className="space-y-8 lg:col-span-1">
-            {/* Info Card */}
-            <ScienceInfo article={article} />
+          {/* Sidebar - Desktop Only */}
+          <aside className="hidden lg:block lg:w-1/3 flex-shrink-0">
+            <div className="lg:sticky lg:top-24 space-y-8">
+              {/* Info Card */}
+              <ScienceInfo article={article} />
 
-            {/* Related Content */}
-            <ScienceRelated article={article} />
-          </div>
+              {/* Related Content */}
+              <ScienceRelated article={article} />
+            </div>
+          </aside>
         </div>
       </div>
     </div>

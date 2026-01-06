@@ -99,14 +99,16 @@ export interface Recipe {
   cookTime: number
   restTime?: number
   servings: number
-  panSize?: number // ✅ NUOVO CAMPO - Dimensione stampo in cm (opzionale)
+  panSize?: number // Dimensione stampo in cm (opzionale)
   categories: Category[]
   tags?: string[]
   ingredients: IngredientGroup[]
   instructions: InstructionPhase[]
-  tips?: any[]
+  tips?: any[] // PortableText content
   storage?: string
-  variations?: any[]
+  variations?: any[] // PortableText content
+  commonMistakes?: any[] // ✅ NUOVO - PortableText content per errori comuni
+  whenToUse?: any[] // ✅ NUOVO - PortableText content per quando usare la ricetta
   relatedTechniques?: TechniquePreview[]
   relatedScience?: SciencePreview[]
   relatedRecipes?: RecipePreview[]
@@ -114,7 +116,7 @@ export interface Recipe {
   author: Author
   nutritionalInfo?: NutritionalInfo
   seo: SEO
-  featured : boolean ;
+  featured: boolean
 }
 
 export interface RecipePreview {

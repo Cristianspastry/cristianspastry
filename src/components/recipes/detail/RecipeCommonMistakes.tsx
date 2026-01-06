@@ -1,9 +1,9 @@
 import { PortableText } from '@portabletext/react'
 import { Card } from '@/components/ui/card'
-import { Lightbulb, Sparkles } from 'lucide-react'
+import { AlertTriangle, X } from 'lucide-react'
 
-interface RecipeTipsProps {
-  tips: any[] // PortableText content
+interface RecipeCommonMistakesProps {
+  mistakes: any[] // PortableText content
 }
 
 const portableTextComponents = {
@@ -24,14 +24,14 @@ const portableTextComponents = {
     bullet: ({ children }: any) => (
       <li className="flex items-start gap-3">
         <span className="mt-1.5 flex-shrink-0">
-          <Sparkles className="h-4 w-4 text-yellow-500" />
+          <X className="h-4 w-4 text-red-500" />
         </span>
         <span className="text-gray-700">{children}</span>
       </li>
     ),
     number: ({ children }: any) => (
       <li className="flex items-start gap-3 text-gray-700">
-        <span className="font-semibold text-primary-600">{children}</span>
+        <span className="font-semibold text-red-600">{children}</span>
       </li>
     ),
   },
@@ -45,34 +45,34 @@ const portableTextComponents = {
   },
 }
 
-export function RecipeTips({ tips }: RecipeTipsProps) {
-  if (!tips || tips.length === 0) return null
+export function RecipeCommonMistakes({ mistakes }: RecipeCommonMistakesProps) {
+  if (!mistakes || mistakes.length === 0) return null
 
   return (
-    <Card className="mt-8 overflow-hidden border-2 border-yellow-100 bg-gradient-to-br from-yellow-50 via-white to-amber-50">
+    <Card className="mt-8 overflow-hidden border-2 border-red-100 bg-gradient-to-br from-red-50 via-white to-rose-50">
       <div className="relative">
         {/* Header decorativo */}
-        <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-200/20 rounded-full blur-3xl" />
+        <div className="absolute top-0 right-0 w-32 h-32 bg-red-200/20 rounded-full blur-3xl" />
         
         <div className="relative p-6">
           <div className="flex items-center gap-3 mb-6">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500 shadow-lg shadow-yellow-500/30">
-              <Lightbulb className="h-6 w-6 text-white" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-red-400 to-rose-500 shadow-lg shadow-red-500/30">
+              <AlertTriangle className="h-6 w-6 text-white" />
             </div>
             <div>
               <h3 className="text-2xl font-bold text-primary-900">
-                Consigli
+                Errori Comuni da Evitare
               </h3>
               <p className="text-sm text-gray-600">
-                Trucchi e segreti per un risultato perfetto
+                Attenzione a questi passaggi critici
               </p>
             </div>
           </div>
 
           {/* Content */}
-          <div className="bg-white/60 backdrop-blur-sm rounded-lg p-5 border border-yellow-200/50">
+          <div className="bg-white/60 backdrop-blur-sm rounded-lg p-5 border border-red-200/50">
             <PortableText 
-              value={tips} 
+              value={mistakes} 
               components={portableTextComponents}
             />
           </div>

@@ -81,6 +81,8 @@ export const RECIPE_QUERY = groq`*[_type == "ricetta" && slug.current == $slug][
   tips,
   storage,
   variations,
+  commonMistakes,
+  whenToUse,
   relatedTechniques[]->{
     _id,
     title,

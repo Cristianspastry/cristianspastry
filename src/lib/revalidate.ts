@@ -15,6 +15,7 @@ export function revalidateRecipe(slug: string) {
   revalidatePath(`/ricette/${slug}`)
   revalidatePath('/ricette')
   revalidatePath('/')
+  console.info(`Revalidated recipe path for slug: ${slug}`)
 }
 
 /**
@@ -24,6 +25,7 @@ export function revalidateTechnique(slug: string) {
   revalidatePath(`/tecniche/${slug}`)
   revalidatePath('/tecniche')
   revalidatePath('/')
+  console.info(`Revalidated technique path for slug: ${slug}`)
 }
 
 /**
@@ -33,4 +35,5 @@ export function revalidateScience(slug: string) {
   revalidatePath(`/scienza/${slug}`)
   revalidatePath('/scienza')
   revalidatePath('/')
+  console.info(`Revalidated science article path for slug: ${slug}`)
 }
