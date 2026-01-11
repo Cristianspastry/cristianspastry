@@ -49,8 +49,78 @@ export default async function RecipePage({ params }: RecipePageProps) {
 
   console.log("Rendering recipe page for:", recipe);
 
+
+// Calcolo di tutti gli ingredienti dai vari gruppi
+  const allIngredients = recipe.ingredients.flatMap(group => 
+    group.items.map(item => 
+      `${item.quantity} ${item.unit || ''} ${item.ingredient}${item.notes ? ` (${item.notes})` : ''}`.trim()
+    )
+  );
+
+  // Calcolo di tutti i passaggi dalle varie fasi
+  const allInstructions = recipe.instructions.flatMap(phase => 
+    phase.steps.map(step => ({
+      '@type': 'HowToStep',
+      text: step.description,
+      // Se il singolo step ha una foto, la aggiungiamo allo schema
+      image: step.image?.url || undefined 
+    }))
+  );
+
+// --- LOGICA SCHEMA.ORG POTENZIATA ---
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Recipe',
+    name: recipe.title,
+    image: recipe.mainImageUrl,
+    description: recipe.excerpt,
+    datePublished: recipe.publishedAt,
+    prepTime: `PT${recipe.prepTime}M`,
+    cookTime: `PT${recipe.cookTime}M`,
+    totalTime: `PT${totalTime}M`,
+    recipeYield: `${recipe.servings} porzioni`,
+    recipeCategory: recipe.categories?.[0]?.title || 'Pasticceria',
+    recipeIngredient: allIngredients,
+    recipeInstructions: allInstructions,
+    author: {
+      '@type': 'Person',
+      name: recipe.author?.name || 'Cristian'
+    },
+    // Dati nutrizionali opzionali
+    ...(recipe.nutritionalInfo && {
+      nutrition: {
+        '@type': 'NutritionInformation',
+        calories: recipe.nutritionalInfo.calories ? `${recipe.nutritionalInfo.calories} kcal` : undefined,
+        proteinContent: recipe.nutritionalInfo.protein ? `${recipe.nutritionalInfo.protein}g` : undefined,
+        fatContent: recipe.nutritionalInfo.fat ? `${recipe.nutritionalInfo.fat}g` : undefined,
+        carbohydrateContent: recipe.nutritionalInfo.carbohydrates ? `${recipe.nutritionalInfo.carbohydrates}g` : undefined,
+        sugarContent: recipe.nutritionalInfo.sugar ? `${recipe.nutritionalInfo.sugar}g` : undefined,
+        fiberContent: recipe.nutritionalInfo.fiber ? `${recipe.nutritionalInfo.fiber}g` : undefined,
+      }
+    }),
+    // Se hai un sistema di tag, li aggiungiamo come keywords
+    keywords: recipe.tags?.join(', ')
+  };
+
+  // Aggiunta dinamica dei dati nutrizionali se presenti
+  if (recipe.nutritionalInfo) {
+    jsonLd.nutrition = {
+      '@type': 'NutritionInformation',
+      calories: `${recipe.nutritionalInfo.calories} calories`,
+      fatContent: `${recipe.nutritionalInfo.fat}g`,
+      proteinContent: `${recipe.nutritionalInfo.protein}g`,
+      carbohydrateContent: `${recipe.nutritionalInfo.carbohydrates}g`,
+      sugarContent: `${recipe.nutritionalInfo.sugar}g`,
+      fiberContent: `${recipe.nutritionalInfo.fiber}g`
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Hero Section con immagine principale */}
       <RecipeHero recipe={recipe} />
 
