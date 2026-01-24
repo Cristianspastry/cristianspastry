@@ -1,6 +1,6 @@
 import { CATEGORIES_QUERY } from '@/sanity/lib/queries';
+import { env } from '@/env'
 import {Home, BookOpen, Beaker, User, Mail, ChefHat, Package,Calculator } from 'lucide-react'
-import { env } from 'process';
 
 export const siteConfig = {
     name: "Cristian's Pastry",
@@ -59,6 +59,7 @@ export const siteConfig = {
       description: "Ricette artigianali, scienza della pasticceria e tecniche professionali. Trasforma la tua cucina in un laboratorio dolciario con passione e precisione.",
       keywords: ["dolci", "pasticceria", "ricette", "torte", "biscotti", "artigianale"],
       author: "Cristian Sorrentino",
+      // Usa l'env validato per evitare valori undefined a runtime.
       siteUrl: env.NEXT_PUBLIC_SITE_URL
     },
     CATEGORIES_QUERY

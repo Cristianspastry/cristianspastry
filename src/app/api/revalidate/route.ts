@@ -7,7 +7,15 @@ import { type NextRequest, NextResponse } from 'next/server'
 
 // Typo per il payload del webhook
 type WebhookPayload = {
-  _type: 'recipe' | 'technique' | 'science' | 'category'
+  _type:
+    | 'recipe'
+    | 'technique'
+    | 'science'
+    | 'category'
+    | 'ricetta'
+    | 'tecnica'
+    | 'scienza'
+    | 'categoria'
   slug?: {
     current: string
   }
@@ -33,11 +41,21 @@ export async function POST(req: NextRequest) {
     }
 
     const slug = body.slug?.current
+    const rawType = body._type?.trim()
 
-    console.log(`🔄 Webhook received: ${body._type} - ${slug || 'no slug'}`)
+    console.log(`🔄 Webhook received: ${rawType} - ${slug || 'no slug'}`)
+
+    // Normalizza i tipi Sanity in italiano ai nomi attesi dalla logica di revalidate.
+    const typeMap: Record<string, 'recipe' | 'technique' | 'science' | 'category'> = {
+      ricetta: 'recipe',
+      tecnica: 'technique',
+      scienza: 'science',
+      categoria: 'category',
+    }
+    const normalizedType = rawType ? typeMap[rawType] ?? rawType : rawType
 
     // Revalida in base al tipo di documento
-    switch (body._type) {
+    switch (normalizedType) {
       case 'science':
         if (slug) {
           revalidateScience(slug)
@@ -74,13 +92,13 @@ export async function POST(req: NextRequest) {
         break
 
       default:
-        console.warn(`⚠️ Unknown document type: ${body._type}`)
-        return new NextResponse(`Unknown type: ${body._type}`, { status: 400 })
+        console.warn(`⚠️ Unknown document type: ${rawType}`)
+        return new NextResponse(`Unknown type: ${rawType}`, { status: 400 })
     }
 
     return NextResponse.json({
       revalidated: true,
-      type: body._type,
+      type: normalizedType,
       slug: slug || null,
       timestamp: new Date().toISOString(),
     })
