@@ -5,12 +5,11 @@ import { SEARCH_QUERY } from '@/sanity/lib/queries'
 // ✅ Con Cache Components, le API routes sono automaticamente dinamiche
 // quando usano request data come searchParams
 
-// Forza la route ad essere dinamica
-export const dynamic = 'force-dynamic'
+// Nota: usare request.url per evitare l'uso di nextUrl con Cache Components abilitati.
 
 export async function GET(request: NextRequest) {
   try {
-    const searchParams = request.nextUrl.searchParams
+    const searchParams = new URL(request.url).searchParams
     const query = searchParams.get('q')
 
     if (!query || query.trim().length < 2) {
