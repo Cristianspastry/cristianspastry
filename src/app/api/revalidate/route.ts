@@ -7,7 +7,15 @@ import { type NextRequest, NextResponse } from 'next/server'
 
 // Typo per il payload del webhook
 type WebhookPayload = {
-  _type: 'recipe' | 'technique' | 'science' | 'category'
+  _type:
+    | 'recipe'
+    | 'technique'
+    | 'science'
+    | 'category'
+    | 'ricetta'
+    | 'tecnica'
+    | 'scienza'
+    | 'categoria'
   slug?: {
     current: string
   }
@@ -36,8 +44,19 @@ export async function POST(req: NextRequest) {
 
     console.log(`🔄 Webhook received: ${body._type} - ${slug || 'no slug'}`)
 
+    // Normalizza i tipi Sanity in italiano ai nomi attesi dalla logica di revalidate.
+    const normalizedType = body._type === 'ricetta'
+      ? 'recipe'
+      : body._type === 'tecnica'
+        ? 'technique'
+        : body._type === 'scienza'
+          ? 'science'
+          : body._type === 'categoria'
+            ? 'category'
+            : body._type
+
     // Revalida in base al tipo di documento
-    switch (body._type) {
+    switch (normalizedType) {
       case 'science':
         if (slug) {
           revalidateScience(slug)
@@ -80,7 +99,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       revalidated: true,
-      type: body._type,
+      type: normalizedType,
       slug: slug || null,
       timestamp: new Date().toISOString(),
     })
