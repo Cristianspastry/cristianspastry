@@ -41,19 +41,18 @@ export async function POST(req: NextRequest) {
     }
 
     const slug = body.slug?.current
+    const rawType = body._type?.trim()
 
-    console.log(`🔄 Webhook received: ${body._type} - ${slug || 'no slug'}`)
+    console.log(`🔄 Webhook received: ${rawType} - ${slug || 'no slug'}`)
 
     // Normalizza i tipi Sanity in italiano ai nomi attesi dalla logica di revalidate.
-    const normalizedType = body._type === 'ricetta'
-      ? 'recipe'
-      : body._type === 'tecnica'
-        ? 'technique'
-        : body._type === 'scienza'
-          ? 'science'
-          : body._type === 'categoria'
-            ? 'category'
-            : body._type
+    const typeMap: Record<string, 'recipe' | 'technique' | 'science' | 'category'> = {
+      ricetta: 'recipe',
+      tecnica: 'technique',
+      scienza: 'science',
+      categoria: 'category',
+    }
+    const normalizedType = rawType ? typeMap[rawType] ?? rawType : rawType
 
     // Revalida in base al tipo di documento
     switch (normalizedType) {
@@ -93,8 +92,8 @@ export async function POST(req: NextRequest) {
         break
 
       default:
-        console.warn(`⚠️ Unknown document type: ${body._type}`)
-        return new NextResponse(`Unknown type: ${body._type}`, { status: 400 })
+        console.warn(`⚠️ Unknown document type: ${rawType}`)
+        return new NextResponse(`Unknown type: ${rawType}`, { status: 400 })
     }
 
     return NextResponse.json({
