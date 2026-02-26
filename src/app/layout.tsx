@@ -12,7 +12,9 @@ import ToastProvider from "@/components/shared/ToastProvider";
 import { siteConfig } from "@/lib/config";
 import { StructuredData } from "@/components/seo/StructuredData";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -88,6 +90,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteUrl,
   },
+  verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+    : undefined,
 };
 
 const geist = Geist({
@@ -104,6 +109,7 @@ export default function RootLayout({
       <head>
         <StructuredData type="website" />
         <StructuredData type="organization" />
+        <meta name="google-site-verification" content="dUN8G5y3wcV9cFpWBe-iwKYreuiJriXxL53A_PzhyLk" />
       </head>
       <body className="flex min-h-screen flex-col">
         {/* Skip to main content link - Best practice for keyboard navigation */}

@@ -14,12 +14,12 @@ interface SitemapData {
   recipes: SitemapEntry[]
   techniques: SitemapEntry[]
   science: SitemapEntry[]
-  categories: SitemapEntry[]
-  authors: SitemapEntry[]
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = env.NEXT_PUBLIC_SITE_URL
+  const baseUrl =
+    env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
+    (env.VERCEL_URL ? `https://${env.VERCEL_URL}` : "http://localhost:3000")
   
   const data: SitemapData = await client.fetch(FULL_SITEMAP_QUERY)
 
@@ -71,26 +71,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }))
 
-  const categorySitemap: MetadataRoute.Sitemap = data.categories.map((category) => ({
-    url: `${baseUrl}/ricette/categoria/${category.slug}`,
-    lastModified: new Date(category._updatedAt),
-    changeFrequency: 'weekly',
-    priority: 0.5,
-  }))
-
-  const authorSitemap: MetadataRoute.Sitemap = data.authors.map((author) => ({
-    url: `${baseUrl}/autori/${author.slug}`,
-    lastModified: new Date(author._updatedAt),
-    changeFrequency: 'monthly',
-    priority: 0.4,
-  }))
-
   return [
     ...staticPages,
     ...recipeSitemap,
     ...techniqueSitemap,
     ...scienceSitemap,
-    ...categorySitemap,
-    ...authorSitemap,
   ]
 }

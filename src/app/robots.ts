@@ -1,6 +1,10 @@
 import type { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+
   return {
     rules: [
       {
@@ -9,6 +13,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/', '/studio/', '/admin/'],
       },
     ],
-    sitemap: 'https://tuosito.com/sitemap.xml',
+    sitemap: `${siteUrl}/sitemap.xml`,
   }
 }

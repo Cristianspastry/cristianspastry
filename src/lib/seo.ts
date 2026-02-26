@@ -6,7 +6,7 @@ import { env } from "process"
 import { siteConfig } from "./config"
 
 
-const DEFAULT_OG_IMAGE = '/og-default.jpg'
+const DEFAULT_OG_IMAGE = '/og-image.svg'
 
 // ============================================
 // METADATA PER RICETTE
@@ -249,7 +249,7 @@ export function generateScienceMetadata(science: Science): Metadata {
       name: env.NEXT_PUBLIC_SITE_URL,
       logo: {
         '@type': 'ImageObject',
-        url: `${env.NEXT_PUBLIC_SITE_URL}/logo.png`,
+        url: `${env.NEXT_PUBLIC_SITE_URL}/logo.svg`,
       },
     },
     mainEntityOfPage: {
@@ -433,7 +433,7 @@ export function generateHomeMetadata(): Metadata {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: `${env.NEXT_PUBLIC_SITE_URL}/cerca?q={search_term_string}`,
+        urlTemplate: `${env.NEXT_PUBLIC_SITE_URL}/search?q={search_term_string}`,
       },
       'query-input': 'required name=search_term_string',
     },

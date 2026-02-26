@@ -47,9 +47,6 @@ export default async function RecipePage({ params }: RecipePageProps) {
 
   const totalTime = (recipe.prepTime || 0) + (recipe.cookTime || 0) + (recipe.restTime ?? 0)
 
-  console.log("Rendering recipe page for:", recipe);
-
-
 // Calcolo di tutti gli ingredienti dai vari gruppi
   const allIngredients = recipe.ingredients.flatMap(group => 
     group.items.map(item => 

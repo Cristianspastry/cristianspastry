@@ -51,8 +51,8 @@ export const siteConfig = {
       scienzaDellaPasticceria: "/scienzadellapasticceria",
       tecniche: "/tecniche",
       search: "/search",
-      privacy: "/privacy",
-      cookie: "/cookie"
+      privacy: "https://www.iubenda.com/privacy-policy/67085013",
+      cookie: "https://www.iubenda.com/privacy-policy/67085013/cookie-policy"
     },
     seo: {
       title: "Cristian's Pastry - Dolci Artigianali",

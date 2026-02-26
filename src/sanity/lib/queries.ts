@@ -806,14 +806,6 @@ export const FULL_SITEMAP_QUERY = groq`{
     "slug": slug.current,
     _updatedAt,
     publishedAt
-  },
-  "categories": *[_type == "category"]{
-    "slug": slug.current,
-    _updatedAt
-  },
-  "authors": *[_type == "author"]{
-    "slug": slug.current,
-    _updatedAt
   }
 }`
 

@@ -33,7 +33,7 @@ export function StructuredData({ type, data = {} }: StructuredDataProps) {
           '@type': 'Organization',
           name: siteConfig.name,
           url: siteUrl,
-          logo: `${siteUrl}/logo.png`,
+          logo: `${siteUrl}/logo.svg`,
           description: siteConfig.description,
           founder: {
             '@type': 'Person',
