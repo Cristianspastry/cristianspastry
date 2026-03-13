@@ -293,17 +293,20 @@ export async function Footer() {
             {/* Link legali - FIXED: Rimossi inline styles e classi iubenda problematiche */}
             <nav aria-label="Link legali">
               <div className="flex items-center gap-4 md:gap-6">
-                <a
-                  href="https://www.iubenda.com/privacy-policy/67085013"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href={siteConfig.links.privacy}
                   className="hover:text-primary-600 transition-colors inline-flex items-center gap-1"
                 >
                   Privacy Policy
-                  <span className="sr-only">(si apre in una nuova finestra)</span>
-                </a>
+                </Link>
+                <Link
+                  href={siteConfig.links.terms}
+                  className="hover:text-primary-600 transition-colors inline-flex items-center gap-1"
+                >
+                  Termini e Condizioni
+                </Link>
                 <a
-                  href="https://www.iubenda.com/privacy-policy/67085013/cookie-policy"
+                  href={siteConfig.links.cookie}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-primary-600 transition-colors inline-flex items-center gap-1"

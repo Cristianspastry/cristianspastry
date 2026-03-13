@@ -16,6 +16,21 @@ const config = {
       },
       {
         protocol: 'https',
+        hostname: 'platform-lookaside.fbsbx.com',
+        pathname: '/platform/profilepic/**',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.tiktokcdn.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.tiktokcdn-us.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'm.media-amazon.com',
         pathname: '/**',
       },

@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, BookOpen, Clock, Wrench, Lightbulb } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
+import FavoriteButton from '@/components/favorites/FavoriteButton'
 import type { Technique, TechniquePreview } from '@/sanity/lib/types'
 
 interface TechniqueCardProps {
@@ -69,6 +70,18 @@ export function TechniqueCard({ technique, index = 0 }: TechniqueCardProps) {
                 </span>
               </div>
             )}
+
+            <div className="absolute right-4 top-4 z-10">
+              <FavoriteButton
+                itemId={technique._id}
+                itemType="technique"
+                size="icon-sm"
+                variant="ghost"
+                activeVariant="default"
+                stopPropagation
+                className="h-9 w-9 rounded-full bg-white/90 shadow-sm hover:bg-white"
+              />
+            </div>
           </div>
 
           {/* Content */}

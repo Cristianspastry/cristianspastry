@@ -14,6 +14,13 @@ export const env = createEnv({
         : z.string().optional(),
     AUTH_DISCORD_ID: z.string().optional(),
     AUTH_DISCORD_SECRET: z.string().optional(),
+    AUTH_GOOGLE_ID: z.string().optional(),
+    AUTH_GOOGLE_SECRET: z.string().optional(),
+    AUTH_FACEBOOK_ID: z.string().optional(),
+    AUTH_FACEBOOK_SECRET: z.string().optional(),
+    AUTH_TIKTOK_ID: z.string().optional(),
+    AUTH_TIKTOK_SECRET: z.string().optional(),
+    AUTH_EMAIL_FROM: z.string().optional(),
 
     // Database - opzionale
     DATABASE_URL: z.string().optional(),
@@ -38,6 +45,8 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: z.string().optional(),
+    NEXT_PUBLIC_FACEBOOK_APP_ID: z.string().optional(),
+    NEXT_PUBLIC_FACEBOOK_API_VERSION: z.string().optional(),
   },
 
   /**
@@ -48,6 +57,13 @@ export const env = createEnv({
     NEXT_AUTH_SECRET: process.env.NEXT_AUTH_SECRET,
     AUTH_DISCORD_ID: process.env.AUTH_DISCORD_ID,
     AUTH_DISCORD_SECRET: process.env.AUTH_DISCORD_SECRET,
+    AUTH_GOOGLE_ID: process.env.AUTH_GOOGLE_ID,
+    AUTH_GOOGLE_SECRET: process.env.AUTH_GOOGLE_SECRET,
+    AUTH_FACEBOOK_ID: process.env.AUTH_FACEBOOK_ID,
+    AUTH_FACEBOOK_SECRET: process.env.AUTH_FACEBOOK_SECRET,
+    AUTH_TIKTOK_ID: process.env.AUTH_TIKTOK_ID,
+    AUTH_TIKTOK_SECRET: process.env.AUTH_TIKTOK_SECRET,
+    AUTH_EMAIL_FROM: process.env.AUTH_EMAIL_FROM,
     DATABASE_URL: process.env.DATABASE_URL,
     SANITY_API_WRITE_TOKEN: process.env.SANITY_API_WRITE_TOKEN,
     SANITY_REVALIDATE_SECRET: process.env.SANITY_REVALIDATE_SECRET,
@@ -55,6 +71,8 @@ export const env = createEnv({
     CONTACT_EMAIL: process.env.CONTACT_EMAIL,
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    NEXT_PUBLIC_FACEBOOK_APP_ID: process.env.NEXT_PUBLIC_FACEBOOK_APP_ID,
+    NEXT_PUBLIC_FACEBOOK_API_VERSION: process.env.NEXT_PUBLIC_FACEBOOK_API_VERSION,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

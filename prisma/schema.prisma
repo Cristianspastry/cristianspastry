@@ -14,6 +14,12 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+    ADMIN
+    EDITOR
+    USER
+}
+
 model Post {
     id        Int      @id @default(autoincrement())
     name      String
@@ -60,9 +66,15 @@ model User {
     email         String?   @unique
     emailVerified DateTime?
     image         String?
+    role          UserRole  @default(USER)
+    passwordHash  String?
     accounts      Account[]
     sessions      Session[]
     posts         Post[]
+    passwordResetTokens PasswordResetToken[]
+    favoriteRecipes FavoriteRecipe[]
+    favoriteTechniques FavoriteTechnique[]
+    favoriteScience FavoriteScience[]
 }
 
 model VerificationToken {
@@ -71,4 +83,57 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model PasswordResetToken {
+    id        String   @id @default(cuid())
+    userId    String
+    tokenHash String   @unique
+    createdAt DateTime @default(now())
+    expiresAt DateTime
+    usedAt    DateTime?
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId])
+    @@index([expiresAt])
+}
+
+model FavoriteRecipe {
+    id        String   @id @default(cuid())
+    userId    String
+    recipeId  String
+    createdAt DateTime @default(now())
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([userId, recipeId])
+    @@index([userId])
+    @@index([recipeId])
+}
+
+model FavoriteTechnique {
+    id          String   @id @default(cuid())
+    userId      String
+    techniqueId String
+    createdAt   DateTime @default(now())
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([userId, techniqueId])
+    @@index([userId])
+    @@index([techniqueId])
+}
+
+model FavoriteScience {
+    id        String   @id @default(cuid())
+    userId    String
+    scienceId String
+    createdAt DateTime @default(now())
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([userId, scienceId])
+    @@index([userId])
+    @@index([scienceId])
 }

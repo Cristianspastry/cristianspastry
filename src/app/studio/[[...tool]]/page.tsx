@@ -7,14 +7,28 @@
  * https://github.com/sanity-io/next-sanity
  */
 
-import { NextStudio } from 'next-sanity/studio'
-import config from '../../../../sanity.config'
+import { NextStudio } from "next-sanity/studio";
+import { redirect } from "next/navigation";
+
+import { auth } from "@/server/auth";
+import { isRoleAtLeast } from "@/server/auth/roles";
+import config from "../../../../sanity.config";
 
 // ❌ RIMOSSO: export const dynamic = 'force-static'
 // ✅ Con Cache Components, lo studio Sanity sarà automaticamente dinamico quando necessario
 
 export { metadata, viewport } from 'next-sanity/studio'
 
-export default function StudioPage() {
-  return <NextStudio config={config} />
+export default async function StudioPage() {
+  const session = await auth();
+
+  if (!session?.user) {
+    redirect(`/auth/signin?callbackUrl=${encodeURIComponent("/studio")}`);
+  }
+
+  if (!isRoleAtLeast(session.user.role, "EDITOR")) {
+    redirect("/");
+  }
+
+  return <NextStudio config={config} />;
 }

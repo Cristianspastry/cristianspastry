@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
 import { Calendar, User, Clock, BookOpen } from 'lucide-react'
+import FavoriteButton from '@/components/favorites/FavoriteButton'
 import type { Technique } from '@/sanity/lib/types'
 
 interface TechniqueHeroProps {
@@ -47,6 +48,14 @@ export default function TechniqueHero({ technique }: TechniqueHeroProps) {
                   {difficultyLabels[technique.difficulty] ?? technique.difficulty}
                 </span>
               )}
+              <FavoriteButton
+                itemId={technique._id}
+                itemType="technique"
+                size="icon-sm"
+                variant="ghost"
+                activeVariant="default"
+                className="h-9 w-9 rounded-full border border-white/30 text-white hover:bg-white/10"
+              />
             </div>
 
             {/* Title */}

@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Beaker, Clock, BookMarked, FlaskConical } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
+import FavoriteButton from '@/components/favorites/FavoriteButton'
 import type { Science, SciencePreview } from '@/sanity/lib/types'
 
 interface ScienceCardProps {
@@ -88,6 +89,18 @@ export function ScienceCard({ science, index = 0 }: ScienceCardProps) {
                 </span>
               </div>
             )}
+
+            <div className="absolute bottom-4 right-4 z-10">
+              <FavoriteButton
+                itemId={science._id}
+                itemType="science"
+                size="icon-sm"
+                variant="ghost"
+                activeVariant="default"
+                stopPropagation
+                className="h-9 w-9 rounded-full bg-white/90 shadow-sm hover:bg-white"
+              />
+            </div>
           </div>
 
           {/* Contenuto - più padding */}

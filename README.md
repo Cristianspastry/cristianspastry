@@ -59,6 +59,10 @@ Un blog moderno e performante dedicato alla pasticceria professionale, costruito
 ### 📧 Features Avanzate
 - 📨 **Form contatti** con invio email (Resend)
 - 🔐 **Validazione** server-side con Zod
+- 🔐 **Autenticazione** con ruoli (Admin/Editor/User)
+- ⭐ **Preferiti** per ricette, tecniche e scienza
+- 👤 **Profilo utente** con collegamento provider
+- 📄 **Privacy e Termini** con pagine dedicate
 - 🧮 **Calcolatori** per pasticceria professionale
 - 🔖 **Categorie e tag** per organizzazione contenuti
 - 📖 **Articoli scientifici** sulla pasticceria
@@ -77,7 +81,7 @@ Un blog moderno e performante dedicato alla pasticceria professionale, costruito
 ### Backend & Data
 - **CMS**: [Sanity 3.x](https://www.sanity.io/)
 - **Database**: Sanity Content Lake
-- **ORM**: [Prisma](https://www.prisma.io/) (optional, per features future)
+- **ORM**: [Prisma](https://www.prisma.io/) (auth, ruoli, preferiti)
 - **Auth**: [NextAuth.js 5.0](https://next-auth.js.org/) (beta)
 
 ### Tools & Utilities
@@ -161,7 +165,7 @@ SANITY_API_WRITE_TOKEN="your-write-token"
 SANITY_REVALIDATE_SECRET="your-secret-key"
 
 # ============================================
-# RESEND (Email Service - Form Contatti)
+# RESEND (Email Service - Form Contatti + Magic Link)
 # ============================================
 RESEND_API_KEY="re_xxxxxxxxxxxxx"
 CONTACT_EMAIL="tua@email.com"
@@ -173,16 +177,38 @@ EMAILOCTOPUS_API_KEY="your-api-key"
 EMAILOCTOPUS_LIST_ID="your-list-id"
 
 # ============================================
-# AUTH (Opzionale)
+# AUTH (NextAuth)
 # ============================================
-AUTH_SECRET="your-secret-key"
+NEXT_AUTH_SECRET="your-secret-key"
 AUTH_DISCORD_ID="your-discord-client-id"
 AUTH_DISCORD_SECRET="your-discord-client-secret"
+AUTH_GOOGLE_ID="your-google-client-id"
+AUTH_GOOGLE_SECRET="your-google-client-secret"
+AUTH_FACEBOOK_ID="your-facebook-app-id"
+AUTH_FACEBOOK_SECRET="your-facebook-app-secret"
+AUTH_TIKTOK_ID="your-tiktok-client-key"
+AUTH_TIKTOK_SECRET="your-tiktok-client-secret"
+AUTH_EMAIL_FROM="Cristian's Pastry <noreply@tuodominio.it>"
 
 # ============================================
-# DATABASE (Opzionale)
+# FACEBOOK SDK (Opzionale)
+# ============================================
+NEXT_PUBLIC_FACEBOOK_APP_ID="your-facebook-app-id"
+NEXT_PUBLIC_FACEBOOK_API_VERSION="v19.0"
+
+# ============================================
+# DATABASE (Obbligatorio per auth)
 # ============================================
 DATABASE_URL="file:./db.sqlite"
+```
+
+### 1b. Setup Prisma (Auth)
+
+Per autenticazione, ruoli e preferiti:
+
+```bash
+npm run db:push
+npm run db:generate
 ```
 
 ### 2. Setup Sanity CMS
@@ -210,12 +236,13 @@ Segui le istruzioni e copia il **Project ID** nel tuo `.env`.
 4. Crea un token con permessi **Editor**
 5. Copia il token in `SANITY_API_WRITE_TOKEN`
 
-### 3. Setup Resend (Email Form Contatti)
+### 3. Setup Resend (Email Form Contatti + Magic Link)
 
 1. Crea account su [resend.com](https://resend.com)
 2. Vai su **API Keys** → Create
 3. Copia la chiave in `RESEND_API_KEY`
 4. Imposta `CONTACT_EMAIL` con la tua email
+5. Imposta `AUTH_EMAIL_FROM` per il Magic Link (mittente verificato)
 
 > **Pro Tip**: Verifica il tuo dominio su Resend per evitare che le email finiscano in spam!
 
@@ -459,6 +486,8 @@ revalidatePath('/ricette/[slug]')
    # Deploy automatico su ogni push a main
    git push origin main
    ```
+
+> Nota: per verifiche dominio (es. TikTok) assicurati che il file di verifica sia presente in `public/` e deployato.
 
 ### Altre Piattaforme
 

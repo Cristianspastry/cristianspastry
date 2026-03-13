@@ -257,6 +257,54 @@ export const FEATURED_RECIPES_QUERY = groq`*[_type == "ricetta" && !seo.noIndex]
   }
 }`
 
+// Query per ricette preferite (profilo utente)
+export const FAVORITE_RECIPES_QUERY = groq`*[_type == "ricetta" && _id in $ids && !seo.noIndex]{
+  _id,
+  title,
+  slug,
+  excerpt,
+  "imageUrl": mainImage.asset->url,
+  "imageAlt": mainImage.alt,
+  categories[]->{
+    _id,
+    title,
+    slug,
+    color,
+    emoji
+  },
+  difficulty,
+  prepTime,
+  publishedAt
+}`
+
+// Query per tecniche preferite (profilo utente)
+export const FAVORITE_TECHNIQUES_QUERY = groq`*[_type == "tecnica" && _id in $ids && !seo.noIndex]{
+  _id,
+  title,
+  slug,
+  excerpt,
+  "imageUrl": mainImage.asset->url,
+  "imageAlt": mainImage.alt,
+  difficulty,
+  executionTime,
+  publishedAt
+}`
+
+// Query per scienza preferita (profilo utente)
+export const FAVORITE_SCIENCE_QUERY = groq`*[_type == "scienza" && _id in $ids && !seo.noIndex]{
+  _id,
+  title,
+  slug,
+  excerpt,
+  "imageUrl": mainImage.asset->url,
+  "imageAlt": mainImage.alt,
+  articleType,
+  complexity,
+  readingTime,
+  featured,
+  publishedAt
+}`
+
 // Query per ricette per categoria
 export const RECIPES_BY_CATEGORY_QUERY = groq`*[_type == "ricetta" && references(*[_type=="category" && slug.current == $slug]._id) && !seo.noIndex] | order(publishedAt desc){
   _id,

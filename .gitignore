@@ -35,6 +35,10 @@ yarn-error.log*
 # do not commit any .env files to git, except for the .env.example file. https://create.t3.gg/en/usage/env-variables#using-environment-variables
 .env
 .env*.local
+.env.example
+
+# project tracking files
+PROJECT_CHANGES.md
 
 # vercel
 .vercel
@@ -48,4 +52,8 @@ yarn-error.log*
 # scripts
 /scripts
 *.txt
+!/public/tiktokn30wuON1FEvonPwZonr0JvKMc6nI9zkq.txt
 /email-templates
+
+.vercel
+.env*.local

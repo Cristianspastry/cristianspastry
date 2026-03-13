@@ -1,8 +1,9 @@
 'use client'
 
-import { Printer, Share2, Bookmark } from 'lucide-react'
+import { Printer, Share2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import type { Recipe } from '@/sanity/lib/types'
+import FavoriteButton from '@/components/favorites/FavoriteButton'
 
 interface RecipeActionsProps {
   recipe: Recipe
@@ -36,10 +37,6 @@ export function RecipeActions({ recipe }: RecipeActionsProps) {
     }
   } // <-- QUESTA PARENTESI MANCAVA!
 
-  const handleSave = () => {
-    // Implementa la logica di salvataggio (localStorage, database, ecc.)
-    alert('Ricetta salvata!')
-  }
 
   return (
     <div className="mb-8 flex flex-wrap gap-3">
@@ -59,17 +56,14 @@ export function RecipeActions({ recipe }: RecipeActionsProps) {
         <Share2 className="h-4 w-4" />
         Condividi
       </Button>
-      {/*
-      TODO: Implementare la logica di salvataggio della ricetta
-      in localStorage O DATABASE CON NEXT AUTH;
-      <Button
-        onClick={handleSave}
+      <FavoriteButton
+        itemId={recipe._id}
+        showLabel
+        size="sm"
         variant="outline"
+        activeVariant="default"
         className="gap-2"
-      >
-        <Bookmark className="h-4 w-4" />
-        Salva
-      </Button>*/}
+      />
     </div>
   )
 }

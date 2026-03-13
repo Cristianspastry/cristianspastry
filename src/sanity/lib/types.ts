@@ -126,6 +126,7 @@ export interface RecipePreview {
   excerpt: string
   imageUrl: string
   imageAlt?: string
+  categories?: Category[]
   difficulty: string
   prepTime: number
   publishedAt: string

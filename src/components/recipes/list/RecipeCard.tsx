@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from 'next/image'
 import { ArrowRight, Clock, Users } from "lucide-react"
+import FavoriteButton from "@/components/favorites/FavoriteButton"
 
 interface RecipeCardProps {
   recipe: Recipe | RecipePreview
@@ -26,6 +27,10 @@ export default function RecipeCard({ recipe, index = 0 }: RecipeCardProps) {
   
   // Type guard for Recipe
   const fullRecipe = isFullRecipe ? recipe : null
+  const previewCategories = !fullRecipe && Array.isArray((recipe as RecipePreview).categories)
+    ? (recipe as RecipePreview).categories
+    : null
+  const categories = fullRecipe?.categories ?? previewCategories
 
   return (
     <motion.div
@@ -53,14 +58,25 @@ export default function RecipeCard({ recipe, index = 0 }: RecipeCardProps) {
             )}
             
             {/* Badge categoria - più grande (solo per Recipe completo) */}
-            {fullRecipe?.categories?.length && (
+            {categories?.length && (
               <div className="absolute left-5 top-5">
                 <span className="rounded-full bg-primary-900/90 px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm">
                   
-                  {fullRecipe.categories[0]?.emoji} {fullRecipe.categories[0]?.title}
+                  {categories[0]?.emoji} {categories[0]?.title}
                 </span>
               </div>
             )}
+
+            <div className="absolute right-4 top-4 z-10">
+              <FavoriteButton
+                itemId={recipe._id}
+                size="icon-sm"
+                variant="ghost"
+                activeVariant="default"
+                stopPropagation
+                className="h-9 w-9 rounded-full bg-white/90 shadow-sm hover:bg-white"
+              />
+            </div>
           </div>
 
           {/* Contenuto - più padding */}

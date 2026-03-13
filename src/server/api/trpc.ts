@@ -10,8 +10,10 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
+import { type UserRole } from "@prisma/client";
 
 import { auth } from "@/server/auth";
+import { isRoleAtLeast } from "@/server/auth/roles";
 import { db } from "@/server/db";
 
 /**
@@ -131,3 +133,19 @@ export const protectedProcedure = t.procedure
       },
     });
   });
+
+/**
+ * Role-protected procedure
+ *
+ * Use this when a route should be accessible only to specific roles.
+ */
+export const roleProtectedProcedure = (requiredRole: UserRole) =>
+  protectedProcedure.use(({ ctx, next }) => {
+    if (!isRoleAtLeast(ctx.session.user.role, requiredRole)) {
+      throw new TRPCError({ code: "FORBIDDEN" });
+    }
+    return next();
+  });
+
+export const adminProcedure = roleProtectedProcedure("ADMIN");
+export const editorProcedure = roleProtectedProcedure("EDITOR");

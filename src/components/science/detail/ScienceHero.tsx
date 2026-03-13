@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
 import { Calendar, User, Clock, BookOpen } from 'lucide-react'
+import FavoriteButton from '@/components/favorites/FavoriteButton'
 import type { Science } from '@/sanity/lib/types'
 
 interface ScienceHeroProps {
@@ -60,6 +61,14 @@ export default function ScienceHero({ article }: ScienceHeroProps) {
                   In Evidenza
                 </Badge>
               )}
+              <FavoriteButton
+                itemId={article._id}
+                itemType="science"
+                size="icon-sm"
+                variant="ghost"
+                activeVariant="default"
+                className="h-9 w-9 rounded-full border border-white/30 text-white hover:bg-white/10"
+              />
             </div>
 
             {/* Title */}

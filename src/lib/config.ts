@@ -51,7 +51,8 @@ export const siteConfig = {
       scienzaDellaPasticceria: "/scienzadellapasticceria",
       tecniche: "/tecniche",
       search: "/search",
-      privacy: "https://www.iubenda.com/privacy-policy/67085013",
+      privacy: "/privacy",
+      terms: "/terms",
       cookie: "https://www.iubenda.com/privacy-policy/67085013/cookie-policy"
     },
     seo: {

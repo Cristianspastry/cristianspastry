@@ -3,7 +3,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { Menu, X, Instagram, Facebook, Youtube, Search } from 'lucide-react'
+import { Menu, X, Instagram, Facebook, Youtube, Search, LogIn, LogOut, Shield, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
 import { siteConfig } from '@/lib/config'
@@ -11,6 +11,7 @@ import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import { usePathname } from 'next/navigation'
+import { signIn, useSession } from 'next-auth/react'
 
 // Lazy load SearchModal - solo quando necessario
 const SearchModal = dynamic(() => import('@/components/search/SearchModal'), {
@@ -78,6 +79,13 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const pathname = usePathname()
+  const { data: session, status } = useSession()
+  const userRole = session?.user?.role
+  const isAuthenticated = status === 'authenticated'
+  const canEdit = userRole === 'ADMIN' || userRole === 'EDITOR'
+  const isAdmin = userRole === 'ADMIN'
+  const userLabel = session?.user?.name ?? session?.user?.email ?? 'Profilo'
+  const roleLabel = canEdit ? (isAdmin ? 'Admin' : 'Editor') : null
   // Keyboard shortcut Ctrl+K / Cmd+K
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -167,6 +175,39 @@ export function Header() {
           >
             <Search className="h-5 w-5 text-gray-700" />
           </Button>
+
+          {status !== 'loading' && (
+            <div className="flex items-center gap-2 pl-2">
+              {canEdit && (
+                <Button variant="ghost" size="sm" asChild>
+                  <Link href="/studio">Studio</Link>
+                </Button>
+              )}
+              {isAdmin && (
+                <Button variant="ghost" size="sm" asChild>
+                  <Link href="/admin">Admin</Link>
+                </Button>
+              )}
+              {!isAuthenticated ? (
+                <Button variant="outline" size="sm" onClick={() => signIn()}>
+                  <LogIn className="h-4 w-4" />
+                  Accedi
+                </Button>
+              ) : (
+                <Button variant="ghost" size="sm" asChild>
+                  <Link href="/profilo" title={session?.user?.email ?? undefined}>
+                    <User className="h-4 w-4" />
+                    <span className="max-w-[140px] truncate">{userLabel}</span>
+                    {roleLabel && (
+                      <span className="ml-1 rounded-full bg-primary-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary-700">
+                        {roleLabel}
+                      </span>
+                    )}
+                  </Link>
+                </Button>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Mobile Navigation */}
@@ -277,6 +318,84 @@ export function Header() {
                   </span>
                 </button>
               </motion.div>
+
+              {status !== 'loading' && (
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{
+                    delay: (siteConfig.navigation.length + 1) * 0.08,
+                    duration: 0.4,
+                    ease: "easeOut"
+                  }}
+                  className="flex flex-col gap-2"
+                >
+                  {canEdit && (
+                    <Link
+                      href="/studio"
+                      onClick={() => setIsOpen(false)}
+                      className="group flex items-center gap-4 rounded-xl px-4 py-3.5 transition-all hover:bg-white/10 hover:pl-6 active:scale-95"
+                    >
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 transition-all group-hover:bg-white/20 group-hover:scale-110">
+                        <User className="h-5 w-5 text-primary-100" strokeWidth={2} />
+                      </div>
+                      <span className="text-lg font-semibold text-white">
+                        Studio
+                      </span>
+                    </Link>
+                  )}
+                  {isAdmin && (
+                    <Link
+                      href="/admin"
+                      onClick={() => setIsOpen(false)}
+                      className="group flex items-center gap-4 rounded-xl px-4 py-3.5 transition-all hover:bg-white/10 hover:pl-6 active:scale-95"
+                    >
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 transition-all group-hover:bg-white/20 group-hover:scale-110">
+                        <Shield className="h-5 w-5 text-primary-100" strokeWidth={2} />
+                      </div>
+                      <span className="text-lg font-semibold text-white">
+                        Admin
+                      </span>
+                    </Link>
+                  )}
+                  {!isAuthenticated ? (
+                    <button
+                      onClick={() => {
+                        setIsOpen(false)
+                        signIn()
+                      }}
+                      className="group flex w-full items-center gap-4 rounded-xl px-4 py-3.5 transition-all hover:bg-white/10 hover:pl-6 active:scale-95"
+                    >
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 transition-all group-hover:bg-white/20 group-hover:scale-110">
+                        <LogIn className="h-5 w-5 text-primary-100" strokeWidth={2} />
+                      </div>
+                      <span className="text-lg font-semibold text-white">
+                        Accedi
+                      </span>
+                    </button>
+                  ) : (
+                    <Link
+                      href="/profilo"
+                      onClick={() => setIsOpen(false)}
+                      className="group flex w-full items-center gap-4 rounded-xl px-4 py-3.5 transition-all hover:bg-white/10 hover:pl-6 active:scale-95"
+                    >
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 transition-all group-hover:bg-white/20 group-hover:scale-110">
+                        <User className="h-5 w-5 text-primary-100" strokeWidth={2} />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-lg font-semibold text-white">
+                          {userLabel}
+                        </span>
+                        {roleLabel && (
+                          <span className="text-xs font-semibold uppercase tracking-wide text-primary-100">
+                            {roleLabel}
+                          </span>
+                        )}
+                      </div>
+                    </Link>
+                  )}
+                </motion.div>
+              )}
             </nav>
 
             {/* Footer con social - sempre visibile in fondo */}
