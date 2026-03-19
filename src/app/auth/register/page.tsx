@@ -1,64 +1,35 @@
-import Image from "next/image";
 import { redirect } from "next/navigation";
 
 import RegisterCard from "@/components/auth/RegisterCard";
 import { auth } from "@/server/auth";
 
 type RegisterPageProps = {
-  searchParams?: {
+  searchParams: Promise<{
     callbackUrl?: string;
-  };
+  }>;
 };
 
 export default async function RegisterPage({ searchParams }: RegisterPageProps) {
+  const resolvedSearchParams = await searchParams;
   const session = await auth();
   if (session?.user) {
-    redirect(searchParams?.callbackUrl ?? "/");
+    redirect(resolvedSearchParams?.callbackUrl ?? "/");
   }
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
-      <div>
-        <div className="flex items-center gap-4">
-          <Image
-            src="/logo.svg"
-            alt="Cristian's Pastry"
-            width={64}
-            height={64}
-            className="h-16 w-16"
-            priority
-          />
-          <div>
-            <p className="text-xs uppercase tracking-[0.25em] text-primary-600">
-              Area riservata
-            </p>
-            <h1 className="text-4xl font-serif font-bold text-primary-900">
-              Registrati
-            </h1>
-          </div>
-        </div>
-
-        <p className="mt-6 text-lg text-gray-700">
-          Crea un account per accedere alle funzionalita riservate del blog.
+    <div className="flex flex-col items-center justify-center min-h-[60vh] max-w-md mx-auto w-full">
+      <div className="flex flex-col items-center mb-8 text-center">
+        <h1 className="text-3xl font-serif font-bold text-amber-950">
+          Cristian's Pastry
+        </h1>
+        <p className="text-xs mt-2 uppercase tracking-[0.25em] text-amber-600 font-medium">
+          Area riservata
         </p>
-
-        <div className="mt-6 space-y-3 text-gray-600">
-          <div className="flex items-center gap-3">
-            <span className="h-2 w-2 rounded-full bg-primary-500" />
-            <span>Accesso personalizzato con ruolo dedicato.</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="h-2 w-2 rounded-full bg-primary-500" />
-            <span>Gestisci tecniche, ricette e articoli.</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="h-2 w-2 rounded-full bg-primary-500" />
-            <span>Reset password rapido in ogni momento.</span>
-          </div>
-        </div>
       </div>
 
-      <RegisterCard />
+      <div className="w-full">
+        <RegisterCard />
+      </div>
     </div>
   );
 }

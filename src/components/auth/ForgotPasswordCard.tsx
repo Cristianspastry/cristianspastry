@@ -35,27 +35,31 @@ export default function ForgotPasswordCard() {
   };
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-xl">
-      <h2 className="text-xl font-semibold text-primary-900">
+    <div className="rounded-2xl border border-amber-100 bg-white/80 backdrop-blur-md p-8 shadow-2xl shadow-amber-900/5">
+      <h2 className="text-2xl font-serif font-bold text-amber-950">
         Recupera password
       </h2>
-      <p className="mt-1 text-sm text-gray-600">
+      <p className="mt-2 text-sm text-amber-950/60">
         Inserisci la tua email per ricevere il link di reset.
       </p>
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-3">
         <div>
-          <label className="text-sm font-medium text-gray-700">Email</label>
+          <label className="text-sm font-medium text-amber-950/80">Email</label>
           <input
             type="email"
             required
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200"
+            className="mt-1.5 w-full rounded-lg border border-amber-200/60 px-4 py-2.5 text-sm transition-all focus:border-amber-400 focus:outline-none focus:ring-4 focus:ring-amber-400/10"
             placeholder="nome@dominio.com"
           />
         </div>
-        <Button type="submit" className="w-full" disabled={loading}>
+        <Button
+          type="submit"
+          className="w-full bg-amber-600 hover:bg-amber-700 text-white shadow-md shadow-amber-900/10 transition-all rounded-lg py-5 mt-2"
+          disabled={loading}
+        >
           {loading ? "Invio in corso..." : "Invia link reset"}
         </Button>
       </form>

@@ -1,75 +1,66 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import ResetPasswordCard from "@/components/auth/ResetPasswordCard";
 
 type ResetPasswordPageProps = {
-  searchParams?: {
+  searchParams: Promise<{
     token?: string;
-  };
+  }>;
 };
 
-export default function ResetPasswordPage({ searchParams }: ResetPasswordPageProps) {
-  const token = searchParams?.token ?? "";
+export default async function ResetPasswordPage({ searchParams }: ResetPasswordPageProps) {
+  const resolvedSearchParams = await searchParams;
+  const token = resolvedSearchParams?.token ?? "";
 
   if (!token) {
     return (
-      <div className="mx-auto max-w-xl rounded-2xl border border-gray-200 bg-white p-8 shadow-xl">
-        <p className="text-xs uppercase tracking-[0.25em] text-primary-600">
-          Reset password
-        </p>
-        <h1 className="mt-2 text-3xl font-serif font-bold text-primary-900">
-          Link non valido
-        </h1>
-        <p className="mt-3 text-gray-600">
-          Il link non e valido o manca il token.
-        </p>
-        <div className="mt-6 flex flex-wrap gap-3">
-          <Link
-            href="/auth/forgot-password"
-            className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground"
-          >
-            Richiedi nuovo link
-          </Link>
-          <Link
-            href="/"
-            className="rounded-md px-4 py-2 text-sm font-medium text-primary-600"
-          >
-            Torna alla home
-          </Link>
+      <div className="flex flex-col items-center justify-center min-h-[60vh] max-w-md mx-auto w-full">
+        <div className="flex flex-col items-center mb-8 text-center">
+          <h1 className="text-3xl font-serif font-bold text-amber-950">
+            Link non valido
+          </h1>
+          <p className="text-xs mt-2 uppercase tracking-[0.25em] text-red-600 font-medium">
+            Reset password
+          </p>
+        </div>
+
+        <div className="w-full rounded-2xl border border-amber-100 bg-white/80 backdrop-blur-md p-8 shadow-2xl shadow-amber-900/5 text-center">
+          <p className="text-amber-950/70 mb-8">
+            Il link non è valido oppure è scaduto.
+          </p>
+          <div className="flex flex-col gap-3">
+            <Link
+              href="/auth/forgot-password"
+              className="w-full justify-center text-center bg-amber-600 hover:bg-amber-700 text-white shadow-md shadow-amber-900/10 transition-all rounded-lg py-3 font-medium"
+            >
+              Richiedi nuovo link
+            </Link>
+            <Link
+              href="/"
+              className="w-full justify-center text-center text-amber-600 hover:text-amber-700 transition-all rounded-lg py-3 font-medium"
+            >
+              Torna alla home
+            </Link>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
-      <div>
-        <div className="flex items-center gap-4">
-          <Image
-            src="/logo.svg"
-            alt="Cristian's Pastry"
-            width={64}
-            height={64}
-            className="h-16 w-16"
-            priority
-          />
-          <div>
-            <p className="text-xs uppercase tracking-[0.25em] text-primary-600">
-              Area riservata
-            </p>
-            <h1 className="text-4xl font-serif font-bold text-primary-900">
-              Nuova password
-            </h1>
-          </div>
-        </div>
-
-        <p className="mt-6 text-lg text-gray-700">
-          Imposta la nuova password per completare il reset.
+    <div className="flex flex-col items-center justify-center min-h-[60vh] max-w-md mx-auto w-full">
+      <div className="flex flex-col items-center mb-8 text-center">
+        <h1 className="text-3xl font-serif font-bold text-amber-950">
+          Cristian's Pastry
+        </h1>
+        <p className="text-xs mt-2 uppercase tracking-[0.25em] text-amber-600 font-medium">
+          Nuova password
         </p>
       </div>
 
-      <ResetPasswordCard token={token} />
+      <div className="w-full">
+        <ResetPasswordCard token={token} />
+      </div>
     </div>
   );
 }

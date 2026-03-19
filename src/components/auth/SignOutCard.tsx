@@ -18,43 +18,53 @@ export default function SignOutCard({
 }: SignOutCardProps) {
   if (!isSignedIn) {
     return (
-      <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-xl">
-        <h2 className="text-xl font-semibold text-primary-900">
+      <div className="rounded-2xl border border-amber-100 bg-white/80 backdrop-blur-md p-8 text-center shadow-2xl shadow-amber-900/5">
+        <h2 className="text-2xl font-serif font-bold text-amber-950">
           Nessuna sessione attiva
         </h2>
-        <p className="mt-2 text-sm text-gray-600">
+        <p className="mt-2 text-sm text-amber-950/70">
           Hai gia effettuato il logout o non sei autenticato.
         </p>
-        <div className="mt-6 flex flex-wrap gap-3">
-          <Button asChild>
-            <Link href="/">Vai alla home</Link>
-          </Button>
-          <Button asChild variant="ghost">
-            <Link href="/auth/signin">Accedi</Link>
-          </Button>
+        <div className="mt-8 flex flex-col gap-3">
+          <Link
+            href="/"
+            className="w-full justify-center text-center bg-amber-600 hover:bg-amber-700 text-white shadow-md shadow-amber-900/10 transition-all rounded-lg py-3 font-medium"
+          >
+            Vai alla home
+          </Link>
+          <Link
+            href="/auth/signin"
+            className="w-full justify-center text-center text-amber-600 hover:text-amber-700 transition-all rounded-lg py-3 font-medium"
+          >
+            Accedi
+          </Link>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-xl">
-      <h2 className="text-xl font-semibold text-primary-900">Esci</h2>
-      <p className="mt-2 text-sm text-gray-600">
+    <div className="rounded-2xl border border-amber-100 bg-white/80 backdrop-blur-md p-8 text-center shadow-2xl shadow-amber-900/5">
+      <h2 className="text-2xl font-serif font-bold text-amber-950">Esci</h2>
+      <p className="mt-2 text-sm text-amber-950/70">
         Sei autenticato come {userLabel ?? "utente"}.
       </p>
-      <p className="mt-1 text-sm text-gray-600">
+      <p className="mt-1 text-sm text-amber-950/70">
         Conferma il logout per terminare la sessione.
       </p>
-      <div className="mt-6 flex flex-wrap gap-3">
-        <Button
+      <div className="mt-8 flex flex-col gap-3">
+        <button
           onClick={() => signOut({ callbackUrl: callbackUrl ?? "/" })}
+          className="w-full justify-center text-center bg-red-600 hover:bg-red-700 text-white shadow-md shadow-red-900/10 transition-all rounded-lg py-3 font-medium"
         >
           Conferma logout
-        </Button>
-        <Button asChild variant="ghost">
-          <Link href={callbackUrl ?? "/"}>Annulla</Link>
-        </Button>
+        </button>
+        <Link
+          href={callbackUrl ?? "/"}
+          className="w-full justify-center text-center text-amber-600 hover:text-amber-700 transition-all rounded-lg py-3 font-medium"
+        >
+          Annulla
+        </Link>
       </div>
     </div>
   );

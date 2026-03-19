@@ -52,7 +52,7 @@ export const client = createClient({
   dataset,
   apiVersion,
   useCdn: true, // use CDN for read-only to reduce errors and improve latency
-  fetch: fetchWithRetry,
+  fetch: fetchWithRetry as any,
 })
 
 // client per lettura e scrittura
@@ -62,5 +62,5 @@ export const clientWithWrite = createClient({
   apiVersion,
   useCdn: false, // keep direct API for writes
   token: SANITY_API_WRITE_TOKEN,
-  fetch: fetchWithRetry,
+  fetch: fetchWithRetry as any,
 })

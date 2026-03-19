@@ -32,6 +32,7 @@ export function TechniqueCard({ technique, index = 0 }: TechniqueCardProps) {
   const isFullTechnique = 'mainImageUrl' in technique
   const imageUrl = isFullTechnique ? technique.mainImageUrl : (technique as TechniquePreview).imageUrl
   const imageAlt = isFullTechnique ? technique.mainImageAlt : technique.title
+  const imageLqip = isFullTechnique ? technique.mainImageLqip : (technique as TechniquePreview).imageLqip
 
   return (
     <motion.div
@@ -47,10 +48,11 @@ export function TechniqueCard({ technique, index = 0 }: TechniqueCardProps) {
             {imageUrl ? (
               <Image
                 src={imageUrl}
-                alt={imageAlt}
+                alt={imageAlt || 'Tecnica'}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                {...(imageLqip ? { placeholder: 'blur', blurDataURL: imageLqip } : {})}
               />
             ) : (
               <div className="flex h-full items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100">

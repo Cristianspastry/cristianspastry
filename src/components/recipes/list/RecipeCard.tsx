@@ -24,7 +24,8 @@ export default function RecipeCard({ recipe, index = 0 }: RecipeCardProps) {
   const totalTime = isFullRecipe ? (recipe.prepTime ?? 0) + (recipe.cookTime ?? 0) : (recipe.prepTime ?? 0)
   const imageUrl = isFullRecipe ? recipe.mainImageUrl : recipe.imageUrl
   const imageAlt = isFullRecipe ? recipe.mainImageAlt : recipe.imageAlt
-  
+  const imageLqip = isFullRecipe ? recipe.mainImageLqip : recipe.imageLqip
+
   // Type guard for Recipe
   const fullRecipe = isFullRecipe ? recipe : null
   const previewCategories = !fullRecipe && Array.isArray((recipe as RecipePreview).categories)
@@ -50,18 +51,19 @@ export default function RecipeCard({ recipe, index = 0 }: RecipeCardProps) {
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                {...(imageLqip ? { placeholder: 'blur', blurDataURL: imageLqip } : {})}
               />
             ) : (
               <div className="flex h-full items-center justify-center bg-gray-100">
                 <span className="text-gray-400">Nessuna immagine</span>
               </div>
             )}
-            
+
             {/* Badge categoria - più grande (solo per Recipe completo) */}
             {categories?.length && (
               <div className="absolute left-5 top-5">
                 <span className="rounded-full bg-primary-900/90 px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm">
-                  
+
                   {categories[0]?.emoji} {categories[0]?.title}
                 </span>
               </div>

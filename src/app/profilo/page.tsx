@@ -140,84 +140,84 @@ export default async function ProfilePage() {
             alt={user.name ?? "Profilo"}
             width={72}
             height={72}
-            className="h-18 w-18 rounded-full border border-gray-200 object-cover"
+            className="h-18 w-18 rounded-full border-2 border-amber-200/50 object-cover shadow-sm"
           />
         ) : (
-          <div className="flex h-18 w-18 items-center justify-center rounded-full border border-gray-200 bg-primary-50 text-xl font-semibold text-primary-700">
+          <div className="flex h-18 w-18 items-center justify-center rounded-full border-2 border-amber-200/50 bg-amber-50 text-xl font-semibold text-amber-800 shadow-sm">
             {(user.name ?? user.email ?? "U")[0]!.toUpperCase()}
           </div>
         )}
         <div>
-          <p className="text-xs uppercase tracking-[0.25em] text-primary-600">
+          <p className="text-xs uppercase tracking-[0.25em] text-amber-600 font-medium">
             Area riservata
           </p>
-          <h1 className="text-3xl font-serif font-bold text-primary-900">
+          <h1 className="text-3xl font-serif font-bold text-amber-950">
             Profilo
           </h1>
-          <p className="mt-1 text-sm text-gray-600">
+          <p className="mt-1 text-sm text-amber-950/70">
             Gestisci le informazioni del tuo account.
           </p>
         </div>
       </div>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-xl">
-          <h2 className="text-lg font-semibold text-primary-900">
+        <div className="rounded-2xl border border-amber-100 bg-white/80 backdrop-blur-md p-8 shadow-2xl shadow-amber-900/5">
+          <h2 className="text-xl font-serif font-bold text-amber-950">
             Dettagli account
           </h2>
-          <div className="mt-4 space-y-3 text-sm text-gray-700">
+          <div className="mt-6 space-y-4 text-sm text-amber-950/80">
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-gray-400">
+              <p className="text-xs uppercase tracking-[0.2em] text-amber-950/50">
                 Nome
               </p>
-              <p className="text-base font-medium text-gray-900">
+              <p className="text-base font-medium text-amber-950">
                 {user.name ?? "Non impostato"}
               </p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-gray-400">
+              <p className="text-xs uppercase tracking-[0.2em] text-amber-950/50">
                 Email
               </p>
-              <p className="text-base font-medium text-gray-900">
+              <p className="text-base font-medium text-amber-950">
                 {user.email ?? "Non impostata"}
               </p>
             </div>
             {canEdit && (
               <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-gray-400">
+                <p className="text-xs uppercase tracking-[0.2em] text-amber-950/50">
                   Ruolo
                 </p>
-                <p className="text-base font-medium text-gray-900">
+                <p className="text-base font-medium text-amber-950">
                   {user.role}
                 </p>
               </div>
             )}
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-gray-400">
+              <p className="text-xs uppercase tracking-[0.2em] text-amber-950/50">
                 Metodo di accesso
               </p>
-              <p className="text-base font-medium text-gray-900">
+              <p className="text-base font-medium text-amber-950">
                 {hasPassword ? "Email e password" : "Solo provider esterni"}
               </p>
               {accountCount > 0 && (
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-1 text-xs text-amber-950/60">
                   Provider collegati: {accountCount}
                 </p>
               )}
             </div>
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-gray-400">
+              <p className="text-xs uppercase tracking-[0.2em] text-amber-950/50">
                 Preferiti
               </p>
-              <p className="text-base font-medium text-gray-900">
+              <p className="text-base font-medium text-amber-950">
                 {totalFavorites}
               </p>
             </div>
           </div>
         </div>
 
-        <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-xl">
-          <h2 className="text-lg font-semibold text-primary-900">
+        <div className="rounded-2xl border border-amber-100 bg-white/80 backdrop-blur-md p-8 shadow-2xl shadow-amber-900/5">
+          <h2 className="text-xl font-serif font-bold text-amber-950">
             Azioni rapide
           </h2>
           <div className="mt-4 flex flex-col gap-3">
@@ -280,7 +280,7 @@ export default async function ProfilePage() {
               <Link href="/auth/signout">Esci</Link>
             </Button>
           </div>
-          <p className="mt-4 text-xs text-gray-500">
+          <p className="mt-6 text-xs text-amber-950/60">
             Se cambi email o password, ricordati di aggiornare i tuoi provider.
           </p>
         </div>
@@ -289,10 +289,10 @@ export default async function ProfilePage() {
       <div className="mt-10">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-serif font-bold text-primary-900">
+            <h2 className="text-3xl font-serif font-bold text-amber-950">
               Ricette preferite
             </h2>
-            <p className="mt-1 text-sm text-gray-600">
+            <p className="mt-1 text-sm text-amber-950/70">
               {favoriteRecipes.length > 0
                 ? `Hai ${favoriteRecipes.length} ricette salvate.`
                 : "Non hai ancora ricette salvate."}
@@ -304,7 +304,7 @@ export default async function ProfilePage() {
         </div>
 
         {favoriteRecipes.length === 0 ? (
-          <div className="mt-6 rounded-2xl border border-dashed border-gray-200 bg-white p-8 text-center text-sm text-gray-500">
+          <div className="mt-6 rounded-2xl border-2 border-dashed border-amber-200/60 bg-white/50 p-8 text-center text-sm text-amber-950/60">
             Salva le ricette che ami e le troverai qui.
           </div>
         ) : (
@@ -319,10 +319,10 @@ export default async function ProfilePage() {
       <div className="mt-12">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-serif font-bold text-primary-900">
+            <h2 className="text-3xl font-serif font-bold text-amber-950">
               Tecniche preferite
             </h2>
-            <p className="mt-1 text-sm text-gray-600">
+            <p className="mt-1 text-sm text-amber-950/70">
               {favoriteTechniques.length > 0
                 ? `Hai ${favoriteTechniques.length} tecniche salvate.`
                 : "Non hai ancora tecniche salvate."}
@@ -334,7 +334,7 @@ export default async function ProfilePage() {
         </div>
 
         {favoriteTechniques.length === 0 ? (
-          <div className="mt-6 rounded-2xl border border-dashed border-gray-200 bg-white p-8 text-center text-sm text-gray-500">
+          <div className="mt-6 rounded-2xl border-2 border-dashed border-amber-200/60 bg-white/50 p-8 text-center text-sm text-amber-950/60">
             Salva le tecniche che ami e le troverai qui.
           </div>
         ) : (
@@ -349,10 +349,10 @@ export default async function ProfilePage() {
       <div className="mt-12">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-serif font-bold text-primary-900">
+            <h2 className="text-3xl font-serif font-bold text-amber-950">
               Scienza preferita
             </h2>
-            <p className="mt-1 text-sm text-gray-600">
+            <p className="mt-1 text-sm text-amber-950/70">
               {favoriteScience.length > 0
                 ? `Hai ${favoriteScience.length} articoli salvati.`
                 : "Non hai ancora articoli scientifici salvati."}
@@ -364,7 +364,7 @@ export default async function ProfilePage() {
         </div>
 
         {favoriteScience.length === 0 ? (
-          <div className="mt-6 rounded-2xl border border-dashed border-gray-200 bg-white p-8 text-center text-sm text-gray-500">
+          <div className="mt-6 rounded-2xl border-2 border-dashed border-amber-200/60 bg-white/50 p-8 text-center text-sm text-amber-950/60">
             Salva gli articoli scientifici che ami e li troverai qui.
           </div>
         ) : (

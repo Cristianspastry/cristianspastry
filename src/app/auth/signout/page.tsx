@@ -1,51 +1,36 @@
-import Image from "next/image";
-
 import SignOutCard from "@/components/auth/SignOutCard";
 import { auth } from "@/server/auth";
 
 type SignOutPageProps = {
-  searchParams?: {
+  searchParams: Promise<{
     callbackUrl?: string;
-  };
+  }>;
 };
 
 export default async function SignOutPage({ searchParams }: SignOutPageProps) {
+  const resolvedSearchParams = await searchParams;
   const session = await auth();
   const userLabel =
     session?.user?.email ?? session?.user?.name ?? session?.user?.id ?? null;
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
-      <div>
-        <div className="flex items-center gap-4">
-          <Image
-            src="/logo.svg"
-            alt="Cristian's Pastry"
-            width={64}
-            height={64}
-            className="h-16 w-16"
-            priority
-          />
-          <div>
-            <p className="text-xs uppercase tracking-[0.25em] text-primary-600">
-              Area riservata
-            </p>
-            <h1 className="text-4xl font-serif font-bold text-primary-900">
-              Logout
-            </h1>
-          </div>
-        </div>
-
-        <p className="mt-6 text-lg text-gray-700">
-          Termina la sessione in modo sicuro e torna al blog.
+    <div className="flex flex-col items-center justify-center min-h-[60vh] max-w-md mx-auto w-full">
+      <div className="flex flex-col items-center mb-8 text-center">
+        <h1 className="text-3xl font-serif font-bold text-amber-950">
+          Cristian's Pastry
+        </h1>
+        <p className="text-xs mt-2 uppercase tracking-[0.25em] text-amber-600 font-medium">
+          Logout
         </p>
       </div>
 
-      <SignOutCard
-        isSignedIn={!!session?.user}
-        userLabel={userLabel}
-        callbackUrl={searchParams?.callbackUrl ?? null}
-      />
+      <div className="w-full">
+        <SignOutCard
+          isSignedIn={!!session?.user}
+          userLabel={userLabel}
+          callbackUrl={resolvedSearchParams?.callbackUrl ?? null}
+        />
+      </div>
     </div>
   );
 }

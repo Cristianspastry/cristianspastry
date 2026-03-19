@@ -107,6 +107,7 @@ const geist = Geist({
   subsets: ["latin"],
   variable: "--font-geist-sans",
   display: "swap",
+  preload: false,
 });
 
 export default function RootLayout({
@@ -119,7 +120,7 @@ export default function RootLayout({
         <StructuredData type="organization" />
         <meta name="google-site-verification" content="dUN8G5y3wcV9cFpWBe-iwKYreuiJriXxL53A_PzhyLk" />
       </head>
-      <body className="flex min-h-screen flex-col">
+      <body className="flex min-h-screen flex-col font-sans antialiased text-foreground bg-background">
         {/* Skip to main content link - Best practice for keyboard navigation */}
         <a
           href="#main-content"

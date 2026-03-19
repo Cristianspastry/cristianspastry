@@ -61,16 +61,23 @@ const PROVIDER_LABELS: Record<string, string> = {
 };
 
 type ErrorPageProps = {
-  searchParams?: {
+  searchParams: Promise<{
     error?: string;
     provider?: string;
-  };
+  }>;
 };
 
-export default function AuthErrorPage({ searchParams }: ErrorPageProps) {
-  const errorKey = searchParams?.error ?? "Default";
-  const message = ERROR_MESSAGES[errorKey] ?? ERROR_MESSAGES.Default;
-  const providerId = searchParams?.provider?.toLowerCase();
+export default async function AuthErrorPage({ searchParams }: ErrorPageProps) {
+  const resolvedSearchParams = await searchParams;
+  const errorKey = resolvedSearchParams?.error ?? "Default";
+  const message =
+    ERROR_MESSAGES[errorKey] ??
+    ERROR_MESSAGES.Default ??
+    {
+      title: "Errore di accesso",
+      description: "Si e verificato un problema durante l'accesso.",
+    };
+  const providerId = resolvedSearchParams?.provider?.toLowerCase();
   const providerLabel = providerId ? (PROVIDER_LABELS[providerId] ?? providerId) : null;
   const isDev = process.env.NODE_ENV !== "production";
   const devHint =
@@ -97,35 +104,43 @@ export default function AuthErrorPage({ searchParams }: ErrorPageProps) {
   }
 
   return (
-    <div className="mx-auto max-w-xl rounded-2xl border border-gray-200 bg-white p-8 shadow-xl">
-      <p className="text-xs uppercase tracking-[0.25em] text-primary-600">
-        Autenticazione
-      </p>
-      <h1 className="mt-2 text-3xl font-serif font-bold text-primary-900">
-        {title}
-      </h1>
-      <p className="mt-3 text-gray-600">{description}</p>
+    <div className="flex flex-col items-center justify-center min-h-[60vh] max-w-md mx-auto w-full">
+      <div className="w-full rounded-2xl border border-amber-100 bg-white/80 backdrop-blur-md p-8 text-center shadow-2xl shadow-amber-900/5">
+        <p className="text-xs uppercase tracking-[0.25em] text-red-600 font-medium">
+          Autenticazione Fallita
+        </p>
+        <h1 className="mt-2 text-2xl font-serif font-bold text-amber-950">
+          {title}
+        </h1>
+        <p className="mt-3 text-amber-950/70">{description}</p>
 
-      <div className="mt-6 flex flex-wrap gap-3">
-        <Button asChild>
-          <Link href="/auth/signin">Torna al login</Link>
-        </Button>
-        <Button asChild variant="ghost">
-          <Link href="/">Vai alla home</Link>
-        </Button>
+        <div className="mt-8 flex flex-col gap-3">
+          <Link
+            href="/auth/signin"
+            className="w-full justify-center text-center bg-amber-600 hover:bg-amber-700 text-white shadow-md shadow-amber-900/10 transition-all rounded-lg py-3 font-medium"
+          >
+            Torna al login
+          </Link>
+          <Link
+            href="/"
+            className="w-full justify-center text-center text-amber-600 hover:text-amber-700 transition-all rounded-lg py-3 font-medium"
+          >
+            Vai alla home
+          </Link>
+        </div>
+
+        {devHint && (
+          <p className="mt-4 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
+            {devHint}
+          </p>
+        )}
+
+        {resolvedSearchParams?.error && (
+          <p className="mt-6 text-xs text-gray-400">
+            Codice errore: {resolvedSearchParams.error}
+          </p>
+        )}
       </div>
-
-      {devHint && (
-        <p className="mt-4 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
-          {devHint}
-        </p>
-      )}
-
-      {searchParams?.error && (
-        <p className="mt-6 text-xs text-gray-400">
-          Codice errore: {searchParams.error}
-        </p>
-      )}
     </div>
   );
 }

@@ -19,6 +19,7 @@ export function buildRecipesQuery(
       slug,
       excerpt,
       "mainImageUrl": mainImage.asset->url,
+  "mainImageLqip": mainImage.asset->metadata.lqip,
       "mainImageAlt": mainImage.alt,
       categories[]->{
         _id,
@@ -37,7 +38,8 @@ export function buildRecipesQuery(
         _id,
         name,
         slug,
-        "imageUrl": image.asset->url
+        "imageUrl": image.asset->url,
+    "imageLqip": image.asset->metadata.lqip
       }
     },
     "total": count(*[_type == "ricetta" ${filterString}]),
@@ -59,6 +61,7 @@ export const RECIPE_QUERY = groq`*[_type == "ricetta" && slug.current == $slug][
   slug,
   excerpt,
   "mainImageUrl": mainImage.asset->url,
+  "mainImageLqip": mainImage.asset->metadata.lqip,
   "mainImageAlt": mainImage.alt,
   "mainImageCaption": mainImage.caption,
   "mainImageMetadata": mainImage.asset->metadata,
@@ -89,6 +92,7 @@ export const RECIPE_QUERY = groq`*[_type == "ricetta" && slug.current == $slug][
     slug,
     excerpt,
     "imageUrl": mainImage.asset->url,
+  "imageLqip": mainImage.asset->metadata.lqip,
     difficulty
   },
   relatedScience[]->{
@@ -97,6 +101,7 @@ export const RECIPE_QUERY = groq`*[_type == "ricetta" && slug.current == $slug][
     slug,
     excerpt,
     "imageUrl": mainImage.asset->url,
+  "imageLqip": mainImage.asset->metadata.lqip,
     articleType
   },
   relatedRecipes[]->{
@@ -105,6 +110,7 @@ export const RECIPE_QUERY = groq`*[_type == "ricetta" && slug.current == $slug][
     slug,
     excerpt,
     "imageUrl": mainImage.asset->url,
+  "imageLqip": mainImage.asset->metadata.lqip,
     difficulty,
     prepTime
   },
@@ -114,6 +120,7 @@ export const RECIPE_QUERY = groq`*[_type == "ricetta" && slug.current == $slug][
     name,
     slug,
     "imageUrl": image.asset->url,
+    "imageLqip": image.asset->metadata.lqip,
     role,
     bio
   },
@@ -220,6 +227,7 @@ export const RECIPES_LIST_QUERY = groq`*[_type == "ricetta" && !seo.noIndex] | o
   slug,
   excerpt,
   "mainImageUrl": mainImage.asset->url,
+  "mainImageLqip": mainImage.asset->metadata.lqip,
   "mainImageAlt": mainImage.alt,
   difficulty,
   prepTime,
@@ -236,7 +244,8 @@ export const RECIPES_LIST_QUERY = groq`*[_type == "ricetta" && !seo.noIndex] | o
   author->{
     name,
     slug,
-    "imageUrl": image.asset->url
+    "imageUrl": image.asset->url,
+    "imageLqip": image.asset->metadata.lqip
   }
 }`
 
@@ -247,6 +256,7 @@ export const FEATURED_RECIPES_QUERY = groq`*[_type == "ricetta" && !seo.noIndex]
   slug,
   excerpt,
   "mainImageUrl": mainImage.asset->url,
+  "mainImageLqip": mainImage.asset->metadata.lqip,
   "mainImageAlt": mainImage.alt,
   difficulty,
   prepTime,
@@ -264,6 +274,7 @@ export const FAVORITE_RECIPES_QUERY = groq`*[_type == "ricetta" && _id in $ids &
   slug,
   excerpt,
   "imageUrl": mainImage.asset->url,
+  "imageLqip": mainImage.asset->metadata.lqip,
   "imageAlt": mainImage.alt,
   categories[]->{
     _id,
@@ -284,6 +295,7 @@ export const FAVORITE_TECHNIQUES_QUERY = groq`*[_type == "tecnica" && _id in $id
   slug,
   excerpt,
   "imageUrl": mainImage.asset->url,
+  "imageLqip": mainImage.asset->metadata.lqip,
   "imageAlt": mainImage.alt,
   difficulty,
   executionTime,
@@ -297,6 +309,7 @@ export const FAVORITE_SCIENCE_QUERY = groq`*[_type == "scienza" && _id in $ids &
   slug,
   excerpt,
   "imageUrl": mainImage.asset->url,
+  "imageLqip": mainImage.asset->metadata.lqip,
   "imageAlt": mainImage.alt,
   articleType,
   complexity,
@@ -312,6 +325,7 @@ export const RECIPES_BY_CATEGORY_QUERY = groq`*[_type == "ricetta" && references
   slug,
   excerpt,
   "mainImageUrl": mainImage.asset->url,
+  "mainImageLqip": mainImage.asset->metadata.lqip,
   "mainImageAlt": mainImage.alt,
   difficulty,
   prepTime,
@@ -325,6 +339,7 @@ export const RELATED_RECIPES_FALLBACK_QUERY = groq`*[_type == "ricetta" && _id !
   slug,
   excerpt,
   "imageUrl": mainImage.asset->url,
+  "imageLqip": mainImage.asset->metadata.lqip,
   "imageAlt": mainImage.alt,
   difficulty,
   prepTime,
@@ -338,6 +353,7 @@ export const RECIPES_SAME_CATEGORY_QUERY = groq`*[_type == "ricetta" && _id != $
   slug,
   excerpt,
   "imageUrl": mainImage.asset->url,
+  "imageLqip": mainImage.asset->metadata.lqip,
   "imageAlt": mainImage.alt,
   difficulty,
   prepTime,
@@ -364,6 +380,7 @@ export const TECHNIQUE_QUERY = groq`*[_type == "tecnica" && slug.current == $slu
   slug,
   excerpt,
   "mainImageUrl": mainImage.asset->url,
+  "mainImageLqip": mainImage.asset->metadata.lqip,
   "mainImageAlt": mainImage.alt,
   "mainImageCaption": mainImage.caption,
   difficulty,
@@ -375,6 +392,7 @@ export const TECHNIQUE_QUERY = groq`*[_type == "tecnica" && slug.current == $slu
   steps[]{
     ...,
     "imageUrl": image.asset->url,
+    "imageLqip": image.asset->metadata.lqip,
     "imageAlt": image.alt,
     "imageCaption": image.caption
   },
@@ -382,6 +400,7 @@ export const TECHNIQUE_QUERY = groq`*[_type == "tecnica" && slug.current == $slu
   variations[]{
     ...,
     "imageUrl": image.asset->url,
+    "imageLqip": image.asset->metadata.lqip,
     "imageAlt": image.alt
   },
   troubleshooting,
@@ -392,6 +411,7 @@ export const TECHNIQUE_QUERY = groq`*[_type == "tecnica" && slug.current == $slu
     slug,
     excerpt,
     "imageUrl": mainImage.asset->url,
+  "imageLqip": mainImage.asset->metadata.lqip,
     difficulty
   },
   relatedScience[]->{
@@ -419,6 +439,7 @@ export const TECHNIQUE_QUERY = groq`*[_type == "tecnica" && slug.current == $slu
     name,
     slug,
     "imageUrl": image.asset->url,
+    "imageLqip": image.asset->metadata.lqip,
     role
   },
   estimatedCost,
@@ -439,6 +460,7 @@ export const TECHNIQUES_LIST_QUERY = groq`*[_type == "tecnica" && !seo.noIndex] 
   slug,
   excerpt,
   "mainImageUrl": mainImage.asset->url,
+  "mainImageLqip": mainImage.asset->metadata.lqip,
   "mainImageAlt": mainImage.alt,
   difficulty,
   executionTime,
@@ -458,6 +480,7 @@ export const ALL_TECHNIQUES_QUERY = groq`*[_type == "tecnica" && !seo.noIndex] |
   slug,
   excerpt,
   "mainImageUrl": mainImage.asset->url,
+  "mainImageLqip": mainImage.asset->metadata.lqip,
   "mainImageAlt": mainImage.alt,
   difficulty,
   executionTime,
@@ -479,6 +502,7 @@ export const TECHNIQUES_BY_CATEGORY_QUERY = groq`*[_type == "tecnica" && categor
   slug,
   excerpt,
   "mainImageUrl": mainImage.asset->url,
+  "mainImageLqip": mainImage.asset->metadata.lqip,
   difficulty,
   executionTime,
   publishedAt
@@ -504,6 +528,7 @@ export const SCIENCE_QUERY = groq`*[_type == "scienza" && slug.current == $slug]
   slug,
   excerpt,
   "mainImageUrl": mainImage.asset->url,
+  "mainImageLqip": mainImage.asset->metadata.lqip,
   "mainImageAlt": mainImage.alt,
   "mainImageCaption": mainImage.caption,
   articleType,
@@ -541,6 +566,7 @@ export const SCIENCE_QUERY = groq`*[_type == "scienza" && slug.current == $slug]
     slug,
     excerpt,
     "imageUrl": mainImage.asset->url,
+  "imageLqip": mainImage.asset->metadata.lqip,
     difficulty
   },
   relatedTechniques[]->{
@@ -549,6 +575,7 @@ export const SCIENCE_QUERY = groq`*[_type == "scienza" && slug.current == $slug]
     slug,
     excerpt,
     "imageUrl": mainImage.asset->url,
+  "imageLqip": mainImage.asset->metadata.lqip,
     difficulty
   },
   relatedScience[]->{
@@ -557,6 +584,7 @@ export const SCIENCE_QUERY = groq`*[_type == "scienza" && slug.current == $slug]
     slug,
     excerpt,
     "imageUrl": mainImage.asset->url,
+  "imageLqip": mainImage.asset->metadata.lqip,
     articleType
   },
   publishedAt,
@@ -566,6 +594,7 @@ export const SCIENCE_QUERY = groq`*[_type == "scienza" && slug.current == $slug]
     name,
     slug,
     "imageUrl": image.asset->url,
+    "imageLqip": image.asset->metadata.lqip,
     role,
     bio
   },
@@ -588,7 +617,9 @@ export const SCIENCE_LIST_QUERY = groq`*[_type == "scienza" && !seo.noIndex] | o
   slug,
   excerpt,
   "imageUrl": mainImage.asset->url,
+  "imageLqip": mainImage.asset->metadata.lqip,
   "mainImageUrl": mainImage.asset->url,
+  "mainImageLqip": mainImage.asset->metadata.lqip,
   "mainImageAlt": mainImage.alt,
   articleType,
   complexity,
@@ -599,7 +630,8 @@ export const SCIENCE_LIST_QUERY = groq`*[_type == "scienza" && !seo.noIndex] | o
   author->{
     name,
     slug,
-    "imageUrl": image.asset->url
+    "imageUrl": image.asset->url,
+    "imageLqip": image.asset->metadata.lqip
   }
 }`
 
@@ -610,6 +642,7 @@ export const ALL_SCIENCE_QUERY = groq`*[_type == "scienza" && !seo.noIndex] | or
   slug,
   excerpt,
   "mainImageUrl": mainImage.asset->url,
+  "mainImageLqip": mainImage.asset->metadata.lqip,
   "mainImageAlt": mainImage.alt,
   articleType,
   complexity,
@@ -620,7 +653,8 @@ export const ALL_SCIENCE_QUERY = groq`*[_type == "scienza" && !seo.noIndex] | or
   author->{
     name,
     slug,
-    "imageUrl": image.asset->url
+    "imageUrl": image.asset->url,
+    "imageLqip": image.asset->metadata.lqip
   }
 }`
 
@@ -631,6 +665,7 @@ export const FEATURED_SCIENCE_QUERY = groq`*[_type == "scienza" && featured == t
   slug,
   excerpt,
   "mainImageUrl": mainImage.asset->url,
+  "mainImageLqip": mainImage.asset->metadata.lqip,
   "mainImageAlt": mainImage.alt,
   articleType,
   complexity,
@@ -645,6 +680,7 @@ export const SCIENCE_BY_TYPE_QUERY = groq`*[_type == "scienza" && articleType ==
   slug,
   excerpt,
   "mainImageUrl": mainImage.asset->url,
+  "mainImageLqip": mainImage.asset->metadata.lqip,
   complexity,
   readingTime,
   publishedAt
@@ -668,6 +704,7 @@ export const CATEGORIES_QUERY = groq`*[_type == "category"] | order(title asc){
   slug,
   description,
   "imageUrl": image.asset->url,
+    "imageLqip": image.asset->metadata.lqip,
   "imageAlt": image.alt,
   color,
   "recipeCount": count(*[_type == "ricetta" && references(^._id)])
@@ -680,6 +717,7 @@ export const CATEGORY_QUERY = groq`*[_type == "category" && slug.current == $slu
   slug,
   description,
   "imageUrl": image.asset->url,
+    "imageLqip": image.asset->metadata.lqip,
   "imageAlt": image.alt,
   color
 }`
@@ -694,6 +732,7 @@ export const AUTHOR_QUERY = groq`*[_type == "author" && slug.current == $slug][0
   name,
   slug,
   "imageUrl": image.asset->url,
+    "imageLqip": image.asset->metadata.lqip,
   "imageAlt": image.alt,
   bio,
   role,
@@ -713,6 +752,7 @@ export const AUTHOR_CONTENT_QUERY = groq`{
     slug,
     excerpt,
     "mainImageUrl": mainImage.asset->url,
+  "mainImageLqip": mainImage.asset->metadata.lqip,
     difficulty,
     prepTime,
     publishedAt
@@ -723,6 +763,7 @@ export const AUTHOR_CONTENT_QUERY = groq`{
     slug,
     excerpt,
     "mainImageUrl": mainImage.asset->url,
+  "mainImageLqip": mainImage.asset->metadata.lqip,
     difficulty,
     publishedAt
   },
@@ -732,6 +773,7 @@ export const AUTHOR_CONTENT_QUERY = groq`{
     slug,
     excerpt,
     "mainImageUrl": mainImage.asset->url,
+  "mainImageLqip": mainImage.asset->metadata.lqip,
     articleType,
     publishedAt
   }
@@ -754,6 +796,7 @@ export const SEARCH_QUERY = groq`{
     slug,
     excerpt,
     "imageUrl": mainImage.asset->url,
+  "imageLqip": mainImage.asset->metadata.lqip,
     publishedAt
   },
   "techniques": *[_type == "tecnica" && !seo.noIndex && (
@@ -767,6 +810,7 @@ export const SEARCH_QUERY = groq`{
     slug,
     excerpt,
     "imageUrl": mainImage.asset->url,
+  "imageLqip": mainImage.asset->metadata.lqip,
     publishedAt
   },
   "science": *[_type == "scienza" && !seo.noIndex && (
@@ -780,6 +824,7 @@ export const SEARCH_QUERY = groq`{
     slug,
     excerpt,
     "imageUrl": mainImage.asset->url,
+  "imageLqip": mainImage.asset->metadata.lqip,
     publishedAt
   }
 }`
@@ -796,6 +841,7 @@ export const HOMEPAGE_QUERY = groq`{
     slug,
     excerpt,
     "mainImageUrl": mainImage.asset->url,
+  "mainImageLqip": mainImage.asset->metadata.lqip,
     "mainImageAlt": mainImage.alt,
     difficulty,
     prepTime,
@@ -811,6 +857,7 @@ export const HOMEPAGE_QUERY = groq`{
     slug,
     excerpt,
     "mainImageUrl": mainImage.asset->url,
+  "mainImageLqip": mainImage.asset->metadata.lqip,
     difficulty,
     executionTime,
     publishedAt
@@ -821,6 +868,7 @@ export const HOMEPAGE_QUERY = groq`{
     slug,
     excerpt,
     "mainImageUrl": mainImage.asset->url,
+  "mainImageLqip": mainImage.asset->metadata.lqip,
     articleType,
     readingTime,
     publishedAt
@@ -830,6 +878,7 @@ export const HOMEPAGE_QUERY = groq`{
     title,
     slug,
     "imageUrl": image.asset->url,
+    "imageLqip": image.asset->metadata.lqip,
     color,
     "recipeCount": count(*[_type == "ricetta" && references(^._id) && !seo.noIndex])
   }
@@ -946,6 +995,7 @@ export const ALL_PRODUCTS_QUERY = groq`*[_type == "product"] | order(order asc, 
   category,
   description,
   "imageUrl": image.asset->url,
+    "imageLqip": image.asset->metadata.lqip,
   "imageAlt": image.alt,
   amazonUrl,
   price,
@@ -963,6 +1013,7 @@ export const PRODUCTS_BY_CATEGORY_QUERY = groq`*[_type == "product" && category 
   category,
   description,
   "imageUrl": image.asset->url,
+    "imageLqip": image.asset->metadata.lqip,
   "imageAlt": image.alt,
   amazonUrl,
   price,
@@ -980,6 +1031,7 @@ export const FEATURED_PRODUCTS_QUERY = groq`*[_type == "product" && featured == 
   category,
   description,
   "imageUrl": image.asset->url,
+    "imageLqip": image.asset->metadata.lqip,
   "imageAlt": image.alt,
   amazonUrl,
   price,

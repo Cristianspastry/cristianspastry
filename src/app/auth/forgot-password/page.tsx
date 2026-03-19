@@ -1,36 +1,20 @@
-import Image from "next/image";
-
 import ForgotPasswordCard from "@/components/auth/ForgotPasswordCard";
 
 export default function ForgotPasswordPage() {
   return (
-    <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
-      <div>
-        <div className="flex items-center gap-4">
-          <Image
-            src="/logo.svg"
-            alt="Cristian's Pastry"
-            width={64}
-            height={64}
-            className="h-16 w-16"
-            priority
-          />
-          <div>
-            <p className="text-xs uppercase tracking-[0.25em] text-primary-600">
-              Area riservata
-            </p>
-            <h1 className="text-4xl font-serif font-bold text-primary-900">
-              Password dimenticata
-            </h1>
-          </div>
-        </div>
-
-        <p className="mt-6 text-lg text-gray-700">
-          Ti invieremo un link per impostare una nuova password.
+    <div className="flex flex-col items-center justify-center min-h-[60vh] max-w-md mx-auto w-full">
+      <div className="flex flex-col items-center mb-8 text-center">
+        <h1 className="text-3xl font-serif font-bold text-amber-950">
+          Cristian's Pastry
+        </h1>
+        <p className="text-xs mt-2 uppercase tracking-[0.25em] text-amber-600 font-medium">
+          Recupero Password
         </p>
       </div>
 
-      <ForgotPasswordCard />
+      <div className="w-full">
+        <ForgotPasswordCard />
+      </div>
     </div>
   );
 }

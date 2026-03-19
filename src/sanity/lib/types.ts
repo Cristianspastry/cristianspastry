@@ -14,7 +14,8 @@ export interface Author {
   _id: string
   name: string
   slug: { current: string }
-  imageUrl: string
+  imageUrl: string;
+  imageLqip?: string;
   imageAlt: string
   bio: any[]
   role?: string
@@ -90,7 +91,8 @@ export interface Recipe {
   title: string
   slug: { current: string }
   excerpt: string
-  mainImageUrl: string
+  mainImageUrl: string;
+  mainImageLqip?: string;
   mainImageAlt: string
   mainImageCaption?: string
   mainImageMetadata?: any
@@ -124,7 +126,8 @@ export interface RecipePreview {
   title: string
   slug: { current: string }
   excerpt: string
-  imageUrl: string
+  imageUrl: string;
+  imageLqip?: string;
   imageAlt?: string
   categories?: Category[]
   difficulty: string
@@ -186,7 +189,8 @@ export interface Technique {
   title: string
   slug: { current: string }
   excerpt: string
-  mainImageUrl: string
+  mainImageUrl: string;
+  mainImageLqip?: string;
   mainImageAlt: string
   mainImageCaption?: string
   difficulty: 'base' | 'intermedio' | 'avanzato' | 'professionale'
@@ -218,7 +222,8 @@ export interface TechniquePreview {
   title: string
   slug: { current: string }
   excerpt: string
-  imageUrl: string
+  imageUrl: string;
+  imageLqip?: string;
   difficulty: string
   executionTime?: number
   publishedAt: string
@@ -286,7 +291,8 @@ export interface Science {
   title: string
   slug: { current: string }
   excerpt: string
-  mainImageUrl: string
+  mainImageUrl: string;
+  mainImageLqip?: string;
   mainImageAlt: string
   mainImageCaption?: string
   articleType: 'ingredienti' | 'processi' | 'reazioni' | 'fisica' | 'dietro-quinte' | 'miti' | 'storia'
@@ -316,7 +322,8 @@ export interface SciencePreview {
   title: string
   slug: { current: string }
   excerpt: string
-  imageUrl: string
+  imageUrl: string;
+  imageLqip?: string;
   articleType: string
   complexity?: string
   readingTime?: number
@@ -340,7 +347,8 @@ export interface SearchResultItem {
   title: string
   slug: { current: string }
   excerpt: string
-  imageUrl: string
+  imageUrl: string;
+  imageLqip?: string;
   publishedAt: string
 }
 
@@ -395,7 +403,8 @@ export interface Product {
   slug: { current: string }
   category: 'crostate' | 'ingredienti' | 'cottura' | 'decorazione' | 'attrezzatura' | 'elettrodomestici'
   description: string
-  imageUrl: string
+  imageUrl: string;
+  imageLqip?: string;
   imageAlt?: string
   amazonUrl: string
   price?: string

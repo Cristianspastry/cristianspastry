@@ -35,6 +35,8 @@ const articleTypeLabels: Record<string, string> = {
 }
 
 export function ScienceCard({ article, index = 0 }: ScienceCardProps) {
+  const imageLqip = article.mainImageLqip || (article as any).imageLqip;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -53,6 +55,7 @@ export function ScienceCard({ article, index = 0 }: ScienceCardProps) {
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
                 sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                {...(imageLqip ? { placeholder: 'blur', blurDataURL: imageLqip } : {})}
               />
             ) : (
               <div className="flex h-full items-center justify-center bg-gradient-to-br from-orange-50 to-orange-100">
@@ -63,9 +66,8 @@ export function ScienceCard({ article, index = 0 }: ScienceCardProps) {
             {/* Complexity Badge */}
             {article.complexity && (
               <div className="absolute left-5 top-5">
-                <span className={`rounded-full ${
-                  complexityColors[article.complexity] ?? 'bg-gray-500'
-                } px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm shadow-lg`}>
+                <span className={`rounded-full ${complexityColors[article.complexity] ?? 'bg-gray-500'
+                  } px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm shadow-lg`}>
                   {complexityLabels[article.complexity] ?? article.complexity}
                 </span>
               </div>
