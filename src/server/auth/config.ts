@@ -21,13 +21,13 @@ import { ensurePrismaClientHasFields } from "@/server/prisma-check";
  *
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
+import "next-auth/jwt";
+
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
       role: UserRole;
-      // ...other properties
-      // role: UserRole;
     } & DefaultSession["user"];
   }
 
@@ -61,44 +61,44 @@ export const authConfig = {
   providers: [
     ...(env.AUTH_DISCORD_ID && env.AUTH_DISCORD_SECRET
       ? [
-          DiscordProvider({
-            clientId: env.AUTH_DISCORD_ID,
-            clientSecret: env.AUTH_DISCORD_SECRET,
-          }),
-        ]
+        DiscordProvider({
+          clientId: env.AUTH_DISCORD_ID,
+          clientSecret: env.AUTH_DISCORD_SECRET,
+        }),
+      ]
       : []),
     ...(env.AUTH_GOOGLE_ID && env.AUTH_GOOGLE_SECRET
       ? [
-          GoogleProvider({
-            clientId: env.AUTH_GOOGLE_ID,
-            clientSecret: env.AUTH_GOOGLE_SECRET,
-            allowDangerousEmailAccountLinking: false,
-          }),
-        ]
+        GoogleProvider({
+          clientId: env.AUTH_GOOGLE_ID,
+          clientSecret: env.AUTH_GOOGLE_SECRET,
+          allowDangerousEmailAccountLinking: false,
+        }),
+      ]
       : []),
     ...(env.AUTH_FACEBOOK_ID && env.AUTH_FACEBOOK_SECRET
       ? [
-          FacebookProvider({
-            clientId: env.AUTH_FACEBOOK_ID,
-            clientSecret: env.AUTH_FACEBOOK_SECRET,
-          }),
-        ]
+        FacebookProvider({
+          clientId: env.AUTH_FACEBOOK_ID,
+          clientSecret: env.AUTH_FACEBOOK_SECRET,
+        }),
+      ]
       : []),
     ...(env.AUTH_TIKTOK_ID && env.AUTH_TIKTOK_SECRET
       ? [
-          TikTokProvider({
-            clientId: env.AUTH_TIKTOK_ID,
-            clientSecret: env.AUTH_TIKTOK_SECRET,
-          }),
-        ]
+        TikTokProvider({
+          clientId: env.AUTH_TIKTOK_ID,
+          clientSecret: env.AUTH_TIKTOK_SECRET,
+        }),
+      ]
       : []),
     ...(env.RESEND_API_KEY && env.AUTH_EMAIL_FROM
       ? [
-          ResendProvider({
-            apiKey: env.RESEND_API_KEY,
-            from: env.AUTH_EMAIL_FROM,
-          }),
-        ]
+        ResendProvider({
+          apiKey: env.RESEND_API_KEY,
+          from: env.AUTH_EMAIL_FROM,
+        }),
+      ]
       : []),
     CredentialsProvider({
       name: "Email e password",
