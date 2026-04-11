@@ -21,8 +21,8 @@
  */
 
 import type { Metadata } from 'next'
-import TechniquesList from '@/components/technique/list/TechniquesList'
-import { getTechniques } from '@/lib/data/techniques'
+import { TechniquesList } from '@/features/techniques/components'
+import { getTechniques } from '@/features/techniques/services/techniqueService'
 
 export const metadata: Metadata = {
   title: 'Tecniche di Pasticceria | Cristian\'s Pastry',

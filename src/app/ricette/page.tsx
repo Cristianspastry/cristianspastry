@@ -22,8 +22,8 @@
  */
 
 import type { Metadata } from 'next'
-import { getRecipes, getRecipeCategories } from '@/lib/data/recipes'
-import RecipesList from '@/components/recipes/list/RecipesList'
+import { getRecipes, getRecipeCategories } from '@/features/recipes/services/recipeService'
+import { RecipesList } from '@/features/recipes/components'
 
 export const metadata: Metadata = {
   title: 'Ricette di Pasticceria | Scopri Dolci Deliziosi',

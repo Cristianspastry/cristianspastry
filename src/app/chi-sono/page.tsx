@@ -2,12 +2,12 @@ import type { Metadata } from 'next'
 import { client } from '@/sanity/lib/client'
 import { AUTHOR_QUERY } from '@/sanity/lib/queries'
 import type { Author } from '@/sanity/lib/types'
-import AboutHero from '@/components/about/AboutHero'
-import AboutBio from '@/components/about/AboutBio'
-import AboutExpertise from '@/components/about/AboutExpertise'
-import AboutContactSection from '@/components/about/AboutContactSection'
-import ContactForm from '@/components/about/ContactForm'
-import PageTransition from '@/components/shared/PageTransition'
+import AboutHero from '@/features/about/components/AboutHero'
+import AboutBio from '@/features/about/components/AboutBio'
+import AboutExpertise from '@/features/about/components/AboutExpertise'
+import AboutContactSection from '@/features/about/components/AboutContactSection'
+import ContactForm from '@/features/about/components/ContactForm'
+import PageTransition from '@/core/components/shared/PageTransition'
 
 export const metadata: Metadata = {
   title: 'Chi Sono | Cristian\'s Pastry',
