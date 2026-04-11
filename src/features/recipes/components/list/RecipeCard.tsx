@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from 'next/image'
 import { ArrowRight, Clock, Users } from "lucide-react"
-import FavoriteButton from "@/components/favorites/FavoriteButton"
+import FavoriteButton from "@/features/favorites/components/FavoriteButton"
 
 interface RecipeCardProps {
   recipe: Recipe | RecipePreview

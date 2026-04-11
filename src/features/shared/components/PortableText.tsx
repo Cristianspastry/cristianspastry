@@ -1,4 +1,4 @@
-import { urlFor } from "@/sanity/lib/image"
+import { urlFor } from "@/core/lib/image"
 import { PortableText as BasePortableText } from '@portabletext/react'
 import type { PortableTextComponents, PortableTextBlock } from '@portabletext/react'
 import Image from "next/image"

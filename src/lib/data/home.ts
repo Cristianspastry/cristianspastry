@@ -3,12 +3,12 @@
 // DATA FETCHING FUNCTIONS - HOME PAGE
 // ============================================
 
-import { client } from "@/sanity/lib/client"
+import { client } from "@/core/lib/clients"
 import {
   RECIPES_LIST_QUERY,
   SCIENCE_LIST_QUERY,
   TECHNIQUES_LIST_QUERY,
-} from "@/sanity/lib/queries"
+} from "@/features/recipes/services/recipeService"
 import type { Recipe, Science, Technique } from "@/sanity/lib/types"
 
 const START = 0

@@ -5,8 +5,8 @@ import { getProviders, signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { LogIn } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import FacebookSdkLoginButton from "@/components/auth/FacebookSdkLoginButton";
+import { Button } from "@/core/components/ui/button";
+import FacebookSdkLoginButton from "@/features/auth/components/FacebookSdkLoginButton";
 
 type Provider = {
   id: string;

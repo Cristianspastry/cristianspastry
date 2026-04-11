@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/core/components/ui/button";
 
 export default function ForgotPasswordCard() {
   const [email, setEmail] = useState("");
