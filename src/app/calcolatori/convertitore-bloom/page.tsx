@@ -1,13 +1,13 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import PageTransition from '@/components/shared/PageTransition'
+import PageTransition from '@/core/components/shared/PageTransition'
 import { Droplet, ArrowLeft, Info } from 'lucide-react'
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Button } from '@/core/components/ui/button'
+import { Input } from '@/core/components/ui/input'
+import { Label } from '@/core/components/ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/core/components/ui/select'
 
 export default function ConvertitoreBloomPage() {
   // First Calculator - Bloom Conversion

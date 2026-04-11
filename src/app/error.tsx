@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import Link from 'next/link'
 import { Home, RefreshCw, AlertTriangle } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/core/components/ui/button'
 
 interface ErrorProps {
   error: Error & { digest?: string }

@@ -11,8 +11,8 @@
  * valori di fallback appropriati per mantenere una buona UX anche in caso di errori.
  */
 
-import { client } from "@/sanity/lib/client"
-import { RECIPES_LIST_QUERY, RECIPE_QUERY, RELATED_RECIPES_FALLBACK_QUERY, RECIPES_SAME_CATEGORY_QUERY, CATEGORIES_QUERY, buildRecipesQuery } from "@/sanity/lib/queries"
+import { client } from "@/core/lib/clients"
+import { RECIPES_LIST_QUERY, RECIPE_QUERY, RELATED_RECIPES_FALLBACK_QUERY, RECIPES_SAME_CATEGORY_QUERY, CATEGORIES_QUERY, buildRecipesQuery } from "@/features/recipes/services/recipeService"
 import type { Category, Recipe, RecipePreview } from "@/sanity/lib/types"
 
 /**

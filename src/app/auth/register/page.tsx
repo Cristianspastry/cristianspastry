@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import RegisterCard from "@/components/auth/RegisterCard";
+import RegisterCard from "@/features/auth/components/RegisterCard";
 import { auth } from "@/server/auth";
 
 type RegisterPageProps = {

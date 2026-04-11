@@ -1,12 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import PageTransition from '@/components/shared/PageTransition'
+import PageTransition from '@/core/components/shared/PageTransition'
 import { Droplet, ArrowLeft, Info } from 'lucide-react'
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Button } from '@/core/components/ui/button'
+import { Input } from '@/core/components/ui/input'
+import { Label } from '@/core/components/ui/label'
 
 export default function IdratazioneImpasstoPage() {
   const [flourWeight, setFlourWeight] = useState<string>('1000')

@@ -5,7 +5,7 @@ import { Heart } from "lucide-react";
 import { toast } from "sonner";
 import { signIn, useSession } from "next-auth/react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/core/components/ui/button";
 
 type FavoriteButtonProps = {
   itemId: string;

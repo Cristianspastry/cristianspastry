@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import ResetPasswordCard from "@/components/auth/ResetPasswordCard";
+import ResetPasswordCard from "@/features/auth/components/ResetPasswordCard";
 
 type ResetPasswordPageProps = {
   searchParams: Promise<{

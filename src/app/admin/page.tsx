@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/core/components/ui/button";
 import { auth } from "@/server/auth";
 import { isRoleAtLeast } from "@/server/auth/roles";
 

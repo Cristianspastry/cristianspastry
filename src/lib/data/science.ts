@@ -27,8 +27,8 @@
  * })
  */
 
-import { client } from "@/sanity/lib/client"
-import { SCIENCE_QUERY } from "@/sanity/lib/queries"
+import { client } from "@/core/lib/clients"
+import { SCIENCE_QUERY } from "@/features/recipes/services/recipeService"
 import type { Science } from "@/sanity/lib/types"
 import { groq } from "next-sanity"
 

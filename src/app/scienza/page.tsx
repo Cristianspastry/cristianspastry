@@ -26,8 +26,8 @@
  */
 
 import type { Metadata } from 'next'
-import ScienceList from '@/components/science/list/ScienceList'
-import { getScienceArticles } from '@/lib/data/science'
+import { ScienceList } from '@/features/science/components'
+import { getScienceArticles } from '@/features/science/services/scienceService'
 
 export const metadata: Metadata = {
   title: 'La Scienza della Pasticceria | Cristian\'s Pastry',

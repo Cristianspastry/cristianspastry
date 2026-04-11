@@ -1,10 +1,10 @@
-import { FeaturedRecipes } from "@/components/home/FeaturedRecipes"
-import { Hero } from "@/components/home/Hero"
-import { ContentSection } from "@/components/home/ContentSection"
-import { generateHomeMetadata } from "@/lib/seo"
+import { FeaturedRecipes } from "@/features/home/components/FeaturedRecipes"
+import { Hero } from "@/features/home/components/Hero"
+import { ContentSection } from "@/features/home/components/ContentSection"
+import { generateHomeMetadata } from "@/core/lib/seo"
 import type { Metadata } from "next"
-import { getHomePageData } from "@/lib/data/home"
-import PageTransition from "@/components/shared/PageTransition"
+import { getHomePageData } from "@/features/home/services/homeService"
+import PageTransition from "@/features/shared/components/PageTransition"
 
 // ❌ RIMOSSO: export const revalidate = 3600
 // ✅ Cache gestita tramite 'use cache' in getHomePageData()

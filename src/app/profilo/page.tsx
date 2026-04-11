@@ -2,21 +2,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
-import RecipeCard from "@/components/recipes/list/RecipeCard";
-import { TechniqueCard } from "@/components/technique/list/TechniqueCard";
-import { ScienceCard } from "@/components/science/ScienceCard";
-import ProfileLinkToast from "@/components/profile/ProfileLinkToast";
+import { Button } from "@/core/components/ui/button";
+import RecipeCard from "@/features/recipes/components/list/RecipeCard";
+import { TechniqueCard } from "@/features/techniques/components/list/TechniqueCard";
+import { ScienceCard } from "@/features/science/components/list/ScienceCard";
+import ProfileLinkToast from "@/features/profile/components/ProfileLinkToast";
 import { env } from "@/env";
 import { auth } from "@/server/auth";
 import { db } from "@/server/db";
 import { isRoleAtLeast } from "@/server/auth/roles";
-import { client } from "@/sanity/lib/client";
+import { client } from "@/core/lib/clients";
 import {
   FAVORITE_RECIPES_QUERY,
   FAVORITE_TECHNIQUES_QUERY,
   FAVORITE_SCIENCE_QUERY,
-} from "@/sanity/lib/queries";
+} from "@/features/recipes/services/recipeService";
 import type { RecipePreview, TechniquePreview, SciencePreview } from "@/sanity/lib/types";
 
 export default async function ProfilePage() {

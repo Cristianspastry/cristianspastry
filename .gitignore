@@ -1,59 +1,51 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+```
+# Dependencies
+node_modules/
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
+# Build outputs
+dist/
+build/
+.next/
+out/
 
-# testing
-/coverage
+# Environment variables
+.env
+.env.local
+.env.*
 
-# database
-/prisma/db.sqlite
-/prisma/db.sqlite-journal
-db.sqlite
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
 
-# next.js
-/.next/
-/out/
-next-env.d.ts
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+*.so
+.Python
+*.sqlite3
 
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
+# Logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
 
-# local env files
-# do not commit any .env files to git, except for the .env.example file. https://create.t3.gg/en/usage/env-variables#using-environment-variables
-.env
-.env*.local
-.env.example
-
-# project tracking files
-PROJECT_CHANGES.md
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-
-# idea files
-.idea
-
-# scripts
-/scripts
-*.txt
-!/public/tiktokn30wuON1FEvonPwZonr0JvKMc6nI9zkq.txt
-/email-templates
-
-.vercel
-.env*.local
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+```

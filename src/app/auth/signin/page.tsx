@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import SignInCard from "@/components/auth/SignInCard";
+import SignInCard from "@/features/auth/components/SignInCard";
 import { auth } from "@/server/auth";
 import { ensurePrismaClientHasFields } from "@/server/prisma-check";
 

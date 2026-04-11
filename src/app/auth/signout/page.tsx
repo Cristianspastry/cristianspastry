@@ -1,4 +1,4 @@
-import SignOutCard from "@/components/auth/SignOutCard";
+import SignOutCard from "@/features/auth/components/SignOutCard";
 import { auth } from "@/server/auth";
 
 type SignOutPageProps = {

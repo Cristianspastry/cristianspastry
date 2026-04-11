@@ -5,7 +5,7 @@ import { hash } from "bcryptjs";
 import {
   markPasswordResetTokenUsed,
   validatePasswordResetToken,
-} from "@/lib/auth/password-reset";
+} from "@/features/auth/lib/password-reset";
 import { db } from "@/server/db";
 import { ensurePrismaClientHasFields } from "@/server/prisma-check";
 

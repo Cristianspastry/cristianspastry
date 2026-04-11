@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/core/components/ui/button";
 
 const ERROR_MESSAGES: Record<string, { title: string; description: string }> = {
   OAuthSignin: {

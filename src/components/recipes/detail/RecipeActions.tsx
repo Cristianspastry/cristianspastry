@@ -3,7 +3,7 @@
 import { Printer, Share2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import type { Recipe } from '@/sanity/lib/types'
-import FavoriteButton from '@/components/favorites/FavoriteButton'
+import FavoriteButton from '@/features/favorites/components/FavoriteButton'
 
 interface RecipeActionsProps {
   recipe: Recipe
