@@ -27,8 +27,8 @@
  * })
  */
 
-import { client } from "@/core/lib/clients"
-import { SCIENCE_QUERY } from "@/features/recipes/services/recipeService"
+import { client } from "@/sanity/lib/client"
+import { SCIENCE_QUERY } from "@/sanity/lib/queries"
 import type { Science } from "@/sanity/lib/types"
 import { groq } from "next-sanity"
 
@@ -64,6 +64,53 @@ export interface ScienceResult {
   /** Indica se ci sono altre pagine disponibili */
   hasMore: boolean
 }
+
+//ScienceArticle
+
+export interface ScienceArticle extends Science {
+  /** URL completo dell'immagine principale */
+  mainImageUrl: string
+  /** Testo alternativo dell'immagine principale */
+  mainImageAlt: string
+  /** Tempo di lettura stimato in minuti */
+  readingTime: number
+  /** Slug dell'autore */
+  authorSlug: string
+  /** Nome dell'autore */
+  authorName: string
+  /** URL dell'autore */
+  authorUrl: string
+  /** URL completo dell'immagine dell'autore */
+  authorImageUrl: string
+  /** Testo alternativo dell'immagine dell'autore */
+  authorImageAlt: string
+  /** Slug della categoria */
+  categorySlug: string
+  /** Nome della categoria */
+  categoryName: string
+  /** URL della categoria */
+  categoryUrl: string
+  /** URL completo dell'immagine della categoria */
+  categoryImageUrl: string
+  /** Testo alternativo dell'immagine della categoria */
+  categoryImageAlt: string
+  /** Descrizione della categoria */
+  categoryDescription: string
+  /** Slug della sottocategoria */
+  subcategorySlug: string
+  /** Nome della sottocategoria */
+  subcategoryName: string
+  /** URL della sottocategoria */
+  subcategoryUrl: string
+  /** URL completo dell'immagine della sottocategoria */
+  subcategoryImageUrl: string
+  /** Testo alternativo dell'immagine della sottocategoria */
+  subcategoryImageAlt: string
+  /** Descrizione della sottocategoria */
+  subcategoryDescription: string
+  /** URL completo dell'immagine della sottocategoria */
+}
+
 
 // ============================================
 // QUERY FUNCTIONS

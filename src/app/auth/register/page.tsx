@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
-import RegisterCard from "@/features/auth/components/RegisterCard";
 import { auth } from "@/server/auth";
+import RegisterCard from "@/components/auth/RegisterCard";
 
 type RegisterPageProps = {
   searchParams: Promise<{

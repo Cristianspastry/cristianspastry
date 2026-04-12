@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import PageTransition from '@/core/components/shared/PageTransition'
+import PageTransition from '@/components/shared/PageTransition'
 import {
   Calculator,
   Scale,

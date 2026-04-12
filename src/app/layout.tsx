@@ -7,14 +7,15 @@ import { Suspense } from "react";
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
 import { TRPCReactProvider } from "@/trpc/react";
-import AuthProvider from "@/features/auth/components/AuthProvider";
-import { Header } from "@/features/layout/components/Header";
-import { Footer } from "@/features/layout/components/Footer";
-import ToastProvider from "@/features/shared/components/ToastProvider";
-import { siteConfig } from "@/core/constants/config";
-import { StructuredData } from "@/features/shared/components/StructuredData";
+
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { siteConfig } from "@/lib/config";
+import { StructuredData } from "@/components/seo/StructuredData";
+import AuthProvider from "@/components/auth/AuthProvider";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import ToastProvider from "@/components/shared/ToastProvider";
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??

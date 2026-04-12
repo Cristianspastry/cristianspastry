@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-import { createPasswordResetToken } from "@/features/auth/lib/password-reset";
+import { createPasswordResetToken } from "@/lib/auth/password-reset";
 import { ensurePrismaClientHasFields } from "@/server/prisma-check";
 
 const RequestSchema = z.object({

@@ -1,6 +1,6 @@
+import SearchContent from '@/components/search/SearchContent'
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
-import { SearchContent } from '@/features/search/components'
 
 export const metadata: Metadata = {
   title: 'Ricerca | Cristian\'s Pastry',

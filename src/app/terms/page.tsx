@@ -1,6 +1,6 @@
+import { siteConfig } from "@/lib/config";
 import type { Metadata } from "next";
 
-import { siteConfig } from "@/core/constants/config";
 
 export const metadata: Metadata = {
   title: `Termini e Condizioni | ${siteConfig.name}`,

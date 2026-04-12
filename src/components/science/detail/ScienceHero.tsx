@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
 import { Calendar, User, Clock, BookOpen } from 'lucide-react'
-import FavoriteButton from '@/features/favorites/components/FavoriteButton'
+import FavoriteButton from '@/components/shared/FavoriteButton'
 import type { Science } from '@/sanity/lib/types'
 
 interface ScienceHeroProps {

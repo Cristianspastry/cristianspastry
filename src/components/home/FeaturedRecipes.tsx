@@ -1,6 +1,7 @@
 
 import type { Recipe } from '@/sanity/lib/types'
-import RecipeCard from '../recipes/list/RecipeCard'
+import { RecipeCard } from '../recipes/card/RecipeCard'
+
 
 interface FeaturedRecipesProps {
   recipes: Recipe[]

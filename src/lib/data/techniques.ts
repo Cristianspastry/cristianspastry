@@ -22,8 +22,8 @@
  * })
  */
 
-import { client } from "@/core/lib/clients"
-import { TECHNIQUE_QUERY } from "@/features/recipes/services/recipeService"
+import { client } from "@/sanity/lib/client"
+import { TECHNIQUE_QUERY } from "@/sanity/lib/queries"
 import type { Technique } from "@/sanity/lib/types"
 import { groq } from "next-sanity"
 

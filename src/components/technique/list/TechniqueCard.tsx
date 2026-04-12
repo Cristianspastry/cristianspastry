@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, BookOpen, Clock, Wrench, Lightbulb } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import FavoriteButton from '@/features/favorites/components/FavoriteButton'
+import FavoriteButton from '@/components/shared/FavoriteButton'
 import type { Technique, TechniquePreview } from '@/sanity/lib/types'
 
 interface TechniqueCardProps {

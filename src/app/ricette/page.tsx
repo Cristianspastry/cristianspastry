@@ -21,9 +21,9 @@
  * - Server-side cache con 'use cache'
  */
 
+import RecipesList from '@/components/recipes/list/RecipesList'
+import { getRecipeCategories, getRecipes } from '@/lib/data/recipes'
 import type { Metadata } from 'next'
-import { getRecipes, getRecipeCategories } from '@/features/recipes/services/recipeService'
-import { RecipesList } from '@/features/recipes/components'
 
 export const metadata: Metadata = {
   title: 'Ricette di Pasticceria | Scopri Dolci Deliziosi',

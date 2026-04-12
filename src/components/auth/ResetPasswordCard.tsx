@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 
-import { Button } from "@/core/components/ui/button";
+import { Button } from "@/components/ui/button";
 
 type ResetPasswordCardProps = {
   token: string;

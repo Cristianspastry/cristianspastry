@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { siteConfig } from "@/core/constants/config";
+import { siteConfig } from "@/lib/config";
 
 export const metadata: Metadata = {
   title: `Privacy Policy | ${siteConfig.name}`,

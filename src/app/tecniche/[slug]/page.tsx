@@ -1,18 +1,17 @@
+import TechniqueEquipment from '@/components/technique/detail/TechniqueEquipment'
+import TechniqueHero from '@/components/technique/detail/TechniqueHero'
+import TechniqueInfo from '@/components/technique/detail/TechniqueInfo'
+import TechniqueIntroduction from '@/components/technique/detail/TechniqueIntroduction'
+import TechniqueKeyPoints from '@/components/technique/detail/TechniqueKeyPoints'
+import TechniqueRelated from '@/components/technique/detail/TechniqueRelated'
+import TechniqueSteps from '@/components/technique/detail/TechniqueSteps'
+import TechniqueTroubleshooting from '@/components/technique/detail/TechniqueTroubleshooting'
+import TechniqueVariations from '@/components/technique/detail/TechniqueVariations'
+import { getTechniqueBySlug } from '@/lib/data/techniques'
+import { Technique } from '@/sanity/lib/types'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { getTechniqueBySlug } from '@/features/techniques/services/techniqueService'
-import type { Technique } from '@/features/techniques/types'
-import { 
-  TechniqueHero,
-  TechniqueInfo,
-  TechniqueIntroduction,
-  TechniqueEquipment,
-  TechniqueSteps,
-  TechniqueKeyPoints,
-  TechniqueTroubleshooting,
-  TechniqueVariations,
-  TechniqueRelated
-} from '@/features/techniques/components'
+
 
 interface TechniquePageProps {
   params: Promise<{

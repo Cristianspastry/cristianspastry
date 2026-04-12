@@ -1,19 +1,18 @@
 // app/ricette/[slug]/page.tsx
-import { 
-  RecipeActions,
-  RecipeCommonMistakes,
-  RecipeHero,
-  RecipeInfo,
-  RecipeIngredients,
-  RecipeInstructions,
-  RecipeNutrition,
-  RecipeRelated,
-  RecipeStorage,
-  RecipeTips,
-  RecipeVariations,
-  RecipeWhenToUse
-} from '@/features/recipes/components'
-import { getRecipeBySlug } from '@/features/recipes/services/recipeService'
+
+import { RecipeActions } from '@/components/recipes/detail/RecipeActions'
+import { RecipeHero } from '@/components/recipes/detail/RecipeHero'
+import { RecipeInfo } from '@/components/recipes/detail/RecipeInfo'
+import { RecipeIngredients } from '@/components/recipes/detail/RecipeIngredients'
+import { RecipeInstructions } from '@/components/recipes/detail/RecipeInstructions'
+import { RecipeNutrition } from '@/components/recipes/detail/RecipeNutrition'
+import { RecipeRelated } from '@/components/recipes/detail/RecipeRelated'
+import { RecipeStorage } from '@/components/recipes/detail/RecipeStorage'
+import { RecipeTips } from '@/components/recipes/detail/RecipeTips'
+import { RecipeVariations } from '@/components/recipes/detail/RecipeVariations'
+import { RecipeWhenToUse } from '@/components/recipes/detail/RecipeWhenToUse'
+import { RecipeCommonMistakes } from '@/components/recipes/detail/RecipeCommonMistakes'
+import { getRecipeBySlug } from '@/lib/data/recipes'
 import { generateRecipeMetadata } from '@/lib/seo'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'

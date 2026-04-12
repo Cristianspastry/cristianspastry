@@ -1,13 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import PageTransition from '@/core/components/shared/PageTransition'
+import PageTransition from '@/components/shared/PageTransition'
 import { Square, ArrowLeft, Info, Circle } from 'lucide-react'
 import Link from 'next/link'
-import { Button } from '@/core/components/ui/button'
-import { Input } from '@/core/components/ui/input'
-import { Label } from '@/core/components/ui/label'
-import { RadioGroup, RadioGroupItem } from '@/core/components/ui/radio-group'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 
 export default function TeglieCalcoloPage() {
   const [panType, setPanType] = useState<'rectangular' | 'round'>('rectangular')

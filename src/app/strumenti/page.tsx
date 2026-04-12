@@ -3,9 +3,9 @@ import type { Metadata } from 'next'
 import { client } from '@/sanity/lib/client'
 import { ALL_PRODUCTS_QUERY } from '@/sanity/lib/queries'
 import type { Product } from '@/sanity/lib/types'
-import ProductCategorySection from '@/features/products/components/ProductCategorySection'
-import PageTransition from '@/core/components/shared/PageTransition'
-import { Skeleton } from '@/core/components/ui/skeleton'
+import { Skeleton } from '@/components/ui/skeleton'
+import PageTransition from '@/components/shared/PageTransition'
+import ProductCategorySection from '@/components/products/ProductCategorySection'
 
 export const metadata: Metadata = {
   title: 'Gli Strumenti che Uso | Attrezzatura per Pasticceria',

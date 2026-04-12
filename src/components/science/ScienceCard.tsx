@@ -5,8 +5,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, Beaker, Clock, BookMarked, FlaskConical } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import FavoriteButton from '@/features/favorites/components/FavoriteButton'
 import type { Science, SciencePreview } from '@/sanity/lib/types'
+import FavoriteButton from '../shared/FavoriteButton'
 
 interface ScienceCardProps {
   science: Science | SciencePreview

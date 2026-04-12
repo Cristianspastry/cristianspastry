@@ -1,13 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import PageTransition from '@/core/components/shared/PageTransition'
+import PageTransition from '@/components/shared/PageTransition'
 import { Wheat, ArrowLeft, Info } from 'lucide-react'
 import Link from 'next/link'
-import { Button } from '@/core/components/ui/button'
-import { Input } from '@/core/components/ui/input'
-import { Label } from '@/core/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/core/components/ui/select'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 interface FlourMixResult {
   flour1Grams: number

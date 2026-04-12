@@ -1,20 +1,20 @@
+import ScienceConclusion from '@/components/science/detail/ScienceConclusion'
+import ScienceExperiments from '@/components/science/detail/ScienceExperiments'
+import ScienceGlossary from '@/components/science/detail/ScienceGlossary'
+import ScienceHero from '@/components/science/detail/ScienceHero'
+import ScienceInfo from '@/components/science/detail/ScienceInfo'
+import ScienceIntroduction from '@/components/science/detail/ScienceIntroduction'
+import ScienceKeyTakeaways from '@/components/science/detail/ScienceKeyTakeaways'
+import SciencePracticalApplications from '@/components/science/detail/SciencePracticalApplications'
+import ScienceReferences from '@/components/science/detail/ScienceReferences'
+import ScienceRelated from '@/components/science/detail/ScienceRelated'
+import ScienceSections from '@/components/science/detail/ScienceSections'
+import { getScienceArticleBySlug } from '@/lib/data/science'
 import type { Metadata } from 'next'
+import type { ScienceArticle } from '@/lib/data/science'
 import { notFound } from 'next/navigation'
-import { getScienceArticleBySlug } from '@/features/science/services/scienceService'
-import type { ScienceArticle } from '@/features/science/types'
-import { 
-  ScienceHero,
-  ScienceInfo,
-  ScienceIntroduction,
-  ScienceSections,
-  ScienceKeyTakeaways,
-  SciencePracticalApplications,
-  ScienceExperiments,
-  ScienceGlossary,
-  ScienceReferences,
-  ScienceConclusion,
-  ScienceRelated
-} from '@/features/science/components'
+import { Science } from '@/sanity/lib/types'
+
 
 interface SciencePageProps {
   params: Promise<{
@@ -24,7 +24,7 @@ interface SciencePageProps {
 
 export async function generateMetadata({ params }: SciencePageProps): Promise<Metadata> {
   const { slug } = await params
-  const article: ScienceArticle | null = await getScienceArticleBySlug(slug)
+  const article: Science | null = await getScienceArticleBySlug(slug)
 
   if (!article) {
     return {
@@ -57,7 +57,7 @@ export async function generateMetadata({ params }: SciencePageProps): Promise<Me
 
 export default async function SciencePage({ params }: SciencePageProps) {
   const { slug } = await params
-  const article: ScienceArticle | null = await getScienceArticleBySlug(slug)
+  const article: Science | null = await getScienceArticleBySlug(slug)
 
   if (!article) {
     notFound()
