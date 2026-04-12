@@ -1,10 +1,6 @@
 import { client } from "@/core/lib/clients"
-import { 
-  CATEGORIES_QUERY, 
-  CATEGORY_QUERY, 
-  RECIPES_BY_CATEGORY_QUERY,
-  HOMEPAGE_QUERY 
-} from "@/features/recipes/services/recipeService"
+import { CATEGORIES_QUERY, CATEGORY_QUERY, HOMEPAGE_QUERY, RECIPES_BY_CATEGORY_QUERY } from "@/sanity/lib/queries"
+
 import type { Category, Recipe } from "@/sanity/lib/types"
 
 /**
