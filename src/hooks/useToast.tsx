@@ -1,7 +1,7 @@
 'use client'
 
 import { create } from 'zustand'
-import type { ToastType } from '@/core/components/shared/Toast'
+import type { ToastType } from '@/components/shared/Toast'
 
 interface Toast {
   id: string

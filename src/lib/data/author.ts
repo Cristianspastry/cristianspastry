@@ -1,5 +1,5 @@
-import { client } from "@/core/lib/clients"
-import { AUTHOR_QUERY } from "@/features/recipes/services/recipeService"
+import { client } from "@/sanity/lib/client"
+import { AUTHOR_QUERY } from "@/sanity/lib/queries"
 import type { Author } from "@/sanity/lib/types"
 
 /**
