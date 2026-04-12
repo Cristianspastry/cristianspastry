@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 
-import { Button } from "@/core/components/ui/button";
 
 type SignOutCardProps = {
   isSignedIn: boolean;
